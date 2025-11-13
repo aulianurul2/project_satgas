@@ -128,6 +128,16 @@
                     <p class="text-sm text-gray-500">Tidak ada bukti yang diunggah untuk laporan ini.</p>
                 @endif
             </div>
+
+            {{-- Alasan Pembatalan --}}
+            @if ($report->status === 'Dibatalkan')
+                <div class="bg-red-50 border-l-4 border-red-400 p-4 rounded-md shadow-sm">
+                    <h2 class="text-lg font-semibold text-red-800 mb-2">Alasan Pembatalan</h2>
+                    <p class="text-red-700 whitespace-pre-wrap">
+                        {{ $report->alasan_dibatalkan ?? 'Tidak ada alasan yang diberikan.' }}
+                    </p>
+                </div>
+            @endif
         </div>
 
         {{-- Tombol Kembali --}}
