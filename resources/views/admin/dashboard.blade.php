@@ -48,11 +48,12 @@
             </a>
             
             {{-- 3. Page Content --}}
-            <a href="#" class="menu-card">
+            <a href="{{ route('admin.media.index') }}" class="menu-card">
                 <div class="icon-placeholder"></div>
                 <h3 class="card-title">Page Content</h3>
                 <p class="card-subtitle">Kelola informasi publik</p>
             </a>
+
             
             {{-- 4. Anggota --}}
             <a href="#" class="menu-card">

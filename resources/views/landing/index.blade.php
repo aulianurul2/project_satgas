@@ -301,26 +301,28 @@
 
     <!-- Berita -->
     <div id="portfolio" class="bg-light py-5">
-        <div class="container px-4 px-lg-5">
-            <h2 class="text-center mt-0">Berita Terbaru</h2>
-            <hr class="divider" />
-            <div class="row g-4">
-                {{-- Bagian berita akan otomatis terisi dari database --}}
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center mt-0">Berita Terbaru</h2>
+        <hr class="divider" />
+        <div class="row g-4">
+            @forelse ($media as $item)
                 <div class="col-lg-4 col-sm-6">
                     <div class="card shadow-sm border-0">
-                        <!-- NOTE: thumbnial image must exist -->
-                        <img class="card-img-top" src="{{ asset('landing/assets/img/portfolio/thumbnails/1.jpg') }}" alt="">
+                        <img class="card-img-top" src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
                         <div class="card-body">
-                            <h5 class="card-title">Judul Berita</h5>
-                            <p class="card-text">Contoh isi berita singkat atau deskripsi kegiatan PPKPT POLSUB.</p>
-                            <!-- Tombol menggunakan btn-primary (Indigo-600) -->
+                            <h5 class="card-title">{{ $item->judul }}</h5>
+                            <p class="card-text">{{ Str::limit($item->isi, 100) }}</p>
                             <a href="#" class="btn btn-primary btn-sm">Baca Selengkapnya</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            @empty
+                <p class="text-center text-muted">Belum ada berita yang dipublikasikan.</p>
+            @endforelse
         </div>
     </div>
+</div>
+
 
     <!-- Contact -->
     <section class="page-section" id="contact">
