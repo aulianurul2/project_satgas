@@ -10,7 +10,7 @@
             <a href="#beranda" class="hover:text-blue-700">Beranda</a>
             <a href="#tentang" class="hover:text-blue-700">Tentang</a>
             <a href="#berita" class="hover:text-blue-700">Berita</a>
-            <a href="#kontak" class="hover:text-blue-700">Kontak</a>
+            <a href="#about" class="hover:text-blue-700">About Us</a>
         </div>
 
         {{-- Tombol Autentikasi --}}
@@ -31,7 +31,9 @@
                 <a href="{{ route('login') }}" class="text-blue-700 font-semibold hover:underline">
                     Login
                 </a>
-                <a href="{{ route('register') }}" class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition">
+                <a href="{{ route('register') }}"
+                   class="bg-blue-700 text-white px-4 py-2 rounded-md hover:bg-blue-800 hover:text-white transition"
+                   style="color: #ffffff;">
                     Register
                 </a>
             @endauth
