@@ -56,7 +56,7 @@
 
             
             {{-- 4. Anggota --}}
-            <a href="#" class="menu-card">
+            <a href="{{ route('admin.members.index') }}" class="menu-card">
                 <div class="icon-placeholder"></div>
                 <h3 class="card-title">Anggota</h3>
                 <p class="card-subtitle">Kelola data anggota</p>

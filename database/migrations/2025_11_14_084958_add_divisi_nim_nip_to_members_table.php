@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->string('divisi')->nullable()->after('jabatan');
-            $table->string('nim_nip')->nullable()->after('divisi');
+            //
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->dropColumn('divisi');
-            $table->dropColumn('nim_nip');
+            //
         });
     }
 };
