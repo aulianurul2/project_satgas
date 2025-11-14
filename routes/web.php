@@ -13,7 +13,7 @@ use App\Http\Controllers\User\RegistrationController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\MediaController;
-
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LandingController;
 
 /*
@@ -24,6 +24,7 @@ use App\Http\Controllers\LandingController;
 */
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 Route::get('/berita/{id}', [MediaController::class, 'show'])->name('berita.show');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
 
 /*
