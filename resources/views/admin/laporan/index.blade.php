@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto py-8">
 
-    <h1 class="text-3xl font-bold mb-8 text-gray-800">Daftar Laporan</h1>
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">Daftar Laporan Kasus</h1>
 
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">

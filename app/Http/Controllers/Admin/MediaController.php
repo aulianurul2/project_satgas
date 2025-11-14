@@ -17,7 +17,9 @@ class MediaController extends Controller
 
     public function create()
     {
-        return view('admin.media.create');
+        // daftar kategori bisa kamu ubah sesuai kebutuhan
+        $kategoriList = ['Berita', 'Kegiatan', 'Artikel', 'Pengumuman'];
+        return view('admin.media.create', compact('kategoriList'));
     }
 
     public function store(Request $request)
@@ -40,12 +42,14 @@ class MediaController extends Controller
             'kategori' => $request->kategori,
         ]);
 
-        return redirect()->route('admin.media.index')->with('success', 'Berita berhasil ditambahkan!');
+        return redirect()->route('admin.media.index')
+            ->with('success', 'Berita berhasil ditambahkan!');
     }
 
     public function edit(Media $media)
     {
-        return view('admin.media.edit', compact('media'));
+        $kategoriList = ['Berita', 'Kegiatan', 'Artikel', 'Pengumuman'];
+        return view('admin.media.edit', compact('media', 'kategoriList'));
     }
 
     public function update(Request $request, Media $media)
@@ -72,7 +76,8 @@ class MediaController extends Controller
             'kategori' => $request->kategori,
         ]);
 
-        return redirect()->route('admin.media.index')->with('success', 'Berita berhasil diperbarui!');
+        return redirect()->route('admin.media.index')
+            ->with('success', 'Berita berhasil diperbarui!');
     }
 
     public function destroy(Media $media)
@@ -82,6 +87,13 @@ class MediaController extends Controller
         }
 
         $media->delete();
-        return redirect()->route('admin.media.index')->with('success', 'Berita berhasil dihapus!');
+        return redirect()->route('admin.media.index')
+            ->with('success', 'Berita berhasil dihapus!');
     }
+        public function show($id)
+    {
+        $media = Media::findOrFail($id);
+        return view('landing.detail-berita', compact('media'));
+    }
+
 }

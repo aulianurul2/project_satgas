@@ -26,10 +26,18 @@
 
             {{-- Kategori --}}
             <div class="mb-4">
-                <label for="kategori" class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
-                <input type="text" id="kategori" name="kategori" value="{{ old('kategori', $media->kategori) }}"
-                       class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-            </div>
+            <label for="kategori" class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
+            <select id="kategori" name="kategori" required
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">-- Pilih Kategori --</option>
+                @foreach($kategoriList as $kategori)
+                    <option value="{{ $kategori }}" {{ old('kategori') == $kategori ? 'selected' : '' }}>
+                        {{ $kategori }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
 
             {{-- Gambar --}}
             <div class="mb-4">

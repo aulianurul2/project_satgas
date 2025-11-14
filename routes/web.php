@@ -16,51 +16,82 @@ use App\Http\Controllers\Admin\MediaController;
 
 use App\Http\Controllers\LandingController;
 
-// 🌐 Landing Page — sekarang pakai controller biar bisa ambil berita dari DB
+/*
+|--------------------------------------------------------------------------
+| 🌐 LANDING PAGE (Publik)
+|--------------------------------------------------------------------------
+| Halaman depan website & berita publik.
+*/
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/berita/{id}', [MediaController::class, 'show'])->name('berita.show');
 
-// 🧩 DASHBOARD ADMIN & FITURNYA
+
+/*
+|--------------------------------------------------------------------------
+| 🧩 DASHBOARD ADMIN
+|--------------------------------------------------------------------------
+| Hanya bisa diakses oleh user dengan hak akses admin.
+*/
 Route::middleware(['auth', 'can:access-admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+        // Dashboard utama
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Dashboard Utama Admin
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        // Manajemen laporan
+        Route::get('/laporan', [AdminReportController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/{laporan}', [AdminReportController::class, 'show'])->name('laporan.show');
+        Route::patch('/laporan/{laporan}/update-status', [AdminReportController::class, 'updateStatus'])->name('laporan.update_status');
 
-    // Manajemen Laporan
-    Route::get('/laporan', [AdminReportController::class, 'index'])->name('laporan.index');
-    Route::get('/laporan/{laporan}', [AdminReportController::class, 'show'])->name('laporan.show');
-    Route::patch('/laporan/{laporan}/update-status', [AdminReportController::class, 'updateStatus'])->name('laporan.update_status');
+        // Manajemen media/berita
+        Route::resource('media', MediaController::class)->parameters(['media' => 'media']);
+    });
 
-    // Manajemen Media / Berita
-    Route::resource('media', MediaController::class)->parameters(['media' => 'media']);
 
-});
-
-// 👤 DASHBOARD USER & FITURNYA
+/*
+|--------------------------------------------------------------------------
+| 👤 DASHBOARD USER
+|--------------------------------------------------------------------------
+| Hanya untuk pengguna yang login & terverifikasi emailnya.
+*/
 Route::middleware(['auth', 'verified'])
     ->prefix('user')
     ->name('user.')
     ->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/laporan', [ReportController::class, 'index'])->name('laporan.index');
-    Route::get('/laporan/buat', [ReportController::class, 'create'])->name('laporan.create');
-    Route::post('/laporan/store', [ReportController::class, 'store'])->name('laporan.store');
-    Route::get('/laporan/riwayat', [ReportController::class, 'history'])->name('laporan.history');
-    Route::get('/laporan/detail/{id}', [ReportController::class, 'show'])->name('laporan.show');
+        // Dashboard user
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran.create');
-    Route::post('/pendaftaran/store', [RegistrationController::class, 'store'])->name('pendaftaran.store');
+        // Laporan pengguna
+        Route::get('/laporan', [ReportController::class, 'index'])->name('laporan.index');
+        Route::get('/laporan/buat', [ReportController::class, 'create'])->name('laporan.create');
+        Route::post('/laporan/store', [ReportController::class, 'store'])->name('laporan.store');
+        Route::get('/laporan/riwayat', [ReportController::class, 'history'])->name('laporan.history');
+        Route::get('/laporan/detail/{id}', [ReportController::class, 'show'])->name('laporan.show');
 
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-});
+        // Pendaftaran
+        Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran.create');
+        Route::post('/pendaftaran/store', [RegistrationController::class, 'store'])->name('pendaftaran.store');
 
-// 🧾 AUTH ROUTES
+        // Profil
+        Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    });
+
+
+/*
+|--------------------------------------------------------------------------
+| 🔑 AUTHENTICATION ROUTES
+|--------------------------------------------------------------------------
+*/
 require __DIR__ . '/auth.php';
 
-// ✉️ Tes Kirim Email Reset Password
+
+/*
+|--------------------------------------------------------------------------
+| ✉️ TES KIRIM EMAIL RESET PASSWORD
+|--------------------------------------------------------------------------
+*/
 Route::get('/test-reset-email', fn() => view('auth.test-reset-email'));
 Route::post('/test-reset-email', function (Request $request) {
     $request->validate(['email' => 'required|email']);
