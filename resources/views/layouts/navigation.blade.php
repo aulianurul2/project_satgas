@@ -8,45 +8,55 @@
                     <span class="text-xl font-bold text-gray-800">SIPRAK</span>
                 </a>
 
-                <!-- Dashboard Link -->
+                <!-- Dashboard Link (❌ Tidak tampil di halaman publik) -->
                 @auth
-                    <x-nav-link :href="Auth::user()->jenisUser === 'admin' ? route('admin.dashboard') : route('user.dashboard')" :active="request()->routeIs('admin.dashboard') || request()->routeIs('user.dashboard')" class="flex items-center space-x-1">
-                        <!-- Icon Rumah -->
-                        <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.5l9-7 9 7V20a1 1 0 01-1 1h-5a1 1 0 01-1-1v-5H9v5a1 1 0 01-1 1H3a1 1 0 01-1-1V9.5z"></path>
-                        </svg>
-                        <span>Dashboard</span>
-                    </x-nav-link>
+                    @if (!Request::is('/') && !Request::is('berita/*'))
+                        <x-nav-link 
+                            :href="Auth::user()->jenisUser === 'admin' ? route('admin.dashboard') : route('user.dashboard')" 
+                            :active="request()->routeIs('admin.dashboard') || request()->routeIs('user.dashboard')" 
+                            class="flex items-center space-x-1">
+                            
+                            <!-- Icon Rumah -->
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.5l9-7 9 7V20a1 1 0 01-1 1h-5a1 1 0 01-1-1v-5H9v5a1 1 0 01-1 1H3a1 1 0 01-1-1V9.5z"/>
+                            </svg>
+                            <span>Dashboard</span>
+                        </x-nav-link>
+                    @endif
                 @endauth
             </div>
 
-            <!-- User Settings Dropdown -->
+            <!-- User Settings / Login (❌ Tidak tampil di halaman publik) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 @auth
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none">
-                                <div>{{ Auth::user()->nama }}</div>
-                                <div class="ms-1">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                    </svg>
-                                </div>
-                            </button>
-                        </x-slot>
+                    @if (!Request::is('/') && !Request::is('berita/*'))
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none">
+                                    <div>{{ Auth::user()->nama }}</div>
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
 
-                        <x-slot name="content">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
+                            <x-slot name="content">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    @endif
                 @else
-                    <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium mx-3">Login</a>
-                    <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium">Register</a>
+                    @if (!Request::is('/') && !Request::is('berita/*'))
+                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium mx-3">Login</a>
+                        <a href="{{ route('register') }}" class="text-gray-600 hover:text-gray-900 text-sm font-medium">Register</a>
+                    @endif
                 @endauth
             </div>
 

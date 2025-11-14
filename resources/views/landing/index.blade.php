@@ -300,19 +300,28 @@
     </section>
 
     <!-- Berita -->
-    <div id="portfolio" class="bg-light py-5">
+   <div id="portfolio" class="bg-light py-5">
     <div class="container px-4 px-lg-5">
         <h2 class="text-center mt-0">Berita Terbaru</h2>
         <hr class="divider" />
         <div class="row g-4">
             @forelse ($media as $item)
-                <div class="col-lg-4 col-sm-6">
-                    <div class="card shadow-sm border-0">
-                        <img class="card-img-top" src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $item->judul }}</h5>
-                            <p class="card-text">{{ Str::limit($item->isi, 100) }}</p>
-                            <a href="#" class="btn btn-primary btn-sm">Baca Selengkapnya</a>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm border-0 d-flex flex-column">
+                        <img class="card-img-top" 
+                             src="{{ asset('storage/' . $item->gambar) }}" 
+                             alt="{{ $item->judul }}" 
+                             style="height: 220px; object-fit: cover;">
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-dark fw-semibold">{{ $item->judul }}</h5>
+                            <p class="card-text flex-grow-1 text-muted">
+                                {{ Str::limit(strip_tags($item->isi), 120) }}
+                            </p>
+                            <a href="{{ route('berita.show', $item->id) }}" 
+                               class="btn btn-primary btn-sm mt-auto align-self-start">
+                                Baca Selengkapnya
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -322,6 +331,7 @@
         </div>
     </div>
 </div>
+
 
 
     <!-- Contact -->
