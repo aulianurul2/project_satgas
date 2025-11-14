@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\ContactController;
+
 use App\Http\Controllers\LandingController;
 
 /*
@@ -101,4 +102,7 @@ Route::post('/test-reset-email', function (Request $request) {
     return $status === Password::RESET_LINK_SENT
         ? back()->with('success', 'Email reset password berhasil dikirim!')
         : back()->withErrors(['email' => __($status)]);
+});
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('members', \App\Http\Controllers\Admin\MemberController::class);
 });
