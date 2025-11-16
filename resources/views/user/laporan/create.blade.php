@@ -13,6 +13,16 @@
         <h1 class="form-title">Formulir Pelaporan Satgas PPKS</h1>
         <p class="form-subtitle">Silakan isi formulir pelaporan berikut dengan data yang benar. Seluruh data isian akan <strong>dirahasiakan</strong>.</p>
 
+                    @if ($errors->any())
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
         <form id="reportForm" action="{{ route('user.laporan.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
