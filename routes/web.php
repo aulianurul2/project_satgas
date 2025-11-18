@@ -13,12 +13,10 @@ use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\MediaController;
-<<<<<<< Updated upstream
+
 use App\Http\Controllers\ContactController;
-=======
 use App\Http\Controllers\User\RecruitmentController;
 use App\Http\Controllers\Controller;
->>>>>>> Stashed changes
 
 use App\Http\Controllers\LandingController;
 

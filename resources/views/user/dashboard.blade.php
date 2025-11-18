@@ -32,7 +32,7 @@
                 <p class="text-sm text-gray-500">Lihat laporan yang sudah Anda kirim</p>
             </a>
             <!-- Pendaftaran Anggota -->
-            <a href="{{ route('user.pendaftaran.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
+            <a href="{{ route('recruitment.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>
                 <p class="text-sm text-gray-500">Daftar menjadi anggota satgas</p>
