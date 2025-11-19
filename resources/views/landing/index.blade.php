@@ -481,7 +481,12 @@
         <div class="container px-4 px-lg-5">
             <div class="row align-items-start">
                <div class="col-md-4 mb-4 mb-md-0">
-                    <h5 class="fw-bold mb-2">Satgas PPKPT</h5>
+                                <h5 class="fw-bold mb-2">
+                <a href="{{ route('tim.pengembang') }}" class="text-decoration-none text-dark">
+                    Satgas PPKPT
+                </a>
+            </h5>
+
                     <p class="small copyright mb-1">© {{ date('Y') }}. All rights reserved.</p>
                     <p class="small mb-0">Politeknik Negeri<br>Subang</p>
                 </div>

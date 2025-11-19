@@ -33,8 +33,6 @@
             </a>
             <!-- Pendaftaran Anggota -->
 
-            <a href="#" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
-
             <a href="{{ route('recruitment.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>

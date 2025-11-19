@@ -10,7 +10,7 @@
     @endif
 
     <div class="form-card">
-        <h1 class="form-title">Formulir Pelaporan Satgas PPKS</h1>
+        <h1 class="form-title">Formulir Pelaporan Satgas PPKPT</h1>
         <p class="form-subtitle">Silakan isi formulir pelaporan berikut dengan data yang benar. Seluruh data isian akan <strong>dirahasiakan</strong>.</p>
 
                     @if ($errors->any())
