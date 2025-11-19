@@ -9,14 +9,17 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ReportController;
 // use App\Http\Controllers\User\RegistrationController;
+// use App\Http\Controllers\User\RegistrationController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\MediaController;
+
 use App\Http\Controllers\ContactController;
 
-
 use App\Http\Controllers\LandingController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +79,9 @@ Route::middleware(['auth', 'verified'])
         // // Pendaftaran
         // Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran.create');
         // Route::post('/pendaftaran/store', [RegistrationController::class, 'store'])->name('pendaftaran.store');
+        // // Pendaftaran
+        // Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran.create');
+        // Route::post('/pendaftaran/store', [RegistrationController::class, 'store'])->name('pendaftaran.store');
 
         // Profil
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -104,9 +110,18 @@ Route::post('/test-reset-email', function (Request $request) {
         ? back()->with('success', 'Email reset password berhasil dikirim!')
         : back()->withErrors(['email' => __($status)]);
 });
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('members', \App\Http\Controllers\Admin\MemberController::class);
 });
+
+
+// USER RECRUITMENT
+Route::middleware(['auth'])->group(function () {
+    Route::get('/recruitment', [RecruitmentController::class, 'create'])->name('recruitment.create');
+    Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
+});
+
 
 Route::middleware(['auth'])->group(function () {
     
