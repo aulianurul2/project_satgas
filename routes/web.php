@@ -135,3 +135,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('profile.destroy');
 
 });
+Route::get('/tim-pengembang', function () {
+    return view('frontend.tim-pengembang');
+})->name('tim.pengembang');

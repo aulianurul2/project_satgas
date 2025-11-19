@@ -17,7 +17,7 @@ class MediaController extends Controller
 
     public function create()
     {
-        // daftar kategori bisa kamu ubah sesuai kebutuhan
+        // daftar kategori
         $kategoriList = ['Berita', 'Kegiatan', 'Artikel', 'Pengumuman'];
         return view('admin.media.create', compact('kategoriList'));
     }
