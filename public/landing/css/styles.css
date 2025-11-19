@@ -10993,3 +10993,76 @@ header.masthead h1, header.masthead .h1 {
 #portfolio .container-fluid .portfolio-box:hover .portfolio-box-caption, #portfolio .container-sm .portfolio-box:hover .portfolio-box-caption, #portfolio .container-md .portfolio-box:hover .portfolio-box-caption, #portfolio .container-lg .portfolio-box:hover .portfolio-box-caption, #portfolio .container-xl .portfolio-box:hover .portfolio-box-caption, #portfolio .container-xxl .portfolio-box:hover .portfolio-box-caption {
   opacity: 1;
 }
+
+.service-card {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(16,24,40,0.08);
+}
+/* teks ringkasan tetap terlihat tapi lebih redup */
+.service-card .short-desc {
+    color: #6b7280;
+}
+
+/* overlay default: tersembunyi di bawah, muncul saat hover */
+.service-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(79,70,229,0.06);
+    color: #0f172a;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform .22s ease, opacity .22s ease;
+    padding: 2.5rem 1.25rem 1.25rem; /* ruang atas untuk ikon */
+    z-index: 3;
+}
+
+.service-card:hover .service-overlay,
+.service-card:focus-within .service-overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* HIDE title & short description WHEN overlay muncul */
+.service-card .card-title,
+.service-card h4,
+.service-card .short-desc {
+    transition: opacity .18s ease, transform .18s ease;
+}
+.service-card:hover h4,
+.service-card:focus-within h4,
+.service-card:hover .short-desc,
+.service-card:focus-within .short-desc {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+}
+
+/* pastikan ikon tetap terlihat di atas overlay (opsional) */
+.service-card .mb-3 {
+    z-index: 4;
+    position: relative;
+}
+
+/* responsif: di layar sentuh overlay tampil langsung, tetap sembunyikan title */
+@media (max-width: 767px) {
+    .service-overlay {
+        transform: none;
+        opacity: 1;
+        position: relative;
+        background: transparent;
+        padding-top: .5rem;
+    }
+    .service-card:hover { transform: none; box-shadow: none; }
+    .service-card h4,
+    .service-card .short-desc {
+        display: none; /* pada mobile, tampilkan overlay sebagai konten saja */
+    }
+    /* non-aktifkan translate ikon di layar sentuh agar tidak mengganggu layout */
+    .service-card .mb-3 { transform: none; transition: none; }
+}
