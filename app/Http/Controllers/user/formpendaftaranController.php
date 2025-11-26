@@ -8,22 +8,23 @@ use App\Models\Recruitment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\QueryException;
 
-class RecruitmentController extends Controller
+class FormPendaftaranController extends Controller
 {
     /**
-     * Tampilkan form pendaftaran recruitment.
+     * Menampilkan halaman form pendaftaran recruitment.
      */
     public function create()
     {
-        return view('user.recruitment');
+        // Menampilkan halaman form pendaftaran (user/recruitment.blade.php)
+        return view('user.laporan.formpendaftaran');
     }
 
     /**
-     * Simpan data pelamar recruitment.
+     * Menyimpan data pendaftar recruitment ke database.
      */
     public function store(Request $request)
     {
-        // ✅ Validasi input
+        // ✅ Validasi input dari form
         $validated = $request->validate([
             'nama'         => 'required|string|max:255',
             'nim'          => 'required|string|max:50|unique:pelamars,nim',
@@ -37,7 +38,7 @@ class RecruitmentController extends Controller
         ]);
 
         try {
-            // ✅ Simpan file ke storage/app/public/uploads/{folder}
+            // ✅ Simpan file ke storage/app/public/uploads/
             $cvPath    = $request->file('cv')->store('uploads/cv', 'public');
             $essayPath = $request->file('essay')->store('uploads/essay', 'public');
             $fotoPath  = $request->file('pas_foto')->store('uploads/foto', 'public');
@@ -53,18 +54,16 @@ class RecruitmentController extends Controller
                 'cv'           => $cvPath,
                 'essay'        => $essayPath,
                 'pas_foto'     => $fotoPath,
-                // status otomatis diisi "Seleksi" oleh model
+                // status otomatis "Seleksi" dari model
             ]);
 
+            // ✅ Redirect ke halaman form dengan pesan sukses
             return redirect()
-                ->route('recruitment.create')
-                ->with('success', '✅ Pendaftaran berhasil dikirim!');
+            ->route('formpendaftaran.create')
+            ->with('success', '✅ Pendaftaran berhasil dikirim!');
+        } 
 
-        } catch (QueryException $e) {
-            // ❌ Jika error database
-            return back()->withErrors(['db_error' => 'Gagal menyimpan ke database: ' . $e->getMessage()]);
-        } catch (\Exception $e) {
-            // ❌ Jika error umum lain
+        catch (\Exception $e) {
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }

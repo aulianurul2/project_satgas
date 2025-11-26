@@ -73,6 +73,7 @@
               <p class="card-subtitle">Kelola data anggota</p>
           </a>
 
+
          {{-- 5. Recruitment --}}
          <a href="#" class="menu-card">
             <div class="icon-placeholder">
@@ -87,6 +88,12 @@
                 </div>
                 <h3 class="card-title">Kelola User</h3>
                 <p class="card-subtitle">Manajemen pengguna sistem</p>
+
+            {{-- 5. Recruitment --}}
+            <a href="{{ route('laporan.adminrecruitment') }}" class="menu-card">
+                <div class="icon-placeholder"></div>
+                <h3 class="card-title">Recruitment</h3>
+                <p class="card-subtitle">Data pendaftar anggota</p>
             </a>
 
 
