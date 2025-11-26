@@ -7,7 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title', 'SIPRAK-PPKPT')</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_satgas.png') }}" />
     <!-- Bootstrap Icons CDN (untuk ikon dashboard) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- Fonts -->

@@ -76,7 +76,9 @@
 
             {{-- 5. Recruitment --}}
             <a href="{{ route('laporan.adminrecruitment') }}" class="menu-card">
-                <div class="icon-placeholder"></div>
+            <div class="icon-placeholder">
+                <i class="bi bi-person-badge text-green-600" aria-hidden="true"></i>
+            </div>
                 <h3 class="card-title">Recruitment</h3>
                 <p class="card-subtitle">Data pendaftar anggota</p>
             </a>
