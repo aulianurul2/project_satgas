@@ -57,7 +57,7 @@ class RecruitmentController extends Controller
             ]);
 
             return redirect()
-                ->route('recruitment.create')
+                ->route('user.riwayatpendaftaran.index')
                 ->with('success', '✅ Pendaftaran berhasil dikirim!');
 
         } catch (QueryException $e) {

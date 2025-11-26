@@ -23,6 +23,7 @@ use App\Http\Controllers\User\RiwayatPendaftaranController;
 use App\Http\Controllers\Controller;
 
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\Admin\LaporanController;
 
 
 
@@ -123,10 +124,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 // USER RECRUITMENT
-Route::middleware(['auth'])->group(function () {
-    Route::get('/recruitment', [RecruitmentController::class, 'create'])->name('recruitment.create');
-    Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
-});
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/recruitment', [RecruitmentController::class, 'create'])->name('recruitment.create');
+//     Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
+// });
 
 
 // ADMIN RECRUITMENT
@@ -152,4 +153,27 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/tim-pengembang', function () {
     return view('frontend.tim-pengembang');
 })->name('tim.pengembang');
+
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+    Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/{id}/edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+
+});
+Route::prefix('admin')->group(function () {
+
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('admin.laporan.index');
+
+    Route::get('/laporan/{id}', [LaporanController::class, 'show'])->name('admin.laporan.show');
+
+    Route::get('/laporan/{id}/download', [LaporanController::class, 'download'])->name('admin.laporan.download');
+
+    Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])->name('admin.laporan.destroy');
+
+});
+
+
 

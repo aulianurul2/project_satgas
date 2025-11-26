@@ -58,9 +58,9 @@ class FormPendaftaranController extends Controller
             ]);
 
             // ✅ Redirect ke halaman form dengan pesan sukses
-            return redirect()
-            ->route('formpendaftaran.create')
+            return redirect()->route('user.riwayatpendaftaran.index')
             ->with('success', '✅ Pendaftaran berhasil dikirim!');
+
         } 
 
         catch (\Exception $e) {

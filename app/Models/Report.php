@@ -17,7 +17,8 @@ class Report extends Model
     protected $fillable = [
         'user_id',
         'nama_pelapor',
-        'TTL',
+        'tempat_lahir',
+        'tanggal_lahir',
         'agama',
         'jk',
         'alamat',
