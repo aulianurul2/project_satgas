@@ -42,12 +42,14 @@
                 <td class="p-2 border">{{ $member->status }}</td>
                 <td class="p-2 border">
                     
-                    @if($member->seleksi)
-                        <span class="text-green-600 font-semibold">seleksi</span>
-                    @elseif
-                        <span class="text-red-600 font-semibold">lolos wawancara</span>
-                    @elseif
-                        <span class="text-red-600 font-semibold">di terima</span>
+                    @if($member->status == 'seleksi')
+                        <span class="text-green-600 font-semibold">Seleksi</span>
+                    @elseif($member->status == 'lolos_wawancara')
+                        <span class="text-blue-600 font-semibold">Lolos Wawancara</span>
+                    @elseif($member->status == 'diterima')
+                        <span class="text-green-600 font-bold">Di Terima</span>
+                    @else
+                        <span class="text-gray-600">{{ $member->status }}</span>
                     @endif
                 </td>
                 {{-- <td class="p-2 border">
@@ -64,7 +66,7 @@
     </table>
 
     <div class="mt-4">
-        {{ $pelamars->links() }}
+        {{ $members->links() }}
     </div>
 </div>
 @endsection

@@ -2,116 +2,110 @@
 
 @section('content')
 
-{{-- Tambahkan styling CSS di sini. Pindahkan ke file CSS terpisah untuk praktik terbaik. --}}
+{{-- Tambahkan styling CSS di sini. --}}
 <style>
-    /* Styling Umum */
-    .user-management-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-    }
+    /* --- Styling yang sudah ada (Tidak diubah) --- */
+    .user-management-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    .page-title { color: #333; border-bottom: 3px solid #007bff; padding-bottom: 10px; margin-bottom: 25px; }
+    .success-alert { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; color: #155724; background-color: #d4edda; border-color: #c3e6cb; font-weight: bold; }
+    .user-table-wrapper { background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow-x: auto; }
+    .user-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .user-table thead tr { background-color: #007bff; color: #ffffff; }
+    .user-table th, .user-table td { padding: 12px 15px; border-bottom: 1px solid #ddd; vertical-align: middle; }
+    .user-table tbody tr:hover { background-color: #f5f5f5; }
+    .action-button { display: inline-block; padding: 8px 12px; border-radius: 5px; text-decoration: none; margin-right: 5px; font-weight: 500; transition: background-color 0.3s ease; text-align: center; white-space: nowrap; color: white; border: none; cursor: pointer; font-size: 14px;} /* Update: added common props */
+    .edit-btn { background-color: #28a745; }
+    .edit-btn:hover { background-color: #218838; }
+    .delete-btn { background-color: #dc3545; }
+    .delete-btn:hover { background-color: #c82333; }
+    .cannot-delete-btn { background-color: #6c757d; cursor: not-allowed; opacity: 0.6; }
+    .profile-photo { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
 
-    .page-title {
-        color: #333;
-        border-bottom: 3px solid #007bff; /* Garis bawah biru */
-        padding-bottom: 10px;
-        margin-bottom: 25px;
-    }
-
-    /* Styling Notifikasi */
-    .success-alert {
-        padding: 15px;
-        margin-bottom: 20px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        color: #155724;
-        background-color: #d4edda;
-        border-color: #c3e6cb;
-        font-weight: bold;
-    }
-
-    /* Styling Tabel */
-    .user-table-wrapper {
-        background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
-        overflow-x: auto; /* Agar responsif */
-    }
-
-    .user-table {
+    /* --- BARU: Styling untuk Custom Modal Pop-up --- */
+    .modal-overlay {
+        display: none; /* Tersembunyi default */
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
         width: 100%;
-        border-collapse: collapse;
-        text-align: left;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan gelap */
+        backdrop-filter: blur(2px); /* Efek blur halus */
+        animation: fadeIn 0.3s;
     }
 
-    .user-table thead tr {
-        background-color: #007bff;
-        color: #ffffff;
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 100%;
+        max-width: 500px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        animation: slideIn 0.3s;
+        overflow: hidden;
     }
 
-    .user-table th, .user-table td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #ddd;
-        vertical-align: middle; /* Memastikan konten berada di tengah secara vertikal */
+    .modal-header {
+        background-color: #dc3545; /* Warna Merah Warning */
+        color: white;
+        padding: 15px 20px;
+        font-size: 18px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
-    .user-table tbody tr:hover {
-        background-color: #f5f5f5; /* Efek hover pada baris */
-    }
-
-    /* Styling Aksi (Tombol) */
-    .action-button {
-        display: inline-block;
-        padding: 8px 12px;
-        border-radius: 5px;
-        text-decoration: none;
-        margin-right: 5px;
-        font-weight: 500;
-        transition: background-color 0.3s ease;
+    .modal-body {
+        padding: 20px;
+        font-size: 16px;
+        color: #333;
         text-align: center;
-        white-space: nowrap; /* Mencegah tombol putus baris */
     }
 
-    .edit-btn {
-        background-color: #28a745; /* Hijau */
+    .modal-footer {
+        padding: 15px 20px;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        border-top: 1px solid #eee;
+    }
+
+    .btn-cancel {
+        background-color: #6c757d;
         color: white;
-    }
-
-    .edit-btn:hover {
-        background-color: #218838;
-    }
-
-    .delete-btn {
-        background-color: #dc3545; /* Merah */
-        color: white;
+        padding: 10px 20px;
         border: none;
+        border-radius: 5px;
         cursor: pointer;
+        font-weight: 500;
     }
+    .btn-cancel:hover { background-color: #5a6268; }
 
-    .delete-btn:hover {
-        background-color: #c82333;
-    }
-
-    .cannot-delete-btn {
-        background-color: #6c757d; /* Abu-abu */
+    .btn-confirm {
+        background-color: #dc3545;
         color: white;
-        cursor: not-allowed;
-        opacity: 0.6;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 500;
     }
+    .btn-confirm:hover { background-color: #c82333; }
 
-    /* Styling Foto Profil */
-    .profile-photo {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%; /* Membuat lingkaran */
-        object-fit: cover;
-        border: 2px solid #ddd;
-    }
+    /* Animasi */
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    @keyframes slideIn { from {transform: translateY(-50px);} to {transform: translateY(0);} }
 </style>
 
 <div class="user-management-container">
 
-    <h2 class="page-title text-3xl font-bold">Kelola User 👤</h2>
+    <h2 class="page-title text-3xl font-bold">Kelola User</h2>
 
     @if(session('success'))
         <div class="success-alert">
@@ -120,11 +114,9 @@
     @endif
 
     <div class="user-table-wrapper">
-
         <table class="user-table">
             <thead>
                 <tr>
-                    {{-- <th>Foto</th> --}}
                     <th>No</th>
                     <th>Nama</th>
                     <th>Email</th>
@@ -134,48 +126,32 @@
                     <th>Aksi</th>
                 </tr>
             </thead>
-
             <tbody>
                 @foreach ($users as $user)
                 <tr>
-                    {{-- Kolom Foto: Asumsi field fotoUser ada, jika tidak, gunakan placeholder --}}
-                    {{-- <td>
-                        @if ($user->fotoUser)
-                            <img src="{{ asset('storage/' . $user->fotoUser) }}" alt="Foto {{ $user->nama }}" class="profile-photo">
-                        @else
-                            {{-- Placeholder jika tidak ada foto --}}
-                            {{-- <div class="profile-photo" style="background-color: #007bff; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">{{ substr($user->nama, 0, 1) }}</div>
-                        @endif
-                    </td>  --}}
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $user->nama }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->kontak }}</td>
                     <td>{{ $user->alamat }}</td>
                     <td>
-                        {{-- Memberi highlight pada jenis user --}}
                         <span style="padding: 4px 8px; border-radius: 4px; font-weight: bold; {{ $user->jenisUser === 'admin' ? 'background-color: #ffc107; color: #333;' : 'background-color: #17a2b8; color: white;' }}">
                             {{ ucfirst($user->jenisUser) }}
                         </span>
                     </td>
                     <td>
                         {{-- Tombol Edit --}}
-                        <a href="{{ route('admin.users.edit', $user->idUser) }}" 
-                            class="action-button edit-btn">
+                        <a href="{{ route('admin.users.edit', $user->idUser) }}" class="action-button edit-btn">
                             ✏️ Edit
                         </a>
 
-                        {{-- Tombol Delete --}}
+                        {{-- Tombol Delete (UPDATED) --}}
                         @if ($user->jenisUser !== 'admin')
-                            <form action="{{ route('admin.users.destroy', $user->idUser) }}" 
-                                method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus user {{ $user->nama }}?')"
-                                    class="action-button delete-btn">
-                                    🗑️ Delete
-                                </button>
-                            </form>
+                            <button type="button" 
+                                    class="action-button delete-btn"
+                                    onclick="showDeleteModal('{{ route('admin.users.destroy', $user->idUser) }}', '{{ $user->nama }}')">
+                                🗑️ Delete
+                            </button>
                         @else
                             <button class="action-button cannot-delete-btn" disabled>
                                 Tidak Dapat Hapus
@@ -185,10 +161,59 @@
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
     </div>
-
 </div>
+
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span>Konfirmasi Hapus</span>
+            <span style="cursor: pointer;" onclick="closeDeleteModal()">✖</span>
+        </div>
+        <div class="modal-body">
+            <p>Apakah Anda yakin ingin menghapus user:</p>
+            <h3 id="modalUserName" style="font-weight: bold; margin: 10px 0;">Nama User</h3>
+            <p style="font-size: 0.9em; color: #666;">Tindakan ini tidak dapat dibatalkan.</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" onclick="closeDeleteModal()">Batal</button>
+            
+            <form id="deleteForm" action="" method="POST" style="display: inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-confirm">Ya, Hapus</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- SCRIPT JAVASCRIPT --}}
+<script>
+    // Fungsi untuk membuka modal
+    function showDeleteModal(actionUrl, userName) {
+        // 1. Set URL form action sesuai ID user yang diklik
+        document.getElementById('deleteForm').action = actionUrl;
+        
+        // 2. Set nama user di dalam modal agar informatif
+        document.getElementById('modalUserName').innerText = userName;
+        
+        // 3. Tampilkan modal
+        document.getElementById('deleteModal').style.display = 'block';
+    }
+
+    // Fungsi untuk menutup modal
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    // Menutup modal jika user klik di luar kotak modal (overlay)
+    window.onclick = function(event) {
+        var modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 @endsection
