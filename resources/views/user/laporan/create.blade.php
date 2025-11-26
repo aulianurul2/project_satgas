@@ -45,8 +45,13 @@
                         <input type="text" name="nama_pelapor" class="input" required>
                     </div>
                     <div>
-                        <label>Tempat Tanggal Lahir *</label>
-                        <input type="text" name="TTL" class="input" required>
+                        <label>Tempat Lahir *</label>
+                        <input type="text" name="tempat_lahir" class="input" required>
+                    </div>
+
+                    <div>
+                        <label>Tanggal Lahir *</label>
+                        <input type="date" name="tanggal_lahir" class="input" required>
                     </div>
                     <div>
                         <label>Agama *</label>

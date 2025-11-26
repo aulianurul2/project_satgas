@@ -59,7 +59,7 @@
            <div class="icon-placeholder">
                 <i class="bi bi-file-earmark-text text-indigo-600" aria-hidden="true"></i>
             </div>
-              <h3 class="card-title">Page Content</h3>
+              <h3 class="card-title">Kelola Berita</h3>
               <p class="card-subtitle">Kelola informasi publik</p>
           </a>
 
@@ -81,6 +81,14 @@
               <h3 class="card-title">Recruitment</h3>
               <p class="card-subtitle">Data pendaftar anggota</p>
           </a>
+          <a href="{{ route('admin.users.index') }}" class="menu-card">
+                <div class="icon-placeholder">
+                    <i class="bi bi-people text-purple-600" aria-hidden="true"></i>
+                </div>
+                <h3 class="card-title">Kelola User</h3>
+                <p class="card-subtitle">Manajemen pengguna sistem</p>
+            </a>
+
 
             {{-- 6. Settings --}}
             {{-- <a href="#" class="menu-card">

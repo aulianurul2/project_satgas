@@ -76,7 +76,8 @@
                 <h2 class="text-lg font-semibold text-gray-900 mb-4 border-b pb-2">Identitas Pelapor</h2>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <p><strong>Nama:</strong> {{ $report->nama_pelapor }}</p>
-                    <p><strong>TTL:</strong> {{ $report->TTL }}</p>
+                    <p><strong>Tempat Lahir:</strong> {{ $report->tempat_lahir }}</p>
+                    <p><strong>Tanggal Lahir:</strong> {{ $report->tanggal_lahir }}</p>
                     <p><strong>Agama:</strong> {{ $report->agama }}</p>
                     <p><strong>JK:</strong> {{ $report->jk }}</p>
                     <p class="col-span-2"><strong>Alamat:</strong> {{ $report->alamat }}</p>
@@ -139,6 +140,14 @@
                 </div>
             @endif
         </div>
+        {{-- Tombol Download PDF --}}
+        <div class="flex justify-start mb-4">
+            <a href="{{ route('admin.laporan.download', $report->idForm) }}"
+            class="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
+                📄 Download Laporan (PDF)
+            </a>
+        </div>
+
 
         {{-- Tombol Kembali --}}
         <div class="flex justify-start">

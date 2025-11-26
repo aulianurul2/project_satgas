@@ -41,7 +41,8 @@ class ReportController extends Controller
     // Validasi input user
     $validated = $request->validate([
         'nama_pelapor' => 'required|string|max:255',
-        'TTL' => 'required|string|max:255',
+        'tempat_lahir' => 'required|string|max:255',
+        'tanggal_lahir' => 'required|date',
         'agama' => 'required|string|max:255',
         'jk' => 'required|string|max:10',
         'alamat' => 'required|string|max:255',
@@ -78,7 +79,8 @@ class ReportController extends Controller
     $report = Report::create([
         'user_id' => $user->idUser ?? $user->id,
         'nama_pelapor' => $validated['nama_pelapor'],
-        'TTL' => $validated['TTL'],
+        'tempat_lahir' => $validated['tempat_lahir'],
+        'tanggal_lahir' => $validated['tanggal_lahir'],
         'agama' => $validated['agama'],
         'jk' => $validated['jk'],
         'alamat' => $validated['alamat'],
