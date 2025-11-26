@@ -102,7 +102,7 @@ class ReportController extends Controller
 
     // Nomor WhatsApp admin (ganti sesuai kebutuhan)
     $adminNumber = '6281312930113'; // format internasional tanpa +
-    $message = "Halo Satgas, ada laporan baru dari $user->nama.\nSilakan cek sistem: " . route('user.dashboard');
+    $message = "Halo Satgas, ada laporan baru dari $user->nama.\nSilakan cek sistem SIPRAK untuk mengetahui lebih lanjut: " . route('user.dashboard');
     $waLink = "https://wa.me/$adminNumber?text=" . urlencode($message);
 
     // Redirect ke dashboard dan simpan link WA di session

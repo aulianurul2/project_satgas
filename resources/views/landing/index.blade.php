@@ -20,6 +20,22 @@
     <link href="{{ asset('landing/css/styles.css') }}" rel="stylesheet" />
     
     <style>
+        .service-overlay {
+    pointer-events: none; /* tidak menangkap klik bila tersembunyi */
+}
+
+/* Jika overlay berada di dalam .service-card, pastikan posisinya relatif terhadap kartu */
+.service-card .service-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 20; /* tetap di bawah ikon yang diangkat (ikon z-index lebih besar) */
+}
+
+/* Aktifkan pointer-events hanya saat overlay ditampilkan (hover/focus) */
+.service-card:hover .service-overlay,
+.service-card:focus-within .service-overlay {
+    pointer-events: auto;
+}
         /* ======================================================= */
         /* INJECTED CUSTOM STYLE TO MATCH LOGIN (INDIGO/BLUE-600) */
         /* ======================================================= */
@@ -68,10 +84,6 @@
 
         /* FIX: Memastikan teks navigasi (seperti "Berita") tidak berwarna orange pada kondisi navbar-shrink */
          /* FIX: Memastikan teks navigasi (seperti "Berita") tidak berwarna orange pada kondisi navbar-shrink */
--        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link {
--            /* Menggunakan warna gelap standar Bootstrap */
--            color: #212529 !important; 
--        }
 +        /* Hanya ubah warna link non-tombol saat navbar shrink */
 +        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:not(.btn) {
 +            color: #212529 !important;
@@ -149,18 +161,43 @@
             background-size: cover;
             background-position: center;
         }
-        header.masthead:before {
+       header.masthead:before {
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            /* Gradien gelap yang mirip dengan latar belakang login yang kaya */
-            /* OPACITY DIKURANGI DARI 0.9 MENJADI 0.75 AGAR TEKS LEBIH TERLIHAT */
-            /* Menggunakan gradien yang lebih ringan (0.1) di awal untuk kontras yang lebih baik pada teks putih */
             background: linear-gradient(to bottom right, rgba(79, 70, 229, 0.1) 0%, rgba(30, 58, 138, 0.75) 100%); 
+            /* jangan tangkap klik; taruh di bawah konten */
+            pointer-events: none;
+            z-index: 0;
         }
+
+        /* pastikan konten header berada di atas overlay */
+        header.masthead {
+            position: relative;
+            z-index: 1;
+        }
+        header.masthead .container,
+        header.masthead .container * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* pastikan section target dan tombol berada di atas (agar anchor/klik bekerja) */
+        #about, #alur {
+            position: relative;
+            z-index: 3;
+        }
+        /* tombol anchor yang meng-scroll harus clickable */
+        a.btn {
+            position: relative;
+            z-index: 4;
+        }
+
+        /* optional: smooth scrolling for anchors */
+        html { scroll-behavior: smooth; }
 
         @media (max-width: 768px) {
             .navbar-brand img {
@@ -190,7 +227,7 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#about">Tentang</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link" href="#alur">Alur Pelaporan</a></li>
                     <li class="nav-item"><a class="nav-link" href="#services">Layanan</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio">Berita</a></li>
@@ -262,36 +299,61 @@
                 <hr class="divider" />
                 <p class="text-muted mb-5">Berikut langkah-langkah pelaporan kasus kekerasan di lingkungan kampus Politeknik Negeri Subang:</p>
             </div>
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-md-3 text-center">
-                    <div class="mt-5">
-                        <!-- Ikon menggunakan text-primary (Indigo-600) -->
-                        <div class="mb-3"><i class="bi bi-person-check fs-1 text-primary"></i></div>
-                        <h4 class="h5">Pelapor Melapor</h4>
-                        <p class="text-muted">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <div class="mt-5">
-                        <div class="mb-3"><i class="bi bi-envelope-open fs-1 text-primary"></i></div>
-                        <h4 class="h5">Verifikasi Laporan</h4>
-                        <p class="text-muted">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <div class="mt-5">
-                        <div class="mb-3"><i class="bi bi-people fs-1 text-primary"></i></div>
-                        <h4 class="h5">Pendampingan Korban</h4>
-                        <p class="text-muted">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
-                    </div>
-                </div>
-                <div class="col-md-3 text-center">
-                    <div class="mt-5">
-                        <div class="mb-3"><i class="bi bi-card-checklist fs-1 text-primary"></i></div>
-                        <h4 class="h5">Penyelesaian Kasus</h4>
-                        <p class="text-muted">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
-                    </div>
-                </div>
+<div class="row gx-4 gx-lg-5">
+    <!-- Service Card (gunakan ulang untuk tiap item) -->
+    <div class="col-md-3 text-center">
+        <div class="mt-5 service-card p-4 rounded">
+            <div class="mb-3"><i class="bi bi-person-check fs-1 text-primary"></i></div>
+            <h4 class="h5 mb-1">Pelapor Melapor</h4>
+            <p class="text-muted short-desc mb-0">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
+
+            <!-- Overlay yang muncul saat hover -->
+            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
+                <h5 class="mb-2">Pelapor Melapor</h5>
+                <p class="mb-0">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 text-center">
+        <div class="mt-5 service-card p-4 rounded">
+            <div class="mb-3"><i class="bi bi-envelope-open fs-1 text-primary"></i></div>
+            <h4 class="h5 mb-1">Verifikasi Laporan</h4>
+            <p class="text-muted short-desc mb-0">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
+
+            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
+                <h5 class="mb-2">Verifikasi Laporan</h5>
+                <p class="mb-0">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 text-center">
+        <div class="mt-5 service-card p-4 rounded">
+            <div class="mb-3"><i class="bi bi-people fs-1 text-primary"></i></div>
+            <h4 class="h5 mb-1">Pendampingan Korban</h4>
+            <p class="text-muted short-desc mb-0">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
+
+            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
+                <h5 class="mb-2">Pendampingan Korban</h5>
+                <p class="mb-0">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 text-center">
+        <div class="mt-5 service-card p-4 rounded">
+            <div class="mb-3"><i class="bi bi-card-checklist fs-1 text-primary"></i></div>
+            <h4 class="h5 mb-1">Penyelesaian Kasus</h4>
+            <p class="text-muted short-desc mb-0">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
+
+            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
+                <h5 class="mb-2">Penyelesaian Kasus</h5>
+                <p class="mb-0">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
+            </div>
+        </div>
+    </div>
+</div>
             </div>
         </div>
     </section>
@@ -325,6 +387,10 @@
                         <div class="mb-2"><i class="bi-heart-fill fs-1 text-primary"></i></div>
                         <h3 class="h4 mb-2">Pendampingan</h3>
                         <p class="text-muted mb-0">Kami menyediakan pendampingan psikologis dan hukum bagi korban kekerasan seksual.</p>
+                    </div>
+                    <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
+                        <h5 class="mb-2">Pendampingan</h5>
+                        <p class="mb-0">Kami menyediakan pendampingan psikologis dan hukum bagi korban kekerasan seksual.</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
@@ -421,7 +487,6 @@
                <div class="col-lg-7 mb-4">
                     <h2 class="mt-0">Hubungi Kami</h2>
                     <hr class="divider" />
-                    <p class="text-muted mb-4">Kirim pertanyaan atau laporan melalui form berikut. Kami akan menindaklanjuti secepatnya.</p>
 
                    @if(session('success'))
                        <div class="alert alert-success">{{ session('success') }}</div>
@@ -481,7 +546,12 @@
         <div class="container px-4 px-lg-5">
             <div class="row align-items-start">
                <div class="col-md-4 mb-4 mb-md-0">
-                    <h5 class="fw-bold mb-2">Satgas PPKPT</h5>
+                                <h5 class="fw-bold mb-2">
+                <a href="{{ route('tim.pengembang') }}" class="text-decoration-none text-dark">
+                    Satgas PPKPT
+                </a>
+            </h5>
+
                     <p class="small copyright mb-1">© {{ date('Y') }}. All rights reserved.</p>
                     <p class="small mb-0">Politeknik Negeri<br>Subang</p>
                 </div>

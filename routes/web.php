@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ReportController;
 // use App\Http\Controllers\User\RegistrationController;
+// use App\Http\Controllers\User\RegistrationController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
@@ -84,6 +85,9 @@ Route::middleware(['auth', 'verified'])
         // // Pendaftaran
         // Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran.create');
         // Route::post('/pendaftaran/store', [RegistrationController::class, 'store'])->name('pendaftaran.store');
+        // // Pendaftaran
+        // Route::get('/pendaftaran', [RegistrationController::class, 'create'])->name('pendaftaran.create');
+        // Route::post('/pendaftaran/store', [RegistrationController::class, 'store'])->name('pendaftaran.store');
 
         // Profil
         Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -124,9 +128,28 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
 });
 
+
 // ADMIN RECRUITMENT
 Route::get('/adminrecruitment', [adminRecruitmentController::class, 'index'])->name('laporan.adminrecruitment');
 Route::get('/form-pendaftaran', [formpendaftaranController::class, 'create'])->name('formpendaftaran.create');
 Route::post('/form-pendaftaran', [formpendaftaranController::class, 'store'])->name('formpendaftaran.store');
 Route::get('/riwayatpendaftaran', [RiwayatPendaftaranController::class, 'index'])
      ->name('user.riwayatpendaftaran.index');
+
+
+Route::middleware(['auth'])->group(function () {
+    
+    Route::get('/user/profile/edit', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/user/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/user/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+
+});
+Route::get('/tim-pengembang', function () {
+    return view('frontend.tim-pengembang');
+})->name('tim.pengembang');
+
