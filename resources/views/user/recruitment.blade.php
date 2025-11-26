@@ -1,43 +1,68 @@
-@extends('layouts.app') {{-- layout khusus user jika ada --}}
+@extends('layouts.app') {{-- layout utama --}}
 
 @section('content')
 
-<div style="width: 450px; margin: auto; margin-top: 40px;">
+<div class="min-h-screen bg-gray-50 py-8 px-4">
+    <div class="max-w-7xl mx-auto">
 
-    <p style="color:red; font-size:14px; text-align:center;">
-        *(Wajib diisi!)* indicated required field!
-    </p>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">
+ 
+            <a href="{{ route('formpendaftaran.create') }}" class="menu-card">
+                <div class="icon-placeholder"></div>
+                <h3 class="card-title">Form Pendaftaran</h3>
+                <p class="card-subtitle">Mengisi Form Pendaftaran</p>
+            </a>
+            
+            {{-- 3. Page Content --}}
+            <a href="{{ route('user.riwayatpendaftaran.index') }}" class="menu-card">
+                <div class="icon-placeholder"></div>
+                <h3 class="card-title">Riwayat Pendaftaran</h3>
+                <p class="card-subtitle">Kelola Riwayat Pendaftaran</p>
+            </a>
 
-    <form action="{{ route('recruitment.store') }}" 
-          method="POST" 
-          enctype="multipart/form-data"
-          style="border:1px solid #000; padding:25px;">
-
-        @csrf
-
-        <input type="text" name="nama" class="form-control mb-3" placeholder="Nama Lengkap*" required>
-        <input type="text" name="nim" class="form-control mb-3" placeholder="NIM*" required>
-        <input type="text" name="jurusan" class="form-control mb-3" placeholder="Jurusan*" required>
-        <input type="text" name="prodi" class="form-control mb-3" placeholder="Prodi*" required>
-        <input type="text" name="ipk" class="form-control mb-3" placeholder="IPK Terakhir*" required>
-        <input type="text" name="no_wa" class="form-control mb-3" placeholder="Nomor Whatsapp Aktif*" required>
-
-        <label class="mt-1">Pas Foto*</label>
-        <input type="file" name="pas_foto" class="form-control mb-3" required>
-
-        <label>CV*</label>
-        <input type="file" name="cv" class="form-control mb-3" required>
-
-        <label>Essay*</label>
-        <input type="file" name="essay" class="form-control mb-3" required>
-
-        <div style="display:flex; justify-content:space-between; margin-top:20px;">
-            <a href="{{ route('user.dashboard') }}" class="btn btn-secondary">BACK</a>
-            <button type="submit" class="btn btn-primary">SUBMIT</button>
         </div>
-
-    </form>
-
+    </div>
 </div>
+
+<style>
+/* Custom CSS untuk styling card menu */
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e5e7eb;
+}
+
+.menu-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.icon-placeholder {
+    width: 80px;
+    height: 80px;
+    background: #f3f4f6; /* Warna placeholder abu-abu terang */
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    font-size: 13px;
+    color: #6b7280;
+}
+</style>
 
 @endsection

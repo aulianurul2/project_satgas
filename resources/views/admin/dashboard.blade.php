@@ -63,7 +63,7 @@
             </a>
 
             {{-- 5. Recruitment --}}
-            <a href="{{ route('admin.media.index') }}" class="menu-card">
+            <a href="{{ route('laporan.adminrecruitment') }}" class="menu-card">
                 <div class="icon-placeholder"></div>
                 <h3 class="card-title">Recruitment</h3>
                 <p class="card-subtitle">Data pendaftar anggota</p>

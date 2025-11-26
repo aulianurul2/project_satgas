@@ -45,4 +45,8 @@ class User extends Authenticatable
     {
         return $this->jenisUser === 'admin';
     }
+    public function user()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 }

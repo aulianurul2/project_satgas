@@ -13,12 +13,16 @@ use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\adminRecruitmentController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\User\RecruitmentController;
+use App\Http\Controllers\User\formpendaftaranController;
+use App\Http\Controllers\User\RiwayatPendaftaranController;
 use App\Http\Controllers\Controller;
 
 use App\Http\Controllers\LandingController;
+
 
 
 
@@ -120,3 +124,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
 });
 
+// ADMIN RECRUITMENT
+Route::get('/adminrecruitment', [adminRecruitmentController::class, 'index'])->name('laporan.adminrecruitment');
+Route::get('/form-pendaftaran', [formpendaftaranController::class, 'create'])->name('formpendaftaran.create');
+Route::post('/form-pendaftaran', [formpendaftaranController::class, 'store'])->name('formpendaftaran.store');
+Route::get('/riwayatpendaftaran', [RiwayatPendaftaranController::class, 'index'])
+     ->name('user.riwayatpendaftaran.index');

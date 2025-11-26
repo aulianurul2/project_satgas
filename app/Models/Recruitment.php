@@ -9,8 +9,14 @@ class Recruitment extends Model
 {
     use HasFactory;
 
-    protected $table = 'members'; // tetap pakai tabel pelamars
+    /**
+     * Nama tabel yang digunakan.
+     */
+    protected $table = 'pelamars';
 
+    /**
+     * Kolom yang bisa diisi (mass assignable).
+     */
     protected $fillable = [
         'nama',
         'nim',
@@ -24,6 +30,9 @@ class Recruitment extends Model
         'status',
     ];
 
+    /**
+     * Nilai default kolom tertentu.
+     */
     protected $attributes = [
         'status' => 'Seleksi',
     ];
