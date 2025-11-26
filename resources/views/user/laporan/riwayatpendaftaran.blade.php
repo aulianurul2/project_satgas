@@ -12,11 +12,12 @@
     @endif
 
     {{-- Jika tidak ada data --}}
-    @if ($pelamars->isEmpty())
-        <div class="text-center text-gray-600 py-8">
-            Anda belum mengirimkan pendaftaran recruitment.
-        </div>
-    @else
+    @if ($pelamars->isEmpty() && !session('success'))
+    <div class="text-center text-gray-600 py-8">
+        Anda belum mengirimkan pendaftaran recruitment.
+    </div>
+    @elseif(!$pelamars->isEmpty())
+
     {{-- Tabel Data --}}
     <div class="bg-white shadow-md rounded-lg p-4 overflow-x-auto">
         <table class="min-w-full border border-gray-200">
