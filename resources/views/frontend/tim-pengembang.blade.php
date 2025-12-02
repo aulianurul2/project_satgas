@@ -86,7 +86,7 @@
                 <div class="card team-card border-0 shadow-sm text-center p-4">
                     <img src="{{ asset('landing/assets/img/Diaz.jpeg') }}" class="team-img mb-3" alt="">
                     <h5 class="fw-semibold mb-1">Muhammad Dhiyaul Haq</h5>
-                    <p class="text-muted mb-1">UI/UX Designer</p>
+                    <p class="text-muted mb-1">UI/UX Designer, Frontend Developer</p>
 
                     <a href="mailto:haq@example.com" class="social-link d-block mb-1">haq@example.com</a>
                     <a href="https://instagram.com/dhiyaul" target="_blank" class="social-link">@dhiyaul</a>
