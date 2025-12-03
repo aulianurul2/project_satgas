@@ -18,12 +18,12 @@ use App\Http\Controllers\Admin\AdminRecruitmentController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\User\RecruitmentController;
-use App\Http\Controllers\User\formpendaftaranController;
 use App\Http\Controllers\User\RiwayatPendaftaranController;
 use App\Http\Controllers\Controller;
 
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\User\formpendaftaranController;
 
 
 
@@ -177,5 +177,16 @@ Route::prefix('admin')->group(function () {
 
 });
 
-
+// ~~~
+Route::middleware(['auth'])->group(function () {
+    // Form Pendaftaran Recruitment
+    Route::get('/user/formpendaftaran', [formpendaftaranController::class, 'create'])
+        ->name('formpendaftaran.create');
+    
+    Route::post('/user/formpendaftaran', [formpendaftaranController::class, 'store'])
+        ->name('formpendaftaran.store');
+    
+    Route::get('/user/riwayat-pendaftaran', [formpendaftaranController::class, 'riwayat'])
+        ->name('formpendaftaran.riwayat');
+});
 

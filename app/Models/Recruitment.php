@@ -9,9 +9,6 @@ class Recruitment extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel yang digunakan.
-     */
     protected $table = 'pelamars';
 
     /**
@@ -37,4 +34,12 @@ class Recruitment extends Model
     protected $attributes = [
         'status' => 'Seleksi',
     ];
+
+    /**
+     * Relasi ke User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
