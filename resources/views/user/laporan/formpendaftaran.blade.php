@@ -30,7 +30,7 @@
                 *(Wajib diisi!)* — indicated required field!
             </p>
 
-            <form action="{{ route('recruitment.store') }}" 
+            <form action="{{ route('formpendaftaran.store') }}" 
                   method="POST" 
                   enctype="multipart/form-data">
                 @csrf

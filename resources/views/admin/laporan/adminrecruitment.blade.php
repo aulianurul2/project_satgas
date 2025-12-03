@@ -5,6 +5,7 @@
 <div class="p-8">
     <h1 class="text-2xl font-bold mb-6">Daftar Pelamar</h1>
 
+    {{-- Pesan sukses --}}
     @if(session('success'))
         <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
             {{ session('success') }}
@@ -28,36 +29,37 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($members as $member)
+            @foreach($pelamars as $pelamar)
             <tr class="text-center">
                 <td class="p-2 border">{{ $loop->iteration }}</td>
-                <td class="p-2 border">{{ $member->nama }}</td>
-                <td class="p-2 border">{{ $member->nim }}</td>
-                <td class="p-2 border">{{ $member->jurusan }}</td>
-                <td class="p-2 border">{{ $member->ipk_terakhir }}</td>
-                <td class="p-2 border">{{ $member->no_wa }}</td>
-                <td class="p-2 border">{{ $member->cv }}</td>
-                <td class="p-2 border">{{ $member->essay }}</td>
-                <td class="p-2 border">{{ $member->pas_foto }}</td>
-                <td class="p-2 border">{{ $member->status }}</td>
-                <td class="p-2 border">
-                    
-                    @if($member->seleksi)
-                        <span class="text-green-600 font-semibold">seleksi</span>
-                    @elseif
-                        <span class="text-red-600 font-semibold">lolos wawancara</span>
-                    @elseif
-                        <span class="text-red-600 font-semibold">di terima</span>
-                    @endif
+                <td class="p-2 border">{{ $pelamar->nama }}</td>
+                <td class="p-2 border">{{ $pelamar->nim }}</td>
+                <td class="p-2 border">{{ $pelamar->jurusan }}</td>
+                <td class="p-2 border">{{ $pelamar->prodi }}</td>
+                <td class="p-2 border">{{ $pelamar->ipk_terakhir }}</td>
+                <td class="p-2 border">{{ $pelamar->no_wa }}</td>
+                <td class="p-2 border text-blue-600 underline">
+                    <a href="{{ asset('storage/' . $pelamar->cv) }}" target="_blank">Lihat CV</a>
                 </td>
-                {{-- <td class="p-2 border">
-                    <a href="{{ route('admin.members.edit', $member) }}" class="text-blue-600">Edit</a>
-                    <form action="{{ route('admin.members.destroy', $member) }}" method="POST" class="inline-block" onsubmit="return confirm('Hapus member ini?')">
+                <td class="p-2 border text-blue-600 underline">
+                    <a href="{{ asset('storage/' . $pelamar->essay) }}" target="_blank">Lihat Essay</a>
+                </td>
+                <td class="p-2 border text-blue-600 underline">
+                    <a href="{{ asset('storage/' . $pelamar->pas_foto) }}" target="_blank">Lihat Foto</a>
+                </td>
+
+                {{-- 🔽 Dropdown ubah status --}}
+                <td class="p-2 border">
+                    <form action="{{ route('adminrecruitment.updateStatus', $pelamar->id) }}" method="POST">
                         @csrf
-                        @method('DELETE')
-                        <button type="submit" class="text-red-600 ml-2">Hapus</button>
+                        @method('PATCH')
+                        <select name="status" onchange="this.form.submit()" class="border rounded px-2 py-1 text-sm">
+                            <option value="Seleksi" {{ $pelamar->status == 'Seleksi' ? 'selected' : '' }}>Seleksi</option>
+                            <option value="Lolos Wawancara" {{ $pelamar->status == 'Lolos Wawancara' ? 'selected' : '' }}>Lolos Wawancara</option>
+                            <option value="Diterima" {{ $pelamar->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
+                        </select>
                     </form>
-                </td> --}}
+                </td>
             </tr>
             @endforeach
         </tbody>

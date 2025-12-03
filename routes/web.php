@@ -14,7 +14,7 @@ use App\Http\Controllers\User\ReportController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\MediaController;
-use App\Http\Controllers\Admin\adminRecruitmentController;
+use App\Http\Controllers\Admin\AdminRecruitmentController;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\User\RecruitmentController;
@@ -124,18 +124,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 // USER RECRUITMENT
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/recruitment', [RecruitmentController::class, 'create'])->name('recruitment.create');
-//     Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
-// });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/recruitment', [RecruitmentController::class, 'create'])->name('recruitment.create');
+    Route::post('/recruitment', [RecruitmentController::class, 'store'])->name('recruitment.store');
+});
 
 
 // ADMIN RECRUITMENT
-Route::get('/adminrecruitment', [adminRecruitmentController::class, 'index'])->name('laporan.adminrecruitment');
+Route::get('/adminrecruitment', [AdminRecruitmentController::class, 'index'])->name('laporan.adminrecruitment');
 Route::get('/form-pendaftaran', [formpendaftaranController::class, 'create'])->name('formpendaftaran.create');
 Route::post('/form-pendaftaran', [formpendaftaranController::class, 'store'])->name('formpendaftaran.store');
 Route::get('/riwayatpendaftaran', [RiwayatPendaftaranController::class, 'index'])
      ->name('user.riwayatpendaftaran.index');
+Route::patch('/adminrecruitment/{id}/update-status', [AdminRecruitmentController::class, 'updateStatus'])
+    ->name('adminrecruitment.updateStatus');
 
 
 Route::middleware(['auth'])->group(function () {

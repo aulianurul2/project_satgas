@@ -18,6 +18,7 @@ class Recruitment extends Model
      * Kolom yang bisa diisi (mass assignable).
      */
     protected $fillable = [
+        'user_id',
         'nama',
         'nim',
         'jurusan',
