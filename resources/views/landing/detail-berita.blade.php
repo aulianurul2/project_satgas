@@ -3,55 +3,42 @@
 @section('content')
 <div class="article-page">
     <!-- Breadcrumb -->
-    <div class="container py-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb modern-breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="{{ url('/') }}">
-                        <i class="bi bi-house-door-fill"></i>
-                        <span>Beranda</span>
-                    </a>
-                </li>
-                <li class="breadcrumb-item active">{{ Str::limit($media->judul, 50) }}</li>
-            </ol>
-        </nav>
+    <div class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container py-4">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb modern-breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ url('/') }}">
+                            <i class="bi bi-house-door-fill"></i>
+                            <span>Beranda</span>
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">{{ Str::limit($media->judul, 50) }}</li>
+                </ol>
+            </nav>
+        </div>
     </div>
 
-    <!-- Hero Section dengan Parallax Effect -->
-    <div class="hero-section">
-        <div class="hero-image-wrapper">
-            <img src="{{ asset('storage/' . $media->gambar) }}" 
-                 class="hero-img" 
-                 alt="{{ $media->judul }}">
-            <div class="hero-overlay"></div>
-        </div>
-        <div class="hero-content">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="hero-badge mb-3">
-                            <i class="bi bi-newspaper"></i>
-                            <span>Artikel</span>
-                        </div>
-                        <h1 class="hero-title" data-aos="fade-up">
-                            {{ $media->judul }}
-                        </h1>
-                        <div class="hero-meta" data-aos="fade-up" data-aos-delay="100">
-                            <div class="meta-item">
-                                <i class="bi bi-calendar3"></i>
-                                <span>{{ $media->created_at->format('d M Y') }}</span>
-                            </div>
-                            <div class="meta-divider"></div>
-                            <div class="meta-item">
-                                <i class="bi bi-clock"></i>
-                                <span>{{ $media->created_at->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- NEW mVerve Style Header -->
+    <div class="mverve-hero">
+        <div class="container text-center">
+            <div class="mverve-meta">
+                <i class="bi bi-calendar3"></i>
+                <span>{{ $media->created_at->format('F d, Y') }}</span>
             </div>
+
+            <h1 class="mverve-title">
+                {{ $media->judul }}
+            </h1>
         </div>
     </div>
+
+<!-- Center Image -->
+<div class="mverve-image-container">
+    <img src="{{ asset('storage/' . $media->gambar) }}" 
+         alt="{{ $media->judul }}"
+         class="mverve-image">
+</div>
 
     <!-- Content Section -->
     <div class="content-section">
@@ -612,6 +599,91 @@
     
     .hero-section {
         height: 300px;
+    }
+}
+
+/* mVerve Style Hero */
+.mverve-hero {
+    background: #3b258a; /* Ungu mVerve */
+    padding: 80px 0 140px; /* Kurangi padding top dari 120px ke 80px */
+    position: relative;
+    text-align: center;
+    color: white;
+    border-bottom-left-radius: 50% 80px;
+    border-bottom-right-radius: 50% 80px;
+    margin-top: 0; /* Pastikan tidak ada margin top */
+}
+
+.mverve-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.9;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.mverve-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    max-width: 850px;
+    margin: 0 auto;
+    line-height: 1.3;
+}
+
+/* Centered Article Image */
+.mverve-image-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -60px; /* Kurangi dari -80px ke -60px untuk overlap yang lebih natural */
+    margin-bottom: 40px;
+    z-index: 10;
+    position: relative;
+}
+
+.mverve-image {
+    width: 85%;
+    max-width: 1100px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    background: white;
+    padding: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .mverve-hero {
+        padding: 60px 0 100px;
+    }
+    
+    .mverve-title {
+        font-size: 1.8rem;
+    }
+    
+    .mverve-image-container {
+        margin-top: -40px;
+    }
+    
+    .mverve-image {
+        width: 90%;
+    }
+}
+
+@media (max-width: 576px) {
+    .mverve-hero {
+        padding: 40px 0 80px;
+    }
+    
+    .mverve-title {
+        font-size: 1.5rem;
+    }
+    
+    .mverve-image-container {
+        margin-top: -30px;
+    }
+    
+    .mverve-image {
+        width: 95%;
     }
 }
 </style>
