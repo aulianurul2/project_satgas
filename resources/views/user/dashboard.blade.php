@@ -31,8 +31,11 @@
                 <h3 class="text-lg font-semibold">Riwayat Laporan</h3>
                 <p class="text-sm text-gray-500">Lihat laporan yang sudah Anda kirim</p>
             </a>
+<<<<<<< HEAD
+=======
             <!-- Pendaftaran Anggota -->
 
+>>>>>>> 06fb66fc611774fa3d55c689e455da177edb3698
             <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>

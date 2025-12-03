@@ -31,9 +31,23 @@
             @csrf
 
             <div class="grid">
+<<<<<<< HEAD
+
+            <form action="{{ route('formpendaftaran.store') }}" 
+                  method="POST" 
+                  enctype="multipart/form-data">
+                @csrf
+
+                <div class="mb-3">
+                    <input type="text" name="nama" value="{{ old('nama') }}" class="form-control" placeholder="Nama Lengkap*" required>
+                <div>
+                    <label>Nama Lengkap *</label>
+                    <input type="text" name="nama" value="{{ old('nama') }}" class="input" required>
+=======
                 <div>
                     <label>Nama Lengkap *</label>
                     <input type="text" name="nama" value="{{ old('nama') }}" class="input" placeholder="Nama Lengkap" required>
+>>>>>>> 06fb66fc611774fa3d55c689e455da177edb3698
                 </div>
 
                 <div>
