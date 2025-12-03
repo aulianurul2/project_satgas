@@ -13,6 +13,7 @@ class Member extends Model
     'aktif',
     'divisi',
     'nim_nip',
+    'alamat',
 ];
 
     //

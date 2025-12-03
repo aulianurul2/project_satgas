@@ -13,9 +13,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pelamars', function (Blueprint $table) {
-            $table->foreignId('user_id')->after('id')->constrained('users')->onDelete('cascade');
+            if (!Schema::hasColumn('pelamars', 'user_id')) {
+                $table->foreignId('user_id')->after('id')->constrained('users')->onDelete('cascade');
+            }
         });
     }
+
 
     /**
      * Reverse the migrations.

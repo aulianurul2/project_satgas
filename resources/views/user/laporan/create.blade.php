@@ -54,9 +54,19 @@
                         <input type="date" name="tanggal_lahir" class="input" required>
                     </div>
                     <div>
-                        <label>Agama *</label>
-                        <input type="text" name="agama" class="input" required>
-                    </div>
+                    <label>Agama *</label>
+                    <select name="agama" class="input" required>
+                        <option value="">Pilih</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Kristen Protestan">Kristen Protestan</option>
+                        <option value="Katolik">Katolik</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Buddha">Buddha</option>
+                        <option value="Konghucu">Konghucu</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
                     <div>
                         <label>Jenis Kelamin *</label>
                         <select name="jk" class="input" required>
@@ -79,14 +89,40 @@
                             <option value="Lainnya">Lainnya</option>
                         </select>
                     </div>
-                    <div>
-                        <label>Asal Jurusan</label>
-                        <input type="text" name="jurusan" class="input">
-                    </div>
-                    <div>
-                        <label>Asal Prodi</label>
-                        <input type="text" name="prodi" class="input">
-                    </div>
+                   <div>
+                    <label>Asal Jurusan *</label>
+                    <select name="jurusan" id="jurusan" class="input" required onchange="toggleJurusanLainnya()">
+                        <option value="">Pilih</option>
+                        <option value="Jurusan Teknologi Informasi dan Komputer">Jurusan Teknologi Informasi dan Komputer</option>
+                        <option value="Jurusan Kesehatan">Jurusan Kesehatan</option>
+                        <option value="Jurusan Teknik Mesin">Jurusan Teknik Mesin</option>
+                        <option value="Jurusan Pertanian">Jurusan Pertanian</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+
+                    <input type="text" id="jurusan_lainnya" name="jurusan_lainnya" class="input" placeholder="Isi jurusan lainnya" style="margin-top:5px; display:none;">
+                </div>
+
+
+                     <div>
+                    <label>Asal Prodi *</label>
+                    <select name="prodi" id="prodi" class="input" required onchange="toggleInput('prodi')">
+                        <option value="">Pilih</option>
+                        <option value="D3-Sistem Informasi">D3-Sistem Informasi</option>
+                        <option value="D3-Keperawatan">D3-Keperawatan</option>
+                        <option value="D3-Agroindustri">D3-Agroindustri</option>
+                        <option value="D3-Pemeliharaan Mesin">D3-Pemeliharaan Mesin</option>
+                        <option value="D4-TRPL">D4-TRPL</option>
+                        <option value="D4-TPTP">D4-TPTP</option>
+                        <option value="D4-TRM">D4-TRM</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+
+                    <input type="text" id="prodi_lainnya" name="prodi_lainnya" 
+                        class="input" placeholder="Isi prodi lainnya" 
+                        style="margin-top:5px; display:none;">
+                </div>
+
                     <div>
                         <label>Nomor HP/WA *</label>
                         <input type="text" name="no_hp" class="input" required>
@@ -331,4 +367,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
+<script>
+function toggleJurusanLainnya() {
+    const jurusan = document.getElementById('jurusan');
+    const lainnya = document.getElementById('jurusan_lainnya');
+    lainnya.style.display = jurusan.value === 'Lainnya' ? 'block' : 'none';
+}
+</script>
+<script>
+function toggleInput(field) {
+    const select = document.getElementById(field);
+    const input = document.getElementById(field + '_lainnya');
+
+    if (select.value === 'Lainnya') {
+        input.style.display = 'block';
+        input.required = true;
+    } else {
+        input.style.display = 'none';
+        input.required = false;
+        input.value = '';
+    }
+}
+</script>
+
 @endsection

@@ -28,6 +28,7 @@ class MemberController extends Controller
             'divisi'  => 'nullable|string|max:255',
             'nim_nip' => 'nullable|string|max:255',
             'aktif'   => 'required|in:0,1',
+            'alamat'  => 'nullable|string',
         ]);
 
         Member::create([
@@ -37,6 +38,7 @@ class MemberController extends Controller
             'divisi'  => $request->divisi,
             'nim_nip' => $request->nim_nip,
             'aktif'   => $request->aktif,
+            'alamat'  => $request->alamat,
         ]);
 
         return redirect()
@@ -58,6 +60,7 @@ class MemberController extends Controller
             'divisi'  => 'nullable|string|max:255',
             'nim_nip' => 'nullable|string|max:255',
             'aktif'   => 'required|in:0,1',
+            'alamat'  => 'nullable|string',
         ]);
 
         $member->update([
@@ -67,6 +70,7 @@ class MemberController extends Controller
             'divisi'  => $request->divisi,
             'nim_nip' => $request->nim_nip,
             'aktif'   => $request->aktif,
+            'alamat'  => $request->alamat,
         ]);
 
         return redirect()

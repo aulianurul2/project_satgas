@@ -109,6 +109,7 @@
                     <th>Jabatan</th>
                     <th>Kontak</th>
                     <th>Status</th>
+                    <th>Alamat</th>
                     <th style="width: 18%;">Aksi</th> {{-- Lebarkan sedikit kolom aksi --}}
                 </tr>
             </thead>
@@ -128,6 +129,7 @@
                             <span class="badge badge-inactive">Nonaktif</span>
                         @endif
                     </td>
+                    <td>{{ $member->alamat }}</td>
                     <td>
                         {{-- Tombol Edit (Hijau, Solid) --}}
                         <a href="{{ route('admin.members.edit', $member->id) }}" class="action-btn btn-edit">

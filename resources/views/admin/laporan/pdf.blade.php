@@ -119,6 +119,7 @@
 <table class="data-table">
     <tr><td>Tanggal Kejadian</td><td>{{ $report->tanggal_kejadian }}</td></tr>
     <tr><td>Lokasi Kejadian</td><td>{{ $report->tempat_kejadian }}</td></tr>
+     <tr><td>Tanggal Melapor</td><td>{{ $report->created_at->translatedFormat('d F Y H:i') }}</td></tr>
 </table>
 
 

@@ -41,6 +41,11 @@
                 <option value="0" {{ old('aktif', $member->aktif ?? 1) == 0 ? 'selected' : '' }}>Nonaktif</option>
             </select>
         </div>
+        <div class="form-group">
+            <label>Alamat</label>
+            <textarea name="alamat" class="form-control" rows="3">{{ old('alamat', $member->alamat ?? '') }}</textarea>
+        </div>
+
 
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">
             {{ isset($member) ? 'Update' : 'Simpan' }}

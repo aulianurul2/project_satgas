@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,10 +15,12 @@
 
         .team-card {
             transition: .3s;
+            height: 100%;
         }
+
         .team-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
         }
 
         .team-img {
@@ -34,6 +37,7 @@
             color: var(--primary);
             font-weight: 500;
         }
+
         .social-link:hover {
             text-decoration: underline;
         }
@@ -42,39 +46,76 @@
 
 <body>
 
-<div class="container py-5">
+    <div class="container py-5">
 
-    <h2 class="text-center fw-bold" style="color: var(--primary)">Tim Pengembang</h2>
-    <p class="text-center text-muted mb-5">
-        Halaman ini berisi informasi mengenai pengembang sistem SIPRAK-PPKPT POLSUB.
-    </p>
+        <h2 class="text-center fw-bold" style="color: var(--primary)">Tim Pengembang</h2>
+        <p class="text-center text-muted mb-5">
+            Halaman ini berisi informasi mengenai pengembang sistem SIPRAK-PPKPT POLSUB.
+        </p>
 
-    <!-- ========================= -->
-    <!-- BARIS 1 : DOSEN PEMBIMBING -->
-    <!-- ========================= -->
-    <div class="row g-4 justify-content-center mb-4">
+        <!-- ========================= -->
+        <!-- BARIS 1 : DOSEN PEMBIMBING -->
+        <!-- ========================= -->
+        <div class="row g-4 justify-content-center mb-4">
 
-        <!-- Dosen Pembimbing 1 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card team-card border-0 shadow-sm text-center p-4">
-                <img src="{{ asset('landing/assets/img/Pa_akmal(2).jpg') }}" class="team-img mb-3" alt="">
-                <h5 class="fw-semibold mb-1">Ardhi Ahmad Jadhira</h5>
-                <p class="text-muted mb-1">Dosen Pembimbing 1</p>
+            <!-- Dosen Pembimbing 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card team-card border-0 shadow-sm text-center p-4 h-100">
+                    <img src="{{ asset('landing/assets/img/Pa_akmal(2).jpg') }}" class="team-img mb-3" alt="">
+                    <h5 class="fw-semibold mb-1">Ardhi Ahmad Jadhira</h5>
+                    <p class="text-muted mb-1">Dosen Pembimbing 1</p>
 
-                <a href="mailto:ardhi@example.com" class="social-link d-block mb-1">ardhi@example.com</a>
-                <a href="https://instagram.com/andi" target="_blank" class="social-link">@Ardhi</a>
+                    <a href="mailto:ardhi@example.com" class="social-link d-block mb-1">ardhi@example.com</a>
+                    <a href="https://instagram.com/andi" target="_blank" class="social-link">@Ardhi</a>
 
-                <hr>
-                <small class="text-muted">Politeknik Negeri Subang</small>
+                    <hr>
+                    <small class="text-muted">Politeknik Negeri Subang</small>
+                </div>
             </div>
-<<<<<<< HEAD
-=======
+
+            <!-- Dosen Pembimbing 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="card team-card border-0 shadow-sm text-center p-4 h-100">
+                    <img src="{{ asset('landing/assets/img/Pa_erick (1).jpg') }}" class="team-img mb-3" alt="">
+                    <h5 class="fw-semibold mb-1">Erick Febrianto</h5>
+                    <p class="text-muted mb-1">Dosen Pembimbing 2</p>
+
+                    <a href="mailto:erick@example.com" class="social-link d-block mb-1">erick@example.com</a>
+                    <a href="https://instagram.com/erick" target="_blank" class="social-link">@Erick</a>
+
+                    <hr>
+                    <small class="text-muted">Politeknik Negeri Subang</small>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ========================= -->
+        <!-- BARIS 2 : MAHASISWA DEVELOPER -->
+        <!-- ========================= -->
+        <div class="row g-4 align-items-stretch">
+
+            <!-- Developer #1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card team-card border-0 shadow-sm text-center p-4 h-100">
+                    <img src="{{ asset('landing/assets/img/Andi.jpeg') }}" class="team-img mb-3" alt="">
+                    <h5 class="fw-semibold mb-1">Andi Hermawan</h5>
+                    <p class="text-muted mb-1">Database Administrator</p>
+                    <p class="text-muted mb-2">Backend Developer</p>
+
+                    <a href="mailto:andi@example.com" class="social-link d-block mb-1">andi@example.com</a>
+                    <a href="https://instagram.com/andi" target="_blank" class="social-link">@andi</a>
+
+                    <hr>
+                    <small class="text-muted">Politeknik Negeri Subang</small>
+                </div>
+            </div>
 
             <!-- Developer #2 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card team-card border-0 shadow-sm text-center p-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card team-card border-0 shadow-sm text-center p-4 h-100">
                     <img src="{{ asset('landing/assets/img/Aulia.jpeg') }}" class="team-img mb-3" alt="">
-                    <h5 class="fw-semibold mb-1">Aulia Febrianti</h5>
+                    <h5 class="fw-semibold mb-1">Aulia Nurul Febrianti</h5>
                     <p class="text-muted mb-1">Backend Engineer</p>
 
                     <a href="mailto:aulia123@gmail.com" class="social-link d-block mb-1">aulia123@gmail.com</a>
@@ -86,11 +127,11 @@
             </div>
 
             <!-- Developer #3 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card team-card border-0 shadow-sm text-center p-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card team-card border-0 shadow-sm text-center p-4 h-100">
                     <img src="{{ asset('landing/assets/img/Diaz.jpeg') }}" class="team-img mb-3" alt="">
                     <h5 class="fw-semibold mb-1">Muhammad Dhiyaul Haq</h5>
-                    <p class="text-muted mb-1">UI/UX Designer, Frontend Developer</p>
+                    <p class="text-muted mb-1">UI/UX Designer</p>
 
                     <a href="mailto:haq@example.com" class="social-link d-block mb-1">haq@example.com</a>
                     <a href="https://instagram.com/dhiyaul" target="_blank" class="social-link">@dhiyaul</a>
@@ -101,8 +142,8 @@
             </div>
 
             <!-- Developer #4 -->
-            <div class="col-lg-4 col-md-6">
-                <div class="card team-card border-0 shadow-sm text-center p-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="card team-card border-0 shadow-sm text-center p-4 h-100">
                     <img src="{{ asset('landing/assets/img/Zahwa.jpeg') }}" class="team-img mb-3" alt="">
                     <h5 class="fw-semibold mb-1">Zahwa Meutia</h5>
                     <p class="text-muted mb-1">UI/UX Designer</p>
@@ -115,99 +156,14 @@
                 </div>
             </div>
 
->>>>>>> 33c53d0d4df7ff9d7b092eca9031c19bcbb31c67
         </div>
 
-        <!-- Dosen Pembimbing 2 -->
-        <div class="col-lg-4 col-md-6">
-            <div class="card team-card border-0 shadow-sm text-center p-4">
-                <img src="{{ asset('landing/assets/img/Pa_erick (1).jpg') }}" class="team-img mb-3" alt="">
-                <h5 class="fw-semibold mb-1">Erick Febrianto</h5>
-                <p class="text-muted mb-1">Dosen Pembimbing 2</p>
-
-                <a href="mailto:erick@example.com" class="social-link d-block mb-1">erick@example.com</a>
-                <a href="https://instagram.com/erick" target="_blank" class="social-link">@Erick</a>
-
-                <hr>
-                <small class="text-muted">Politeknik Negeri Subang</small>
-            </div>
+        <div class="text-center mt-5">
+            <a href="{{ url('/') }}" class="btn btn-primary px-4">Kembali ke Beranda</a>
         </div>
 
     </div>
-
-    <!-- ========================= -->
-    <!-- BARIS 2 : MAHASISWA DEVELOPER -->
-    <!-- ========================= -->
-    <div class="row g-4">
-
-        <!-- Developer #1 -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card team-card border-0 shadow-sm text-center p-4">
-                <img src="{{ asset('landing/assets/img/Andi.jpeg') }}" class="team-img mb-3" alt="">
-                <h5 class="fw-semibold mb-1">Andi Hermawan</h5>
-                <p class="text-muted mb-1">Database Administrator</p>
-                <p class="text-muted mb-2">Backend Developer</p>
-
-                <a href="mailto:andi@example.com" class="social-link d-block mb-1">andi@example.com</a>
-                <a href="https://instagram.com/andi" target="_blank" class="social-link">@andi</a>
-
-                <hr>
-                <small class="text-muted">Politeknik Negeri Subang</small>
-            </div>
-        </div>
-
-        <!-- Developer #2 -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card team-card border-0 shadow-sm text-center p-4">
-                <img src="{{ asset('landing/assets/img/Aulia.jpeg') }}" class="team-img mb-3" alt="">
-                <h5 class="fw-semibold mb-1">Aulia Febrianti</h5>
-                <p class="text-muted mb-1">Backend Engineer</p>
-
-                <a href="mailto:aulia123@gmail.com" class="social-link d-block mb-1">aulia123@gmail.com</a>
-                <a href="https://instagram.com/aulia" target="_blank" class="social-link">@aulia</a>
-
-                <hr>
-                <small class="text-muted">Politeknik Negeri Subang</small>
-            </div>
-        </div>
-
-        <!-- Developer #3 -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card team-card border-0 shadow-sm text-center p-4">
-                <img src="{{ asset('landing/assets/img/Diaz.jpeg') }}" class="team-img mb-3" alt="">
-                <h5 class="fw-semibold mb-1">Muhammad Dhiyaul Haq</h5>
-                <p class="text-muted mb-1">UI/UX Designer</p>
-
-                <a href="mailto:haq@example.com" class="social-link d-block mb-1">haq@example.com</a>
-                <a href="https://instagram.com/dhiyaul" target="_blank" class="social-link">@dhiyaul</a>
-
-                <hr>
-                <small class="text-muted">Politeknik Negeri Subang</small>
-            </div>
-        </div>
-
-        <!-- Developer #4 -->
-        <div class="col-lg-3 col-md-6">
-            <div class="card team-card border-0 shadow-sm text-center p-4">
-                <img src="{{ asset('landing/assets/img/Zahwa.jpeg') }}" class="team-img mb-3" alt="">
-                <h5 class="fw-semibold mb-1">Zahwa Meutia</h5>
-                <p class="text-muted mb-1">UI/UX Designer</p>
-
-                <a href="mailto:zahwa@example.com" class="social-link d-block mb-1">zahwa@example.com</a>
-                <a href="https://instagram.com/zahwa" target="_blank" class="social-link">@zahwa</a>
-
-                <hr>
-                <small class="text-muted">Politeknik Negeri Subang</small>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="text-center mt-5">
-        <a href="{{ url('/') }}" class="btn btn-primary px-4">Kembali ke Beranda</a>
-    </div>
-
-</div>
 
 </body>
+
 </html>

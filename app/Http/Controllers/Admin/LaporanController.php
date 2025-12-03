@@ -47,4 +47,5 @@ class LaporanController extends Controller
         return redirect()->route('admin.laporan.index')
             ->with('success', 'Laporan berhasil dihapus.');
     }
+    
 }

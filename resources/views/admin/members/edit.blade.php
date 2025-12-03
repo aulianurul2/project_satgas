@@ -41,6 +41,11 @@
                 <option value="0" {{ old('aktif', $member->aktif ?? 1) == 0 ? 'selected' : '' }}>Nonaktif</option>
             </select>
         </div>
+        <div class="form-group">
+            <label>Alamat</label>
+            <textarea name="alamat" class="form-control" rows="3">{{ old('alamat', $member->alamat ?? '') }}</textarea>
+        </div>
+
 
 
 

@@ -86,6 +86,7 @@
                     <p><strong>Prodi:</strong> {{ $report->prodi ?? '-' }}</p>
                     <p><strong>No HP/WA:</strong> {{ $report->no_hp }}</p>
                     <p><strong>Email:</strong> {{ $report->email }}</p>
+                    
                 </div>
             </div>
 
@@ -111,6 +112,14 @@
                 <div class="bg-gray-50 p-4 rounded-md border border-gray-100">
                     <p class="whitespace-pre-wrap">{{ $report->bantuan_yang_diperlukan ?? 'Tidak ada informasi' }}</p>
                 </div>
+                <br>
+                
+                <h2 class="text-lg font-semibold text-gray-900 mb-4 border-b pb-2">Tanggal Submit</h2>
+                <div class="bg-gray-50 p-4 rounded-md border border-gray-100">
+                    <p> {{ $report->created_at->translatedFormat('d F Y H:i') }}</p>
+
+                </div>
+
             </div>
 
             {{-- Bukti --}}
