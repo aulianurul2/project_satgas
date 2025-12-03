@@ -5,59 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>SIPRAK-PPKPT POLSUB</title>
+    <title>SIPRAK-PPKPT</title>
 
-    <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="{{ asset('landing/assets/favicon.ico') }}" />
-    <!-- Bootstrap Icons-->
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo_satgas.png') }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
-    <!-- SimpleLightbox plugin CSS-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ asset('landing/css/styles.css') }}" rel="stylesheet" />
     
     <style>
-        .service-overlay {
-    pointer-events: none; /* tidak menangkap klik bila tersembunyi */
-}
-
-/* Jika overlay berada di dalam .service-card, pastikan posisinya relatif terhadap kartu */
-.service-card .service-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 20; /* tetap di bawah ikon yang diangkat (ikon z-index lebih besar) */
-}
-
-/* Aktifkan pointer-events hanya saat overlay ditampilkan (hover/focus) */
-.service-card:hover .service-overlay,
-.service-card:focus-within .service-overlay {
-    pointer-events: auto;
-}
         /* ======================================================= */
-        /* INJECTED CUSTOM STYLE TO MATCH LOGIN (INDIGO/BLUE-600) */
+        /* PERBAIKAN CSS UNTUK OVERLAY CARD (HOVER EFFECT)       */
+        /* ======================================================= */
+        
+        .service-card {
+            position: relative; /* Penting: agar overlay tidak keluar dari kotak */
+            overflow: hidden;   /* Mencegah isi keluar dari radius border */
+            background: #fff;   /* Pastikan card punya background dasar putih */
+            transition: all 0.3s ease;
+        }
+
+        .service-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Background warna Primary (Indigo) agar menutupi icon di belakangnya */
+            background-color: rgba(79, 70, 229, 0.95); 
+            
+            /* Teks Putih agar terbaca di background gelap */
+            color: #ffffff !important; 
+            
+            /* Default: Sembunyikan Overlay */
+            opacity: 0; 
+            visibility: hidden;
+            
+            /* Animasi transisi */
+            transition: all 0.3s ease-in-out;
+            z-index: 10;
+            
+            /* Flexbox untuk menengahkan teks */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Paksa teks di dalam overlay menjadi putih (mengalahkan class text-muted) */
+        .service-overlay h5, 
+        .service-overlay p {
+            color: #ffffff !important;
+        }
+
+        /* SAAT DI-HOVER: Munculkan Overlay */
+        .service-card:hover .service-overlay {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Opsional: Sedikit efek angkat pada card saat hover */
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        }
+
+        /* ======================================================= */
+        /* STYLE BAWAAN LAINNYA                                  */
         /* ======================================================= */
         :root {
-            /* Warna Primer Baru: Indigo-600 */
             --bs-primary: #4f46e5; 
             --bs-primary-rgb: 79, 70, 229;
-            /* Warna Sekunder/Aksen yang lebih gelap untuk hover */
-            --bs-dark-rgb: 23, 23, 34; /* Hampir hitam */
+            --bs-dark-rgb: 23, 23, 34; 
         }
         
-        /* Mengaplikasikan warna primer baru pada kelas Bootstrap */
         .btn-primary, .btn-primary:focus {
             background-color: var(--bs-primary) !important;
             border-color: var(--bs-primary) !important;
         }
         .btn-primary:hover {
-            background-color: #4338ca !important; /* Indigo-700 */
+            background-color: #4338ca !important; 
             border-color: #4338ca !important;
         }
         
-        /* FIX: Memastikan tombol outline menggunakan warna Indigo yang benar */
         .btn-outline-primary {
             color: var(--bs-primary) !important;
             border-color: var(--bs-primary) !important;
@@ -74,44 +107,32 @@
             background-color: var(--bs-primary) !important;
         }
 
-        /* FIX: Menghilangkan efek warna orange pada garis pembagi (divider) */
         .divider {
             background-color: var(--bs-primary) !important;
-            border: none !important; /* Menghapus border default */
-            height: 0.2rem; /* Menentukan tinggi garis */
+            border: none !important;
+            height: 0.2rem;
             opacity: 1;
         }
 
-        /* FIX: Memastikan teks navigasi (seperti "Berita") tidak berwarna orange pada kondisi navbar-shrink */
-         /* FIX: Memastikan teks navigasi (seperti "Berita") tidak berwarna orange pada kondisi navbar-shrink */
-+        /* Hanya ubah warna link non-tombol saat navbar shrink */
-+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:not(.btn) {
-+            color: #212529 !important;
-+        }
-+
-+        /* Pastikan tombol tetap putih saat shrink (Register / Dashboard) */
-+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn {
-+            color: #fff !important;
-+        }
-+
-+        /* Jika tombol primary juga menggunakan .btn-primary pastikan background & border tetap */
-+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-primary {
-+            background-color: var(--bs-primary) !important;
-+            border-color: var(--bs-primary) !important;
-+            color: #fff !important;
-+        }
-
-        /* ======================================================= */
-        /* PENYESUAIAN BARU UNTUK HOVER NAVIGASI */
-        /* ======================================================= */
-
-        /* Aturan hover untuk tautan Navigasi pada keadaan 'shrink' (ketika scroll) */
-        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:hover,
-        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:focus {
-            color: var(--bs-primary) !important; /* Teks menjadi Indigo saat hover */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:not(.btn) {
+            color: #212529 !important;
         }
 
-        /* SAMAKAN WARNA HIGHLIGHT/SELECTION DENGAN PALETTE */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn {
+            color: #fff !important;
+        }
+
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-primary {
+            background-color: var(--bs-primary) !important;
+            border-color: var(--bs-primary) !important;
+            color: #fff !important;
+        }
+
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:hover,
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:focus {
+            color: var(--bs-primary) !important;
+        }
+
         ::selection {
             background: var(--bs-primary);
             color: #fff;
@@ -121,42 +142,29 @@
             color: #fff;
         }
 
-        /* Fokus keyboard / outline untuk link di navbar (gunakan warna palette, tapi tombol tetap putih) */
         #mainNav .navbar-nav .nav-link:focus {
             outline: none;
             box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.15);
             border-radius: 0.25rem;
         }
 
-        /* Pastikan tombol di navbar tetap teks putih saat focus/active */
         #mainNav .navbar-nav .nav-link.btn:focus,
         #mainNav .navbar-nav .nav-link.btn:active {
             color: #fff !important;
             box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.18);
         }
 
-        /* COPYRIGHT */
-                /* Pastikan tombol di navbar tetap teks putih saat focus/active */
-        #mainNav .navbar-nav .nav-link.btn:focus,
-        #mainNav .navbar-nav .nav-link.btn:active {
-            color: #fff !important;
-            box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.18);
+        footer .copyright {
+            font-size: 0.72rem;
+            line-height: 1.2;
+            margin-bottom: 0.25rem;
+            color: #6c757d;
+        }
+        footer .small {
+            font-size: 0.82rem; 
         }
 
-+        /* Footer: kecilkan teks copyright */
-+        footer .copyright {
-+            font-size: 0.72rem; /* lebih kecil */
-+            line-height: 1.2;
-+            margin-bottom: 0.25rem;
-+            color: #6c757d; /* tetap muted */
-+        }
-+        footer .small {
-+            font-size: 0.82rem; /* ukuran small lain di footer sedikit lebih kecil */
-+        }
-
-        /* Styling Khusus Masthead (Hero Section) agar memiliki Gradien Kaya */
         header.masthead {
-            /* Ganti dengan gambar latar belakang Anda */
             background-image: url('{{ asset("landing/assets/img/ppkpt.jpeg") }}'); 
             background-size: cover;
             background-position: center;
@@ -169,12 +177,10 @@
             right: 0;
             bottom: 0;
             background: linear-gradient(to bottom right, rgba(79, 70, 229, 0.1) 0%, rgba(30, 58, 138, 0.75) 100%); 
-            /* jangan tangkap klik; taruh di bawah konten */
             pointer-events: none;
             z-index: 0;
         }
 
-        /* pastikan konten header berada di atas overlay */
         header.masthead {
             position: relative;
             z-index: 1;
@@ -185,18 +191,15 @@
             z-index: 2;
         }
 
-        /* pastikan section target dan tombol berada di atas (agar anchor/klik bekerja) */
         #about, #alur {
             position: relative;
             z-index: 3;
         }
-        /* tombol anchor yang meng-scroll harus clickable */
         a.btn {
             position: relative;
             z-index: 4;
         }
 
-        /* optional: smooth scrolling for anchors */
         html { scroll-behavior: smooth; }
 
         @media (max-width: 768px) {
@@ -209,11 +212,9 @@
 </head>
 
 <body id="page-top">
-    <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand d-flex align-items-center" href="#page-top">
-                <!-- NOTE: logo.png must exist in the assets path -->
                 <img src="{{ asset('landing/assets/img/logo.png') }}" alt="Logo Satgas" 
                     style="height: 40px; width: auto; margin-right: 10px;">
                 <span class="fw-bold">SATGAS PPKPT POLSUB</span>
@@ -234,7 +235,6 @@
                     <li class="nav-item"><a class="nav-link" href="#aboutus">About Us</a></li>
 
                     @guest
-                        <!-- Menggunakan btn-outline-primary dan btn-primary yang sudah di-override warnanya -->
                         <li class="nav-item"><a class="nav-link btn btn-outline-primary mx-2" href="{{ route('login') }}">Login</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-primary text-white px-3" href="{{ route('register') }}">Register</a></li>
                         @else
@@ -258,10 +258,8 @@
         </div>
     </nav>
 
-    <!-- Masthead (Hero Section) - Sekarang dengan overlay gradien Indigo -->
     <header class="masthead">
         <div class="container px-4 px-lg-5 h-100">
-            <!-- PENYESUAIAN DISINI: Menambahkan position:relative dan z-index: 10 untuk mengangkat konten teks di atas overlay :before -->
             <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center" 
                 style="position: relative; z-index: 10;"> 
                 
@@ -277,7 +275,6 @@
         </div>
     </header>
 
-    <!-- About - Background sudah berubah warna menjadi Indigo-600 -->
     <section class="page-section bg-primary" id="about">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -291,7 +288,6 @@
         </div>
     </section>
 
-    <!-- Alur Pelaporan Section -->
     <section class="page-section bg-light" id="alur">
         <div class="container px-4 px-lg-5">
             <div class="text-center">
@@ -299,73 +295,69 @@
                 <hr class="divider" />
                 <p class="text-muted mb-5">Berikut langkah-langkah pelaporan kasus kekerasan di lingkungan kampus Politeknik Negeri Subang:</p>
             </div>
-<div class="row gx-4 gx-lg-5">
-    <!-- Service Card (gunakan ulang untuk tiap item) -->
-    <div class="col-md-3 text-center">
-        <div class="mt-5 service-card p-4 rounded">
-            <div class="mb-3"><i class="bi bi-person-check fs-1 text-primary"></i></div>
-            <h4 class="h5 mb-1">Pelapor Melapor</h4>
-            <p class="text-muted short-desc mb-0">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
+            
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-md-3 text-center">
+                    <div class="mt-5 service-card p-4 rounded shadow-sm">
+                        <div class="mb-3"><i class="bi bi-person-check fs-1 text-primary"></i></div>
+                        <h4 class="h5 mb-1">Pelapor Melapor</h4>
+                        <p class="text-muted short-desc mb-0">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
 
-            <!-- Overlay yang muncul saat hover -->
-            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
-                <h5 class="mb-2">Pelapor Melapor</h5>
-                <p class="mb-0">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
-            </div>
-        </div>
-    </div>
+                        <div class="service-overlay">
+                            <h5 class="mb-2">Pelapor Melapor</h5>
+                            <p class="mb-0">Mahasiswa atau civitas akademika melaporkan kasus melalui form atau datang langsung ke posko Satgas.</p>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="col-md-3 text-center">
-        <div class="mt-5 service-card p-4 rounded">
-            <div class="mb-3"><i class="bi bi-envelope-open fs-1 text-primary"></i></div>
-            <h4 class="h5 mb-1">Verifikasi Laporan</h4>
-            <p class="text-muted short-desc mb-0">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
+                <div class="col-md-3 text-center">
+                    <div class="mt-5 service-card p-4 rounded shadow-sm">
+                        <div class="mb-3"><i class="bi bi-envelope-open fs-1 text-primary"></i></div>
+                        <h4 class="h5 mb-1">Verifikasi Laporan</h4>
+                        <p class="text-muted short-desc mb-0">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
 
-            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
-                <h5 class="mb-2">Verifikasi Laporan</h5>
-                <p class="mb-0">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
-            </div>
-        </div>
-    </div>
+                        <div class="service-overlay">
+                            <h5 class="mb-2">Verifikasi Laporan</h5>
+                            <p class="mb-0">Satgas memverifikasi laporan dan memastikan identitas pelapor tetap dirahasiakan.</p>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="col-md-3 text-center">
-        <div class="mt-5 service-card p-4 rounded">
-            <div class="mb-3"><i class="bi bi-people fs-1 text-primary"></i></div>
-            <h4 class="h5 mb-1">Pendampingan Korban</h4>
-            <p class="text-muted short-desc mb-0">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
+                <div class="col-md-3 text-center">
+                    <div class="mt-5 service-card p-4 rounded shadow-sm">
+                        <div class="mb-3"><i class="bi bi-people fs-1 text-primary"></i></div>
+                        <h4 class="h5 mb-1">Pendampingan Korban</h4>
+                        <p class="text-muted short-desc mb-0">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
 
-            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
-                <h5 class="mb-2">Pendampingan Korban</h5>
-                <p class="mb-0">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
-            </div>
-        </div>
-    </div>
+                        <div class="service-overlay">
+                            <h5 class="mb-2">Pendampingan Korban</h5>
+                            <p class="mb-0">Tim memberikan pendampingan psikologis, hukum, dan administratif kepada pelapor atau korban.</p>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="col-md-3 text-center">
-        <div class="mt-5 service-card p-4 rounded">
-            <div class="mb-3"><i class="bi bi-card-checklist fs-1 text-primary"></i></div>
-            <h4 class="h5 mb-1">Penyelesaian Kasus</h4>
-            <p class="text-muted short-desc mb-0">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
+                <div class="col-md-3 text-center">
+                    <div class="mt-5 service-card p-4 rounded shadow-sm">
+                        <div class="mb-3"><i class="bi bi-card-checklist fs-1 text-primary"></i></div>
+                        <h4 class="h5 mb-1">Penyelesaian Kasus</h4>
+                        <p class="text-muted short-desc mb-0">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
 
-            <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
-                <h5 class="mb-2">Penyelesaian Kasus</h5>
-                <p class="mb-0">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
-            </div>
-        </div>
-    </div>
-</div>
+                        <div class="service-overlay">
+                            <h5 class="mb-2">Penyelesaian Kasus</h5>
+                            <p class="mb-0">Kasus diselesaikan sesuai mekanisme hukum dan peraturan yang berlaku di perguruan tinggi.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Video Section -->
     <section class="page-section" id="video">
         <div class="container px-4 px-lg-5 text-center">
             <h2 class="mt-0">Video Sosialisasi Satgas PPKPT</h2>
             <hr class="divider" />
             <p class="text-muted mb-4">Tonton video berikut untuk memahami lebih lanjut tentang upaya pencegahan dan penanganan kekerasan seksual di kampus.</p>
 
-            <!-- Responsive Video Embed -->
             <div class="ratio ratio-16x9 shadow-lg rounded-3">
                 <iframe 
                     src="https://www.youtube.com/embed/OxiwR2dRA-w" 
@@ -376,21 +368,21 @@
         </div>
     </section>
 
-    <!-- Services -->
     <section class="page-section" id="services">
         <div class="container px-4 px-lg-5">
             <h2 class="text-center mt-0">Layanan Kami</h2>
             <hr class="divider" />
             <div class="row gx-4 gx-lg-5">
                 <div class="col-lg-3 col-md-6 text-center">
-                    <div class="mt-5">
+                    <div class="mt-5 service-card p-3 rounded position-relative">
                         <div class="mb-2"><i class="bi-heart-fill fs-1 text-primary"></i></div>
                         <h3 class="h4 mb-2">Pendampingan</h3>
                         <p class="text-muted mb-0">Kami menyediakan pendampingan psikologis dan hukum bagi korban kekerasan seksual.</p>
-                    </div>
-                    <div class="service-overlay d-flex flex-column justify-content-center align-items-center text-center p-3">
-                        <h5 class="mb-2">Pendampingan</h5>
-                        <p class="mb-0">Kami menyediakan pendampingan psikologis dan hukum bagi korban kekerasan seksual.</p>
+                        
+                        <div class="service-overlay">
+                            <h5 class="mb-2">Pendampingan</h5>
+                            <p class="mb-0">Kami menyediakan pendampingan psikologis dan hukum bagi korban kekerasan seksual.</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
@@ -418,8 +410,7 @@
         </div>
     </section>
 
-    <!-- Berita -->
-   <div id="portfolio" class="bg-light py-5">
+    <div id="portfolio" class="bg-light py-5">
     <div class="container px-4 px-lg-5">
         <h2 class="text-center mt-0">Berita Terbaru</h2>
         <hr class="divider" />
@@ -451,13 +442,9 @@
     </div>
 </div>
 
-
-
-    <!-- About Us -->
-      <section class="page-section bg-white" id="aboutus">
+    <section class="page-section bg-white" id="aboutus">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
-                <!-- KIRI: Judul + Deskripsi -->
                 <div class="col-lg-7">
                     <h2 class="mt-0">Tentang Satgas</h2>
                     <hr class="divider" />
@@ -467,7 +454,6 @@
                     <p class="text-muted mb-0">Untuk informasi lebih lanjut atau pelaporan, silakan hubungi kami melalui kontak resmi Satgas PPKPT Polsub.</p>
                 </div>
 
-                <!-- KANAN: Logo Satgas (scaled & centered) -->
                 <div class="col-lg-5 text-center">
                     <figure class="m-0 d-flex align-items-center justify-content-center" style="min-height:160px;">
                         <img src="{{ asset('landing/assets/img/logo.png') }}" alt="Logo Satgas" 
@@ -479,11 +465,10 @@
             </div>
         </div>
     </section>
-        <!-- Hubungi Kami (baru) -->
+
     <section class="page-section bg-light" id="contact">
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5">
-                <!-- FORM (kiri) -->
                <div class="col-lg-7 mb-4">
                     <h2 class="mt-0">Hubungi Kami</h2>
                     <hr class="divider" />
@@ -512,7 +497,6 @@
                     </form>
                 </div>
 
-                <!-- INFO + MAP (kanan) -->
                 <div class="col-lg-5">
                     <div class="card border-0 shadow-sm mb-4">
                         <div class="card-body">
@@ -540,18 +524,15 @@
         </div>
     </section>
 
-    <!-- Footer -->
-     <!-- Footer -->
     <footer class="bg-white py-5" style="border-top:4px solid var(--bs-primary);">
         <div class="container px-4 px-lg-5">
             <div class="row align-items-start">
                <div class="col-md-4 mb-4 mb-md-0">
-                                <h5 class="fw-bold mb-2">
-                <a href="{{ route('tim.pengembang') }}" class="text-decoration-none text-dark">
-                    Satgas PPKPT
-                </a>
-            </h5>
-
+                    <h5 class="fw-bold mb-2">
+                        <a href="{{ route('tim.pengembang') }}" class="text-decoration-none text-dark">
+                            Satgas PPKPT
+                        </a>
+                    </h5>
                     <p class="small copyright mb-1">© {{ date('Y') }}. All rights reserved.</p>
                     <p class="small mb-0">Politeknik Negeri<br>Subang</p>
                 </div>
@@ -561,7 +542,7 @@
                     <ul class="list-unstyled small mb-0">
                         <li><a href="#" class="text-decoration-none text-muted">Privacy Policy</a></li>
                         <li><a href="#" class="text-decoration-none text-muted">Help Center</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Terms &amp; Condition</a></li>
+                        <li><a href="#" class="text-decoration-none text-muted">Terms & Condition</a></li>
                     </ul>
                 </div>
 
@@ -580,7 +561,6 @@
         </div>
     </footer>
 
-    <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
     <script src="{{ asset('landing/js/scripts.js') }}"></script>

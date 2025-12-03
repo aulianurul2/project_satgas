@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Recruitment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\QueryException;
@@ -15,7 +16,7 @@ class FormPendaftaranController extends Controller
      */
     public function create()
     {
-        // Menampilkan halaman form pendaftaran (user/recruitment.blade.php)
+        // Tampilkan view form pendaftaran
         return view('user.laporan.formpendaftaran');
     }
 
@@ -43,8 +44,9 @@ class FormPendaftaranController extends Controller
             $essayPath = $request->file('essay')->store('uploads/essay', 'public');
             $fotoPath  = $request->file('pas_foto')->store('uploads/foto', 'public');
 
-            // ✅ Simpan data ke database
+            // ✅ Simpan data ke database dengan user_id dari user login
             Recruitment::create([
+                'user_id'      => Auth::id(), // ← penting untuk riwayat!
                 'nama'         => $validated['nama'],
                 'nim'          => $validated['nim'],
                 'jurusan'      => $validated['jurusan'],
@@ -54,16 +56,20 @@ class FormPendaftaranController extends Controller
                 'cv'           => $cvPath,
                 'essay'        => $essayPath,
                 'pas_foto'     => $fotoPath,
-                // status otomatis "Seleksi" dari model
+                // status otomatis "Seleksi" (default dari migration)
             ]);
 
-            // ✅ Redirect ke halaman form dengan pesan sukses
-            return redirect()->route('user.riwayatpendaftaran.index')
-            ->with('success', '✅ Pendaftaran berhasil dikirim!');
-
+            // ✅ Redirect ke halaman riwayat pendaftaran dengan pesan sukses
+            return redirect()
+                ->route('user.riwayatpendaftaran.index')
+                ->with('success', '✅ Pendaftaran berhasil dikirim!');
         } 
-
+        catch (QueryException $e) {
+            // ❌ Jika error database
+            return back()->withErrors(['db_error' => 'Gagal menyimpan ke database: ' . $e->getMessage()]);
+        } 
         catch (\Exception $e) {
+            // ❌ Jika error umum lain
             return back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }

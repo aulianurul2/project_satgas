@@ -10,14 +10,13 @@ class RiwayatPendaftaranController extends Controller
 {
     public function index()
     {
-        // Ambil user yang sedang login
-        $user = Auth::user();
+        // Ambil ID user yang sedang login
+        $userId = Auth::id();
 
-        // Ambil data pendaftaran milik user berdasarkan nama atau nim (tergantung data kamu)
-        $pelamars = Recruitment::where('nim', $user->nim ?? '')
-                               ->orWhere('nama', $user->name ?? '')
-                               ->get();
+        // Ambil data pendaftaran milik user login berdasarkan user_id
+        $pelamars = Recruitment::where('user_id', $userId)->get();
 
+        // Kirim ke view
         return view('user.laporan.riwayatpendaftaran', compact('pelamars'));
     }
 }
