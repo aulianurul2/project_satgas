@@ -297,7 +297,7 @@ body {
             <div class="modal-footer" style="border-top: 1px solid #e5e7eb;">
                 <button class="btn btn-primary" data-bs-dismiss="modal" style="padding: 10px 24px;">
                     <i class="bi bi-check-circle me-2"></i>
-                    Saya Mengerti
+                    Paham
                 </button>
             </div>
 
