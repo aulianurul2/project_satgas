@@ -32,7 +32,6 @@
 
             <div class="grid">
 
-<<<<<<< HEAD
             <form action="{{ route('formpendaftaran.store') }}" 
                   method="POST" 
                   enctype="multipart/form-data">
@@ -40,11 +39,9 @@
 
                 <div class="mb-3">
                     <input type="text" name="nama" value="{{ old('nama') }}" class="form-control" placeholder="Nama Lengkap*" required>
-=======
                 <div>
                     <label>Nama Lengkap *</label>
                     <input type="text" name="nama" value="{{ old('nama') }}" class="input" required>
->>>>>>> 5426d96efe63862a2900fe64e073d4c0aa73ddfa
                 </div>
 
                 <div>

@@ -32,7 +32,6 @@
             @foreach($pelamars as $pelamar)
             <tr class="text-center">
                 <td class="p-2 border">{{ $loop->iteration }}</td>
-<<<<<<< HEAD
                 <td class="p-2 border">{{ $pelamar->nama }}</td>
                 <td class="p-2 border">{{ $pelamar->nim }}</td>
                 <td class="p-2 border">{{ $pelamar->jurusan }}</td>
@@ -41,7 +40,6 @@
                 <td class="p-2 border">{{ $pelamar->no_wa }}</td>
                 <td class="p-2 border text-blue-600 underline">
                     <a href="{{ asset('storage/' . $pelamar->cv) }}" target="_blank">Lihat CV</a>
-=======
                 <td class="p-2 border">{{ $member->nama }}</td>
                 <td class="p-2 border">{{ $member->nim }}</td>
                 <td class="p-2 border">{{ $member->jurusan }}</td>
@@ -62,7 +60,6 @@
                     @else
                         <span class="text-gray-600">{{ $member->status }}</span>
                     @endif
->>>>>>> 5426d96efe63862a2900fe64e073d4c0aa73ddfa
                 </td>
                 <td class="p-2 border text-blue-600 underline">
                     <a href="{{ asset('storage/' . $pelamar->essay) }}" target="_blank">Lihat Essay</a>
