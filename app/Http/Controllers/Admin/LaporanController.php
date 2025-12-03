@@ -9,9 +9,26 @@ use PDF;
 
 class LaporanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $reports = Laporan::latest()->paginate(10);
+        // 1. Inisialisasi Query
+        $query = Laporan::query();
+
+        // 2. Filter Berdasarkan Status (Jika ada input)
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // 3. Filter Berdasarkan Tanggal (Jika ada input start & end)
+        if ($request->filled('start') && $request->filled('end')) {
+            // Asumsi filter berdasarkan tanggal pembuatan (created_at)
+            $query->whereBetween('created_at', [$request->start, $request->end]);
+        }
+
+        // 4. Eksekusi Query dengan Pagination
+        // withQueryString() penting agar saat klik halaman 2, parameter filter tidak hilang
+        $reports = $query->latest()->paginate(10)->withQueryString();
+
         return view('admin.laporan.index', compact('reports'));
     }
 

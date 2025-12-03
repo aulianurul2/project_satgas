@@ -1,201 +1,216 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container mx-auto py-8 px-4">
 
-{{-- 1. STYLE CSS (Tabel, Modal, dan Tombol yang Diperbarui) --}}
-<style>
-    /* Container & Title */
-    .page-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 3px solid #007bff; padding-bottom: 10px; }
-    .page-title { font-size: 1.8rem; font-weight: bold; color: #333; margin: 0; }
-
-    /* Header Buttons */
-    .btn-add { background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: 600; transition: 0.3s; display: inline-block; }
-    .btn-add:hover { background-color: #0056b3; }
-
-    /* Table Styling */
-    .table-responsive { background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow-x: auto; }
-    .custom-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 800px; }
-    .custom-table thead tr { background-color: #007bff; color: #ffffff; }
-    .custom-table th, .custom-table td { padding: 12px 15px; border-bottom: 1px solid #ddd; vertical-align: middle; }
-    .custom-table tbody tr:hover { background-color: #f5f5f5; }
-
-    /* Badges */
-    .badge { padding: 5px 10px; border-radius: 20px; font-size: 0.85em; font-weight: bold; }
-    .badge-active { background-color: #d4edda; color: #155724; }
-    .badge-inactive { background-color: #f8d7da; color: #721c24; }
-
-    /* --- ACTION BUTTONS (Diperbarui sesuai gambar referensi) --- */
-    .action-btn {
-        display: inline-flex; /* Agar ikon dan teks rata tengah */
-        align-items: center;
-        justify-content: center;
-        padding: 8px 16px; /* Padding lebih besar agar terlihat solid */
-        border-radius: 6px; /* Sudut sedikit lebih membulat */
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        color: white; /* Teks putih untuk semua tombol aksi */
-        transition: all 0.2s ease-in-out;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sedikit bayangan agar menonjol */
-    }
-
-    /* Spasi kecil antara emoji dan teks */
-    .action-btn span {
-        margin-right: 8px;
-    }
-
-    /* Tombol Edit - HIJAU (Sesuai Gambar) */
-    .btn-edit {
-        background-color: #28a745; /* Warna hijau seperti di referensi */
-        margin-right: 8px; /* Jarak antar tombol */
-    }
-    .btn-edit:hover { background-color: #218838; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-
-    /* Tombol Delete - MERAH */
-    .btn-delete {
-        background-color: #dc3545;
-    }
-    .btn-delete:hover { background-color: #c82333; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
-
-
-    /* --- CSS MODAL POPUP --- */
-    .modal-overlay {
-        display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
-        background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(2px);
-    }
-    .modal-content {
-        background-color: #fefefe; margin: 15% auto; padding: 0; border: 1px solid #888; width: 90%; max-width: 450px;
-        border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideDown 0.3s;
-    }
-    .modal-header {
-        background-color: #dc3545; color: white; padding: 15px; font-weight: bold;
-        display: flex; justify-content: space-between; align-items: center;
-        border-top-left-radius: 8px; border-top-right-radius: 8px;
-    }
-    .modal-body { padding: 20px; text-align: center; color: #333; }
-    .modal-footer { padding: 15px; background-color: #f1f1f1; display: flex; justify-content: flex-end; gap: 10px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
-    .btn-modal-cancel { background-color: #6c757d; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
-    .btn-modal-confirm { background-color: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
-    @keyframes slideDown { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
-</style>
-
-<div class="page-container">
-
-    {{-- Header --}}
-    <div class="page-header">
-        <h1 class="page-title">Kelola Anggota</h1>
-        <a href="{{ route('admin.members.create') }}" class="btn-add">+ Tambah Anggota</a>
+    {{-- Header & Title --}}
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800">Kelola Anggota</h1>
+            <p class="text-sm text-gray-500 mt-1">Manajemen data anggota, divisi, dan status keaktifan.</p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-3 mt-4 md:mt-0">
+            @if(request('search') || request('status'))
+                <a href="{{ route('admin.members.index') }}" class="text-sm text-red-600 hover:underline self-center">
+                    &times; Reset Filter
+                </a>
+            @endif
+            <a href="{{ route('admin.members.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Tambah Anggota
+            </a>
+        </div>
     </div>
 
-    {{-- Alert --}}
-    @if(session('success'))
-        <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
-            {{ session('success') }}
+    {{-- Alert Success --}}
+    @if (session('success'))
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-sm" role="alert">
+            <p class="font-bold">Berhasil</p>
+            <p>{{ session('success') }}</p>
         </div>
     @endif
 
-    {{-- Tabel Data --}}
-    <div class="table-responsive">
-        <table class="custom-table">
-            <thead>
+    {{-- SECTION: Filter Form --}}
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <form action="{{ route('admin.members.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            
+            {{-- Search Nama / NIM --}}
+            <div class="md:col-span-2">
+                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari Anggota</label>
+                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Cari nama atau NIM/NIP..."
+                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
+            </div>
+
+            {{-- Filter Status --}}
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status Keaktifan</label>
+                <select name="status" id="status" 
+                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
+                    <option value="">Semua Status</option>
+                    <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Aktif</option>
+                    <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Nonaktif</option>
+                </select>
+            </div>
+
+            {{-- Tombol Cari --}}
+            <div>
+                <button type="submit" class="w-full bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition duration-150 ease-in-out flex justify-center items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                    Cari Data
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {{-- SECTION: Table Members --}}
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
                 <tr>
-                    <th style="width: 5%;">No</th>
-                    <th>Nama</th>
-                    <th>NIM/NIP</th>
-                    <th>Divisi</th>
-                    <th>Jabatan</th>
-                    <th>Kontak</th>
-                    <th>Status</th>
-                    <th style="width: 18%;">Aksi</th> {{-- Lebarkan sedikit kolom aksi --}}
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">No</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama & NIM</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Divisi & Jabatan</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kontak</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($members as $member)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $member->nama }}</td>
-                    <td>{{ $member->nim_nip }}</td>
-                    <td>{{ $member->divisi }}</td>
-                    <td>{{ $member->jabatan }}</td>
-                    <td>{{ $member->kontak }}</td>
-                    <td>
+                <tr class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {{ $loop->iteration + $members->firstItem() - 1 }}
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-medium text-gray-900">{{ $member->nama }}</div>
+                        <div class="text-xs text-gray-500">{{ $member->nim_nip }}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm text-gray-900">{{ $member->divisi }}</div>
+                        <div class="text-xs text-gray-500">{{ $member->jabatan }}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        {{ $member->kontak }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
                         @if($member->aktif)
-                            <span class="badge badge-active">Aktif</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                Aktif
+                            </span>
                         @else
-                            <span class="badge badge-inactive">Nonaktif</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                Nonaktif
+                            </span>
                         @endif
                     </td>
-                    <td>
-                        {{-- Tombol Edit (Hijau, Solid) --}}
-                        <a href="{{ route('admin.members.edit', $member->id) }}" class="action-btn btn-edit">
-                            <span>✏️</span> Edit
-                        </a>
-                        
-                        {{-- Tombol Hapus (Merah, Solid, Pemicu Modal) --}}
-                        <button type="button" 
-                                class="action-btn btn-delete"
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <div class="flex justify-end space-x-2">
+                            {{-- Tombol Edit --}}
+                            <a href="{{ route('admin.members.edit', $member->id) }}" class="text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1.5 rounded transition flex items-center gap-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                </svg>
+                                Edit
+                            </a>
+
+                            {{-- Tombol Hapus (Pemicu Modal) --}}
+                            <button type="button" 
+                                class="text-white bg-red-600 hover:bg-red-700 px-3 py-1.5 rounded transition flex items-center gap-1"
                                 onclick="showDeleteModal('{{ route('admin.members.destroy', $member->id) }}', '{{ $member->nama }}')">
-                            <span>🗑️</span> Hapus
-                        </button>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                                Hapus
+                            </button>
+                        </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" style="text-align: center; padding: 20px; color: #777;">Belum ada data anggota.</td>
+                    <td colspan="6" class="px-6 py-10 text-center text-gray-500">
+                        <div class="flex flex-col items-center justify-center">
+                            <svg class="h-12 w-12 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                            <span class="text-lg font-medium text-gray-900">Belum ada data anggota</span>
+                            <span class="text-sm text-gray-500">Silakan tambahkan anggota baru atau ubah filter pencarian Anda.</span>
+                        </div>
+                    </td>
                 </tr>
                 @endforelse
             </tbody>
         </table>
+        
+        {{-- Pagination --}}
+        <div class="px-6 py-4 border-t border-gray-200">
+            {{ $members->withQueryString()->links() }}
+        </div>
     </div>
-    
-    <div style="margin-top: 20px;">
-        {{ $members->links() }}
+
+</div>
+
+{{-- HTML MODAL (Tailwind Version) --}}
+<div id="deleteModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        {{-- Background overlay --}}
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" onclick="closeDeleteModal()"></div>
+
+        {{-- Spacing trick for centering --}}
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+        {{-- Modal panel --}}
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            Konfirmasi Hapus
+                        </h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                                Apakah Anda yakin ingin menghapus anggota: <br>
+                                <span id="modalItemName" class="font-bold text-gray-800"></span>?
+                            </p>
+                            <p class="text-xs text-red-500 mt-1">Data yang dihapus tidak dapat dikembalikan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <form id="deleteForm" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Ya, Hapus
+                    </button>
+                </form>
+                <button type="button" onclick="closeDeleteModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Batal
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
-{{-- 2. HTML MODAL (Pop-up) - Tidak ada perubahan --}}
-<div id="deleteModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span>Konfirmasi Hapus</span>
-            <span style="cursor: pointer;" onclick="closeDeleteModal()">✖</span>
-        </div>
-        <div class="modal-body">
-            <p>Apakah Anda yakin ingin menghapus anggota:</p>
-            <h3 id="modalItemName" style="font-weight: bold; margin: 10px 0;">Nama Anggota</h3>
-            <p style="font-size: 0.9em; color: #666;">Data yang dihapus tidak dapat dikembalikan.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-modal-cancel" onclick="closeDeleteModal()">Batal</button>
-            <form id="deleteForm" action="" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn-modal-confirm">Ya, Hapus</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-{{-- 3. JAVASCRIPT - Tidak ada perubahan --}}
+{{-- JAVASCRIPT --}}
 <script>
     function showDeleteModal(actionUrl, itemName) {
         document.getElementById('deleteForm').action = actionUrl;
         document.getElementById('modalItemName').innerText = itemName;
-        document.getElementById('deleteModal').style.display = 'block';
+        document.getElementById('deleteModal').classList.remove('hidden');
     }
 
     function closeDeleteModal() {
-        document.getElementById('deleteModal').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        var modal = document.getElementById('deleteModal');
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
+        document.getElementById('deleteModal').classList.add('hidden');
     }
 </script>
 

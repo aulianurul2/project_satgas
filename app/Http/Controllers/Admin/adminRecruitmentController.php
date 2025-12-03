@@ -2,15 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-<<<<<<< HEAD
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Recruitment;
-=======
 use App\Http\Controllers\Controller; // <--- TAMBAHKAN BARIS INI
 use Illuminate\Http\Request;
 use App\Models\Member; // Pastikan Model Member juga di-import jika dipakai
->>>>>>> 5426d96efe63862a2900fe64e073d4c0aa73ddfa
 
 class AdminRecruitmentController extends Controller
 {
@@ -19,44 +13,6 @@ class AdminRecruitmentController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        // Ambil semua data pelamar, urutkan terbaru
-        $pelamars = Recruitment::latest()->paginate(10);
-
-        // Tampilkan ke view admin.laporan.adminrecruitment
-        return view('admin.laporan.adminrecruitment', compact('pelamars'));
-    }
-
-    /**
-     * Menampilkan halaman tambah data (jika diperlukan).
-     */
-    public function create()
-    {
-        return view('admin.laporan.adminrecruitment');
-    }
-
-    /**
-     * Mengupdate status pelamar.
-     */
-    public function updateStatus(Request $request, $id)
-    {
-        // ✅ Validasi input status
-        $request->validate([
-            'status' => 'required|in:Seleksi,Lolos Wawancara,Diterima',
-        ]);
-
-        // ✅ Cari pelamar berdasarkan ID
-        $pelamar = Recruitment::findOrFail($id);
-
-        // ✅ Update status
-        $pelamar->status = $request->status;
-        $pelamar->save();
-
-        // ✅ Kembalikan ke halaman sebelumnya dengan pesan sukses
-        return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui!');
-    }
-}
-=======
         // Pastikan model Member sudah ada
         $members = Member::latest()->paginate(10); 
         
@@ -64,4 +20,3 @@ class AdminRecruitmentController extends Controller
         return view('admin/laporan/adminrecruitment', compact('members'));
     }
 }
->>>>>>> 5426d96efe63862a2900fe64e073d4c0aa73ddfa
