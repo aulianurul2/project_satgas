@@ -33,11 +33,7 @@
             </a>
             <!-- Pendaftaran Anggota -->
 
-<<<<<<< HEAD
             <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
-=======
-                <a href="{{ route('formpendaftaran.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
->>>>>>> 5426d96efe63862a2900fe64e073d4c0aa73ddfa
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>
                 <p class="text-sm text-gray-500">Daftar menjadi anggota satgas</p>
