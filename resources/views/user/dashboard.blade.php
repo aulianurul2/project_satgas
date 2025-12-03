@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+
+@php
+    use App\Models\Setting;
+    $pendaftaranAktif = Setting::where('key', 'pendaftaran_aktif')->value('value');
+@endphp
+
 @if(session('success'))
     <script>
         alert("{{ session('success') }}");
@@ -33,11 +39,18 @@
             </a>
             <!-- Pendaftaran Anggota -->
 
-            <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
+            <a href="{{ $pendaftaranAktif ? route('recruitment.create') : '#' }}" 
+            class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center relative {{ !$pendaftaranAktif ? 'opacity-50 cursor-not-allowed' : '' }}">
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>
-                <p class="text-sm text-gray-500">Daftar menjadi anggota satgas</p>
+                <p class="text-sm text-gray-500">
+                    {{ $pendaftaranAktif ? 'Daftar menjadi anggota satgas' : 'Pendaftaran Ditutup' }}
+                </p>
+                @if(!$pendaftaranAktif)
+                    <div class="absolute inset-0 bg-white bg-opacity-50 rounded-xl"></div>
+                @endif
             </a>
+
             <!-- Profil -->
             <a href="{{ route('profile.edit') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">👤</div>
@@ -45,6 +58,20 @@
                 <p class="text-sm text-gray-500">Lihat dan ubah biodata Anda</p>
             </a>
         </div>
+        @if(Auth::user()->role === 'admin')
+        <div class="mt-8 p-4 bg-gray-100 rounded-lg">
+            <form action="{{ route('admin.recruitment.toggle') }}" method="POST">
+                @csrf
+                <button type="submit" name="action" value="{{ $pendaftaranAktif ? 'close' : 'open' }}"
+                    class="px-4 py-2 rounded {{ $pendaftaranAktif ? 'bg-red-600 text-white' : 'bg-green-600 text-white' }}">
+                    {{ $pendaftaranAktif ? 'Undeploy Pendaftaran' : 'Deploy Pendaftaran' }}
+                </button>
+            </form>
+            <p class="mt-2 text-sm text-gray-500">
+                Status saat ini: <span class="font-semibold">{{ $pendaftaranAktif ? 'AKTIF' : 'TIDAK AKTIF' }}</span>
+            </p>
+        </div>
+        @endif
     </div>
 </div>
 

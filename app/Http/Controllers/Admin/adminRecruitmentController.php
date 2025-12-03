@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Recruitment;
 use App\Models\Member;
+use App\Models\Setting;
 
 class AdminRecruitmentController extends Controller
 {
@@ -14,22 +15,26 @@ class AdminRecruitmentController extends Controller
      */
     public function index()
     {
-        // Ambil semua data pelamar
-        $pelamars = Recruitment::latest()->paginate(10);
+    $pelamars = Recruitment::latest()->paginate(10);
+    $members = Member::latest()->paginate(10);
 
-        // Ambil data member jika diperlukan
-        $members = Member::latest()->paginate(10);
+    // Ambil status pendaftaran
+    $pendaftaranAktif = (bool) Setting::where('key', 'pendaftaran_aktif')->value('value');
+    return view('admin.laporan.adminrecruitment', compact('pelamars', 'members', 'pendaftaranAktif'));
 
-        return view('admin.laporan.adminrecruitment', compact('pelamars', 'members'));
     }
+
 
     /**
      * Menampilkan halaman tambah data (jika diperlukan).
      */
     public function create()
     {
-        return view('admin.laporan.adminrecruitment');
+       $pendaftaranAktif = (bool) Setting::where('key', 'pendaftaran_aktif')->value('value');
+
+        return view('admin.laporan.adminrecruitment', compact('pendaftaranAktif'));
     }
+
 
     /**
      * Mengupdate status pelamar.
@@ -45,5 +50,18 @@ class AdminRecruitmentController extends Controller
         $pelamar->save();
 
         return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui!');
+    }
+
+     public function toggle(Request $request)
+    {
+        $action = $request->input('action'); // 'open' atau 'close'
+
+        Setting::updateOrCreate(
+            ['key' => 'pendaftaran_aktif'],
+            ['value' => $action === 'open' ? 1 : 0]
+
+        );
+
+        return back()->with('success', 'Status pendaftaran berhasil diubah.');
     }
 }

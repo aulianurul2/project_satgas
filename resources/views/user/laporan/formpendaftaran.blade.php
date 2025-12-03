@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app') 
 
 @section('content')
 <div class="container">
@@ -41,26 +41,50 @@
                     <input type="text" name="nim" value="{{ old('nim') }}" class="input" placeholder="NIM" required>
                 </div>
 
-                <div>
+                {{-- 🧑‍🎓 Kolom Jurusan: SATU KOLOM (Dynamic Select/Input) --}}
+                <div id="jurusan-group">
                     <label>Jurusan *</label>
-                    <input type="text" name="jurusan" value="{{ old('jurusan') }}" class="input" placeholder="Jurusan" required>
+                    <select id="jurusan-select" name="jurusan" class="input jurusan-input" required>
+                        <option value="">Pilih</option>
+                        <option value="Jurusan Teknologi Informasi dan Komputer">Jurusan Teknologi Informasi dan Komputer</option>
+                        <option value="Jurusan Kesehatan">Jurusan Kesehatan</option>
+                        <option value="Jurusan Teknik Mesin">Jurusan Teknik Mesin</option>
+                        <option value="Jurusan Pertanian">Jurusan Pertanian</option>
+                        <option value="Lainnya">Lainnya (Isi Manual)</option>
+                    </select>
                 </div>
 
-                <div>
-                    <label>Prodi *</label>
-                    <input type="text" name="prodi" value="{{ old('prodi') }}" class="input" placeholder="Program Studi" required>
-                </div>
-
+                {{-- Hapus kolom 'Jurusan Lainnya' --}}
+                {{-- Ganti dengan kolom IPK agar layout 2 kolom tetap terisi rapi --}}
                 <div>
                     <label>IPK Terakhir *</label>
                     <input type="number" step="0.01" min="0" max="4" name="ipk_terakhir" value="{{ old('ipk_terakhir') }}" class="input" placeholder="Contoh: 3.50" required>
                 </div>
 
+                {{-- 📚 Kolom Prodi: SATU KOLOM (Dynamic Select/Input) --}}
+                <div id="prodi-group">
+                    <label>Prodi *</label>
+                    <select id="prodi-select" name="prodi" class="input prodi-input" required>
+                        <option value="">Pilih</option>
+                        <option value="D3-Sistem Informasi">D3-Sistem Informasi</option>
+                        <option value="D3-Keperawatan">D3-Keperawatan</option>
+                        <option value="D3-Agroindustri">D3-Agroindustri</option>
+                        <option value="D3-Pemeliharaan Mesin">D3-Pemeliharaan Mesin</option>
+                        <option value="D4-TRPL">D4-TRPL</option>
+                        <option value="D4-TPTP">D4-TPTP</option>
+                        <option value="D4-TRM">D4-TRM</option>
+                        <option value="Lainnya">Lainnya (Isi Manual)</option>
+                    </select>
+                </div>
+
+                {{-- Hapus kolom 'Prodi Lainnya' --}}
+                {{-- Ganti dengan kolom Nomor WA agar layout 2 kolom tetap terisi rapi --}}
                 <div>
                     <label>Nomor WhatsApp Aktif *</label>
                     <input type="text" name="no_wa" value="{{ old('no_wa') }}" class="input" placeholder="08xxxxxxxxxx" required>
                 </div>
 
+                {{-- Baris File Input --}}
                 <div>
                     <label>Pas Foto * (jpg/png, maks 2MB)</label>
                     <input type="file" name="pas_foto" class="input" accept="image/jpeg,image/jpg,image/png" required>
@@ -84,6 +108,9 @@
         </form>
     </div>
 </div>
+
+---
+## 🎨 Styling (CSS) - *Tidak ada perubahan*
 
 <style>
 body {
@@ -269,7 +296,9 @@ body {
 }
 </style>
 
-<!-- Modal Syarat -->
+---
+## ⚙️ JavaScript untuk Logika "Lainnya"
+
 <div class="modal fade" id="syaratModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 14px;">
@@ -308,8 +337,86 @@ body {
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var modal = new bootstrap.Modal(document.getElementById('syaratModal'));
-        modal.show();
+        // Tampilkan Modal Syarat
+        var modalElement = document.getElementById('syaratModal');
+        if (modalElement) {
+            var modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        }
+
+        // --- Fungsi Utama (Handling Jurusan & Prodi) ---
+        function initializeDynamicInput(selectId, containerId, inputName, placeholderText) {
+            const selectElement = document.getElementById(selectId);
+            const container = document.getElementById(containerId);
+
+            if (!selectElement || !container) return;
+
+            // Variabel untuk menyimpan input teks yang dibuat secara dinamis (dibuat hanya sekali)
+            let dynamicInput = null;
+
+            function replaceWithTextInput(initialValue = '') {
+                // 1. Buat input teks baru jika belum ada
+                if (!dynamicInput) {
+                    dynamicInput = document.createElement('input');
+                    dynamicInput.setAttribute('type', 'text');
+                    dynamicInput.setAttribute('id', selectId); // ID sama
+                    dynamicInput.setAttribute('required', 'required');
+                    dynamicInput.setAttribute('placeholder', placeholderText);
+                    dynamicInput.setAttribute('class', selectElement.className);
+                }
+
+                // 2. Set nilai jika ada nilai awal (dari old() atau isian user)
+                dynamicInput.value = initialValue;
+
+                // 3. Ganti elemen select dengan input teks
+                // Pastikan input teks memiliki name yang sama dengan select agar terkirim ke backend
+                if (container.querySelector('select#' + selectId)) {
+                    container.replaceChild(dynamicInput, selectElement);
+                }
+                dynamicInput.setAttribute('name', inputName); 
+                dynamicInput.focus();
+            }
+            
+            // --- Penanganan Old Value Saat Load ---
+            const initialOldValue = selectElement.getAttribute('data-old-value'); // Akan kita ambil dari Blade
+
+            // Cek apakah ada nilai lama yang diisi (setelah error validasi)
+            if (initialOldValue) {
+                // Cari apakah nilai lama ada di opsi standar
+                let found = Array.from(selectElement.options).some(opt => opt.value === initialOldValue);
+
+                if (!found) {
+                    // Jika nilai ada tapi tidak di opsi standar, berarti itu isian manual.
+                    // Langsung ganti ke input teks saat load.
+                    replaceWithTextInput(initialOldValue);
+                } else {
+                    // Jika nilai ditemukan di opsi standar, set nilai select
+                    selectElement.value = initialOldValue;
+                }
+            }
+
+
+            // --- Event Listener ---
+            selectElement.addEventListener('change', function() {
+                if (this.value === 'Lainnya') {
+                    // Jika memilih "Lainnya", ganti ke input teks
+                    replaceWithTextInput(''); // Nilai awal kosong
+                }
+            });
+        }
+
+        // Karena kita tidak bisa mendapatkan old() di JS dengan pasti di luar PHP,
+        // kita tambahkan data-old-value di Blade agar JS bisa membacanya.
+
+        // Jurusan Setup
+        const jurusanSelect = document.getElementById('jurusan-select');
+        jurusanSelect.setAttribute('data-old-value', '{{ old("jurusan") }}');
+        initializeDynamicInput('jurusan-select', 'jurusan-group', 'jurusan', 'Masukkan Jurusan Anda');
+
+        // Prodi Setup
+        const prodiSelect = document.getElementById('prodi-select');
+        prodiSelect.setAttribute('data-old-value', '{{ old("prodi") }}');
+        initializeDynamicInput('prodi-select', 'prodi-group', 'prodi', 'Masukkan Program Studi Anda');
     });
 </script>
 

@@ -57,6 +57,9 @@ Route::middleware(['auth', 'can:access-admin'])
         Route::get('/laporan/{laporan}', [AdminReportController::class, 'show'])->name('laporan.show');
         Route::patch('/laporan/{laporan}/update-status', [AdminReportController::class, 'updateStatus'])->name('laporan.update_status');
 
+        // Toggle pendaftaran
+         Route::post('/recruitment/toggle', [AdminRecruitmentController::class, 'toggle'])->name('recruitment.toggle');
+
         // Manajemen media/berita
         Route::resource('media', MediaController::class)->parameters(['media' => 'media']);
     });
@@ -138,6 +141,8 @@ Route::get('/riwayatpendaftaran', [RiwayatPendaftaranController::class, 'index']
      ->name('user.riwayatpendaftaran.index');
 Route::patch('/adminrecruitment/{id}/update-status', [AdminRecruitmentController::class, 'updateStatus'])
     ->name('adminrecruitment.updateStatus');
+
+
 
 
 Route::middleware(['auth'])->group(function () {

@@ -5,7 +5,30 @@
 <div class="p-8">
     <h1 class="text-2xl font-bold mb-6">Daftar Pelamar</h1>
 
-```
+<!-- Tombol Toggle Status Pendaftaran --> 
+<form action="{{ route('admin.recruitment.toggle') }}" method="POST" style="margin-bottom: 20px;"> 
+    @csrf 
+    <button type="submit" name="action" value="{{ $pendaftaranAktif ? 'close' : 'open' }}" 
+    style="padding: 10px 20px; background-color: #3490dc; color: white; border: none; cursor: pointer;"> 
+    {{ $pendaftaranAktif ? 'Tutup Pendaftaran (AKTIF)' : 'Buka Pendaftaran (TIDAK AKTIF)' }} 
+    </button> 
+</form>
+
+@if(Auth::user()->role === 'admin')
+<div class="mt-8 p-4 bg-gray-100 rounded-lg">
+    <form action="{{ route('admin.recruitment.toggle') }}" method="POST">
+        @csrf
+        <button type="submit" name="action" value="{{ $pendaftaranAktif ? 'close' : 'open' }}"
+            class="px-4 py-2 rounded {{ $pendaftaranAktif ? 'bg-red-600 text-white' : 'bg-green-600 text-white' }}">
+            {{ $pendaftaranAktif ? 'Undeploy Pendaftaran' : 'Deploy Pendaftaran' }}
+        </button>
+    </form>
+    <p class="mt-2 text-sm text-gray-500">
+        Status saat ini: <span class="font-semibold">{{ $pendaftaranAktif ? 'AKTIF' : 'TIDAK AKTIF' }}</span>
+    </p>
+</div>
+@endif
+
 {{-- Pesan sukses --}}
 @if(session('success'))
     <div class="bg-green-100 text-green-700 p-2 rounded mb-4">
