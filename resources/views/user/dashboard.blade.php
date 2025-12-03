@@ -31,18 +31,7 @@
                 <h3 class="text-lg font-semibold">Riwayat Laporan</h3>
                 <p class="text-sm text-gray-500">Lihat laporan yang sudah Anda kirim</p>
             </a>
-            <!-- Pendaftaran Anggota -->
-
-<<<<<<< HEAD
-
-            <a href="{{ route('recruitment.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
-
             <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
-
-                <a href="{{ route('formpendaftaran.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
-=======
-            <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
->>>>>>> 6d6851eb1d594f57f9861e5c1e1a32b90520515b
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>
                 <p class="text-sm text-gray-500">Daftar menjadi anggota satgas</p>

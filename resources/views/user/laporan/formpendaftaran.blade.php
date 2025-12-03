@@ -39,12 +39,9 @@
 
                 <div class="mb-3">
                     <input type="text" name="nama" value="{{ old('nama') }}" class="form-control" placeholder="Nama Lengkap*" required>
-<<<<<<< HEAD
                 <div>
                     <label>Nama Lengkap *</label>
                     <input type="text" name="nama" value="{{ old('nama') }}" class="input" required>
-=======
->>>>>>> 6d6851eb1d594f57f9861e5c1e1a32b90520515b
                 </div>
 
                 <div>
