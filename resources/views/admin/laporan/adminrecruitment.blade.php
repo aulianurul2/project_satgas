@@ -32,6 +32,7 @@
             @foreach($pelamars as $pelamar)
             <tr class="text-center">
                 <td class="p-2 border">{{ $loop->iteration }}</td>
+<<<<<<< HEAD
                 <td class="p-2 border">{{ $pelamar->nama }}</td>
                 <td class="p-2 border">{{ $pelamar->nim }}</td>
                 <td class="p-2 border">{{ $pelamar->jurusan }}</td>
@@ -40,6 +41,28 @@
                 <td class="p-2 border">{{ $pelamar->no_wa }}</td>
                 <td class="p-2 border text-blue-600 underline">
                     <a href="{{ asset('storage/' . $pelamar->cv) }}" target="_blank">Lihat CV</a>
+=======
+                <td class="p-2 border">{{ $member->nama }}</td>
+                <td class="p-2 border">{{ $member->nim }}</td>
+                <td class="p-2 border">{{ $member->jurusan }}</td>
+                <td class="p-2 border">{{ $member->ipk_terakhir }}</td>
+                <td class="p-2 border">{{ $member->no_wa }}</td>
+                <td class="p-2 border">{{ $member->cv }}</td>
+                <td class="p-2 border">{{ $member->essay }}</td>
+                <td class="p-2 border">{{ $member->pas_foto }}</td>
+                <td class="p-2 border">{{ $member->status }}</td>
+                <td class="p-2 border">
+                    
+                    @if($member->status == 'seleksi')
+                        <span class="text-green-600 font-semibold">Seleksi</span>
+                    @elseif($member->status == 'lolos_wawancara')
+                        <span class="text-blue-600 font-semibold">Lolos Wawancara</span>
+                    @elseif($member->status == 'diterima')
+                        <span class="text-green-600 font-bold">Di Terima</span>
+                    @else
+                        <span class="text-gray-600">{{ $member->status }}</span>
+                    @endif
+>>>>>>> 5426d96efe63862a2900fe64e073d4c0aa73ddfa
                 </td>
                 <td class="p-2 border text-blue-600 underline">
                     <a href="{{ asset('storage/' . $pelamar->essay) }}" target="_blank">Lihat Essay</a>
@@ -66,7 +89,7 @@
     </table>
 
     <div class="mt-4">
-        {{ $pelamars->links() }}
+        {{ $members->links() }}
     </div>
 </div>
 @endsection
