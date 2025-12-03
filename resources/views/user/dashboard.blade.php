@@ -39,8 +39,12 @@
             </a>
             <!-- Pendaftaran Anggota -->
 
+<<<<<<< HEAD
             <a href="{{ $pendaftaranAktif ? route('recruitment.create') : '#' }}" 
             class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center relative {{ !$pendaftaranAktif ? 'opacity-50 cursor-not-allowed' : '' }}">
+=======
+            <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
+>>>>>>> 810cbaab2a7fcbf668430cf3b75969c260b6bf46
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>
                 <p class="text-sm text-gray-500">

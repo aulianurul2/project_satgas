@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
+<<<<<<< HEAD
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Recruitment;
 use App\Models\Member;
 use App\Models\Setting;
+=======
+use App\Http\Controllers\Controller; // <--- TAMBAHKAN BARIS INI
+use Illuminate\Http\Request;
+use App\Models\Member; // Pastikan Model Member juga di-import jika dipakai
+>>>>>>> 810cbaab2a7fcbf668430cf3b75969c260b6bf46
 
 class AdminRecruitmentController extends Controller
 {
@@ -15,6 +21,7 @@ class AdminRecruitmentController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
     $pelamars = Recruitment::latest()->paginate(10);
     $members = Member::latest()->paginate(10);
 
@@ -63,5 +70,12 @@ class AdminRecruitmentController extends Controller
         );
 
         return back()->with('success', 'Status pendaftaran berhasil diubah.');
+=======
+        // Pastikan model Member sudah ada
+        $members = Member::latest()->paginate(10); 
+        
+        // Sesuaikan path view-nya dengan folder view Anda
+        return view('admin/laporan/adminrecruitment', compact('members'));
+>>>>>>> 810cbaab2a7fcbf668430cf3b75969c260b6bf46
     }
 }
