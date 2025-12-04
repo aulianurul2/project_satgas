@@ -114,20 +114,37 @@
             opacity: 1;
         }
 
+        /* === LOGIC NAVBAR SAAT SCROLL (Navbar Shrink) === */
+
+        /* 1. Link Navigasi biasa jadi hitam */
         #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:not(.btn) {
             color: #212529 !important;
         }
 
-        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn {
-            color: #fff !important;
-        }
+        /* 2. FIX BUG LOGIN BUTTON (Invisible Button Fix)
+           Masalah sebelumnya: Rule lama memaksa semua .nav-link.btn jadi putih (#fff).
+           Solusi: Pisahkan rule untuk btn-outline (Login) dan btn-primary (Register).
+        */
 
-        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-primary {
-            background-color: var(--bs-primary) !important;
+        /* Untuk Tombol LOGIN (Outline): Saat scroll, teks & border harus BIRU (Primary), bukan putih */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-outline-primary {
+            color: var(--bs-primary) !important;
             border-color: var(--bs-primary) !important;
+        }
+        
+        /* Saat hover di mode scroll, baru jadi teks putih background biru */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-outline-primary:hover {
             color: #fff !important;
+            background-color: var(--bs-primary) !important;
         }
 
+        /* Untuk Tombol REGISTER (Solid): Tetap teks PUTIH karena backgroundnya biru */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-primary {
+            color: #fff !important;
+            background-color: var(--bs-primary) !important;
+        }
+
+        /* Efek Hover Link Navigasi */
         #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:hover,
         #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:focus {
             color: var(--bs-primary) !important;
