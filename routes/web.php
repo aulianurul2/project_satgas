@@ -161,6 +161,18 @@ Route::get('/tim-pengembang', function () {
     return view('frontend.tim-pengembang');
 })->name('tim.pengembang');
 
+Route::get('/privacy-policy', function () {
+    return view('landing.privacy');
+})->name('privacy');
+
+Route::get('/help-center', function () {
+    return view('landing.help');
+})->name('help');
+
+Route::get('/terms-condition', function () {
+    return view('landing.terms');
+})->name('terms');
+
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 

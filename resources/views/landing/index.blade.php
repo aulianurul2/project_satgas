@@ -554,14 +554,27 @@
                     <p class="small mb-0">Politeknik Negeri<br>Subang</p>
                 </div>
 
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <h6 class="fw-semibold mb-2">About</h6>
-                    <ul class="list-unstyled small mb-0">
-                        <li><a href="#" class="text-decoration-none text-muted">Privacy Policy</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Help Center</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Terms & Condition</a></li>
-                    </ul>
-                </div>
+<!-- Cari bagian footer di file index Anda dan ubah list-nya menjadi seperti ini -->
+<div class="col-md-4 mb-4 mb-md-0">
+    <h6 class="fw-semibold mb-2">About</h6>
+    <ul class="list-unstyled small mb-0">
+        <li>
+            <a href="{{ route('privacy') }}" class="text-decoration-none text-muted hover-primary">
+                Privacy Policy
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('help') }}" class="text-decoration-none text-muted hover-primary">
+                Help Center
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('terms') }}" class="text-decoration-none text-muted hover-primary">
+                Terms & Condition
+            </a>
+        </li>
+    </ul>
+</div>
 
                 <div class="col-md-4 text-md-end">
                     <h6 class="fw-semibold mb-2">Follow Us on</h6>
