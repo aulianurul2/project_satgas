@@ -576,17 +576,22 @@
     </ul>
 </div>
 
-                <div class="col-md-4 text-md-end">
-                    <h6 class="fw-semibold mb-2">Follow Us on</h6>
-                    <a href="#" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
-                       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="#" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
-                       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);">
-                        <i class="bi bi-whatsapp"></i>
-                    </a>
-                </div>
+<div class="col-md-4 text-md-end">
+    <h6 class="fw-semibold mb-2">Follow Us on</h6>
+    <a href="https://www.instagram.com/satgasppkpt" target="_blank" 
+       class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
+       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);"
+       aria-label="Instagram Satgas PPKPT">
+        <i class="bi bi-instagram"></i>
+    </a>
+    
+    <a href="https://wa.me/6281947315687" target="_blank" 
+       class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
+       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);"
+       aria-label="WhatsApp Satgas PPKPT">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+</div>
             </div>
         </div>
     </footer>
