@@ -26,6 +26,11 @@ class Recruitment extends Model
         'essay',
         'pas_foto',
         'status',
+        'tanggal_pendaftaran'
+    ];
+
+    protected $casts = [
+    'tanggal_pendaftaran' => 'datetime',
     ];
 
     /**

@@ -64,7 +64,7 @@ class ReportController extends Controller
         'tempat_kejadian' => 'required|string|max:255',
         'kronologi' => 'required|string',
         'bantuan_yang_diperlukan' => 'nullable|string',
-        'bukti' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        'bukti' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:20000',
     ]);
 
     $user = Auth::user();

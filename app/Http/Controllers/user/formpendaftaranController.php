@@ -33,9 +33,9 @@ class FormPendaftaranController extends Controller
             'prodi'        => 'required|string|max:255',
             'ipk_terakhir' => 'required|numeric|between:0,4',
             'no_wa'        => 'required|string|max:20',
-            'cv'           => 'required|file|mimes:pdf|max:2048',
-            'essay'        => 'required|file|mimes:pdf|max:2048',
-            'pas_foto'     => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'cv'           => 'required|file|mimes:pdf|max:100000',
+            'essay'        => 'required|file|mimes:pdf|max:100000',
+            'pas_foto'     => 'required|image|mimes:jpg,jpeg,png|max:10000',
         ]);
 
         try {
@@ -56,6 +56,7 @@ class FormPendaftaranController extends Controller
                 'cv'           => $cvPath,
                 'essay'        => $essayPath,
                 'pas_foto'     => $fotoPath,
+                'tanggal_pendaftaran' => now(),
                 // status otomatis "Seleksi" (default dari migration)
             ]);
 

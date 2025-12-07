@@ -8,11 +8,29 @@ use App\Models\Member;
 
 class MemberController extends Controller
 {
-    public function index()
-    {
-        $members = Member::latest()->paginate(10);
-        return view('admin.members.index', compact('members'));
+    public function index(Request $request)
+{
+    $query = Member::query();
+
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function ($q) use ($search) {
+            $q->where('nama', 'LIKE', "%$search%")
+              ->orWhere('jabatan', 'LIKE', "%$search%")
+              ->orWhere('divisi', 'LIKE', "%$search%");
+        });
     }
+
+    if ($request->filled('status')) {
+        $query->where('aktif', $request->status);
+    }
+
+    $members = $query->orderBy('nama', 'asc')->paginate(10);
+
+    return view('admin.members.index', compact('members'));
+}
+
 
     public function create()
     {

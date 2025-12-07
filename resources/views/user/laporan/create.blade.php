@@ -42,65 +42,74 @@
                 <div class="grid">
                     <div>
                         <label>Nama Pelapor *</label>
-                        <input type="text" name="nama_pelapor" class="input" required>
+                        <input type="text" name="nama_pelapor" value="{{ old('nama_pelapor') }}" class="input" required>
                     </div>
                     <div>
                         <label>Tempat Lahir *</label>
-                        <input type="text" name="tempat_lahir" class="input" required>
+                        <input type="text" name="tempat_lahir" value="{{ old('tempat_lahir') }}" class="input" required>
                     </div>
 
                     <div>
                         <label>Tanggal Lahir *</label>
-                        <input type="date" name="tanggal_lahir" class="input" required>
+                        <input type="date" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" class="input" required>
                     </div>
                     <div>
                     <label>Agama *</label>
                     <select name="agama" class="input" required>
                         <option value="">Pilih</option>
-                        <option value="Islam">Islam</option>
-                        <option value="Kristen Protestan">Kristen Protestan</option>
-                        <option value="Katolik">Katolik</option>
-                        <option value="Hindu">Hindu</option>
-                        <option value="Buddha">Buddha</option>
-                        <option value="Konghucu">Konghucu</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam</option>
+                        <option value="Kristen Protestan" {{ old('agama') == 'Kristen Protestan' ? 'selected' : '' }}>Kristen Protestan</option>
+                        <option value="Katolik" {{ old('agama') == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                        <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                        <option value="Buddha" {{ old('agama') == 'Buddha' ? 'selected' : '' }}>Buddha</option>
+                        <option value="Konghucu" {{ old('agama') == 'Konghucu' ? 'selected' : '' }}>Konghucu</option>
+                        <option value="Lainnya" {{ old('agama') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                     </select>
+
                 </div>
 
                     <div>
                         <label>Jenis Kelamin *</label>
                         <select name="jk" class="input" required>
                             <option value="">Pilih</option>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
+                            <option value="Laki-laki" {{ old('jk')=='Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="Perempuan" {{ old('jk')=='Perempuan' ? 'selected' : '' }}>Perempuan</option>
                         </select>
+
                     </div>
                     <div>
                         <label>Alamat *</label>
-                        <input type="text" name="alamat" class="input" required>
+                        <input type="text" name="alamat" value="{{ old('alamat') }}" class="input" required>
                     </div>
                     <div>
                         <label>Unsur *</label>
                         <select name="unsur" class="input" required>
                             <option value="">Pilih</option>
-                            <option value="Dosen">Dosen</option>
-                            <option value="Mahasiswa">Mahasiswa</option>
-                            <option value="Tendik">Tendik</option>
-                            <option value="Lainnya">Lainnya</option>
+                            <option value="Dosen" {{ old('unsur')=='Dosen' ? 'selected' : '' }}>Dosen</option>
+                            <option value="Mahasiswa" {{ old('unsur')=='Mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                            <option value="Tendik" {{ old('unsur')=='Tendik' ? 'selected' : '' }}>Tendik</option>
+                            <option value="Lainnya" {{ old('unsur')=='Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
+
                     </div>
                    <div>
                     <label>Asal Jurusan *</label>
                     <select name="jurusan" id="jurusan" class="input" required onchange="toggleJurusanLainnya()">
-                        <option value="">Pilih</option>
-                        <option value="Jurusan Teknologi Informasi dan Komputer">Jurusan Teknologi Informasi dan Komputer</option>
-                        <option value="Jurusan Kesehatan">Jurusan Kesehatan</option>
-                        <option value="Jurusan Teknik Mesin">Jurusan Teknik Mesin</option>
-                        <option value="Jurusan Pertanian">Jurusan Pertanian</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
+                    <option value="">Pilih</option>
+                    <option value="Jurusan Teknologi Informasi dan Komputer" {{ old('jurusan') == 'Jurusan Teknologi Informasi dan Komputer' ? 'selected' : '' }}>JurTekKom</option>
+                    <option value="Jurusan Kesehatan" {{ old('jurusan') == 'Jurusan Kesehatan' ? 'selected' : '' }}>Kesehatan</option>
+                    <option value="Jurusan Teknik Mesin" {{ old('jurusan') == 'Jurusan Teknik Mesin' ? 'selected' : '' }}>Teknik Mesin</option>
+                    <option value="Jurusan Pertanian" {{ old('jurusan') == 'Jurusan Pertanian' ? 'selected' : '' }}>Pertanian</option>
+                    <option value="Lainnya" {{ old('jurusan') == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
+                </select>
 
-                    <input type="text" id="jurusan_lainnya" name="jurusan_lainnya" class="input" placeholder="Isi jurusan lainnya" style="margin-top:5px; display:none;">
+                <input type="text"
+                    id="jurusan_lainnya"
+                    name="jurusan_lainnya"
+                    class="input"
+                    placeholder="Isi jurusan lainnya"
+                    value="{{ old('jurusan_lainnya') }}"
+                    style="margin-top:5px; {{ old('jurusan') == 'Lainnya' ? '' : 'display:none;' }}">
                 </div>
 
 
@@ -108,38 +117,41 @@
                     <label>Asal Prodi *</label>
                     <select name="prodi" id="prodi" class="input" required onchange="toggleInput('prodi')">
                         <option value="">Pilih</option>
-                        <option value="D3-Sistem Informasi">D3-Sistem Informasi</option>
-                        <option value="D3-Keperawatan">D3-Keperawatan</option>
-                        <option value="D3-Agroindustri">D3-Agroindustri</option>
-                        <option value="D3-Pemeliharaan Mesin">D3-Pemeliharaan Mesin</option>
-                        <option value="D4-TRPL">D4-TRPL</option>
-                        <option value="D4-TPTP">D4-TPTP</option>
-                        <option value="D4-TRM">D4-TRM</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="D3-Sistem Informasi" {{ old('prodi')=='D3-Sistem Informasi' ? 'selected' : '' }}>D3-Sistem Informasi</option>
+                        <option value="D3-Keperawatan" {{ old('prodi')=='D3-Keperawatan' ? 'selected' : '' }}>D3-Keperawatan</option>
+                        <option value="D3-Agroindustri" {{ old('prodi')=='D3-Agroindustri' ? 'selected' : '' }}>D3-Agroindustri</option>
+                        <option value="D3-Pemeliharaan Mesin" {{ old('prodi')=='D3-Pemeliharaan Mesin' ? 'selected' : '' }}>D3-Pemeliharaan Mesin</option>
+                        <option value="D4-TRPL" {{ old('prodi')=='D4-TRPL' ? 'selected' : '' }}>D4-TRPL</option>
+                        <option value="D4-TPTP" {{ old('prodi')=='D4-TPTP' ? 'selected' : '' }}>D4-TPTP</option>
+                        <option value="D4-TRM" {{ old('prodi')=='D4-TRM' ? 'selected' : '' }}>D4-TRM</option>
+                        <option value="Lainnya" {{ old('prodi')=='Lainnya' ? 'selected' : '' }}>Lainnya</option>
                     </select>
 
-                    <input type="text" id="prodi_lainnya" name="prodi_lainnya" 
-                        class="input" placeholder="Isi prodi lainnya" 
-                        style="margin-top:5px; display:none;">
-                </div>
+                    <input type="text" id="prodi_lainnya" name="prodi_lainnya"
+                        class="input"
+                        placeholder="Isi prodi lainnya"
+                        value="{{ old('prodi_lainnya') }}"
+                        style="margin-top:5px; {{ old('prodi')=='Lainnya' ? '' : 'display:none;' }}">
+                                    </div>
 
                     <div>
                         <label>Nomor HP/WA *</label>
-                        <input type="text" name="no_hp" class="input" required>
+                        <input type="text" name="no_hp" value="{{ old('no_hp') }}" class="input" required>
                     </div>
                     <div>
                         <label>Email *</label>
-                        <input type="email" name="email" class="input" required>
+                        <input type="email" name="email" value="{{ old('email') }}" class="input" required>
                     </div>
                     <div>
                         <label>Kedudukan Pelapor *</label>
                         <select name="kedudukan" class="input" required>
                             <option value="">Pilih</option>
-                            <option value="Korban">Korban</option>
-                            <option value="Saksi">Saksi</option>
-                            <option value="Perwakilan Korban">Perwakilan Korban</option>
-                            <option value="Lainnya">Lainnya</option>
+                            <option value="Korban" {{ old('kedudukan')=='Korban' ? 'selected' : '' }}>Korban</option>
+                            <option value="Saksi" {{ old('kedudukan')=='Saksi' ? 'selected' : '' }}>Saksi</option>
+                            <option value="Perwakilan Korban" {{ old('kedudukan')=='Perwakilan Korban' ? 'selected' : '' }}>Perwakilan Korban</option>
+                            <option value="Lainnya" {{ old('kedudukan')=='Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
+
                     </div>
                 </div>
 
@@ -157,27 +169,29 @@
                         <label>Pihak yang Dilaporkan *</label>
                         <select name="pihak_dilaporkan" class="input" required>
                             <option value="">Pilih</option>
-                            <option value="Dosen">Dosen</option>
-                            <option value="Mahasiswa">Mahasiswa</option>
-                            <option value="Tendik">Tendik</option>
-                            <option value="Lainnya">Lainnya</option>
+                            <option value="Dosen" {{ old('pihak_dilaporkan')=='Dosen' ? 'selected' : '' }}>Dosen</option>
+                            <option value="Mahasiswa" {{ old('pihak_dilaporkan')=='Mahasiswa' ? 'selected' : '' }}>Mahasiswa</option>
+                            <option value="Tendik" {{ old('pihak_dilaporkan')=='Tendik' ? 'selected' : '' }}>Tendik</option>
+                            <option value="Lainnya" {{ old('pihak_dilaporkan')=='Lainnya' ? 'selected' : '' }}>Lainnya</option>
                         </select>
+
                     </div>
                     <div>
                         <label>Nama Terlapor</label>
-                        <input type="text" name="nama_terlapor" class="input">
+                        <input type="text" name="nama_terlapor" value="{{ old('nama_terlapor') }}" class="input">
                     </div>
                     <div>
                         <label>Jenis Kelamin Terlapor</label>
                         <select name="jk_terlapor" class="input">
                             <option value="">Pilih</option>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
+                            <option value="Laki-laki" {{ old('jk_terlapor')=='Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="Perempuan" {{ old('jk_terlapor')=='Perempuan' ? 'selected' : '' }}>Perempuan</option>
                         </select>
+
                     </div>
                     <div>
                         <label>Unit Kerja Terlapor</label>
-                        <input type="text" name="unit_kerja_terlapor" class="input">
+                        <input type="text" name="unit_kerja_terlapor" value="{{ old('unit_kerja_terlapor') }}" class="input">
                     </div>
                 </div>
 
@@ -194,27 +208,27 @@
                 <div class="grid">
                     <div>
                         <label>Tanggal Kejadian *</label>
-                        <input type="date" name="tanggal_kejadian" class="input" required>
+                        <input type="date" name="tanggal_kejadian" value="{{ old('tanggal_kejadian') }}" class="input" required>
                     </div>
                     <div>
                         <label>Tempat Kejadian *</label>
-                        <input type="text" name="tempat_kejadian" class="input" required>
+                        <input type="text" name="tempat_kejadian" value="{{ old('tempat_kejadian') }}" class="input" required>
                     </div>
                 </div>
 
                 <div class="field">
                     <label>Kronologi Kejadian *</label>
-                    <textarea name="kronologi" class="input" rows="5" required></textarea>
+                    <textarea name="kronologi" class="input" rows="5" required>{{ old('kronologi') }}</textarea>
                 </div>
 
                 <div class="field">
                     <label>Bantuan yang Diperlukan *</label>
-                    <textarea name="bantuan_yang_diperlukan" class="input" rows="3" required></textarea>
+                    <textarea name="bantuan_yang_diperlukan" class="input" rows="3" required>{{ old('bantuan_yang_diperlukan') }}</textarea>
                 </div>
 
                 <div class="field">
                     <label>Unggah Bukti (Opsional)</label>
-                    <input type="file" name="bukti" class="input">
+                    <input type="file" name="bukti" value="{{ old('bukti') }}" class="input">
                 </div>
 
                 <div class="button-group between">
@@ -388,6 +402,21 @@ function toggleInput(field) {
         input.value = '';
     }
 }
+
+
+
+
+function toggleInput(id) {
+    const select = document.getElementById(id);
+    const inputLainnya = document.getElementById(id + '_lainnya');
+
+    if (select.value === "Lainnya") {
+        inputLainnya.style.display = "block";
+    } else {
+        inputLainnya.style.display = "none";
+    }
+}
+
 </script>
 
 @endsection

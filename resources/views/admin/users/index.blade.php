@@ -48,7 +48,8 @@
                 @forelse($users as $user)
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{ $loop->iteration }}
+                        {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
+
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-gray-900">{{ $user->nama }}</div>
@@ -119,13 +120,10 @@
                 @endforelse
             </tbody>
         </table>
+        <div class="mt-4">
+            {{ $users->links() }}
+        </div>
 
-        {{-- Pagination (jika ada) --}}
-        @if(method_exists($users, 'links'))
-            <div class="px-6 py-4 border-t border-gray-200">
-                {{ $users->links() }}
-            </div>
-        @endif
     </div>
 
 </div>

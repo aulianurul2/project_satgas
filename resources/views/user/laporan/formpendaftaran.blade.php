@@ -86,17 +86,17 @@
 
                 {{-- Baris File Input --}}
                 <div>
-                    <label>Pas Foto * (jpg/png, maks 2MB)</label>
+                    <label>Pas Foto * (jpg/png, maks 10MB)</label>
                     <input type="file" name="pas_foto" class="input" accept="image/jpeg,image/jpg,image/png" required>
                 </div>
 
                 <div>
-                    <label>CV * (PDF, maks 2MB)</label>
+                    <label>CV * (PDF, maks 10MB)</label>
                     <input type="file" name="cv" class="input" accept="application/pdf" required>
                 </div>
 
                 <div>
-                    <label>Essay * (PDF, maks 2MB)</label>
+                    <label>Essay * (PDF, maks 10MB)</label>
                     <input type="file" name="essay" class="input" accept="application/pdf" required>
                 </div>
             </div>
@@ -317,7 +317,7 @@ body {
                     <li>IPK minimal <strong>2.75</strong></li>
                     <li>Melampirkan pas foto terbaru (format JPG/PNG)</li>
                     <li>Melampirkan CV (Curriculum Vitae) dalam format PDF</li>
-                    <li>Melampirkan essay motivasi dalam format PDF</li>
+                    <li>Melampirkan essay dalam format PDF</li>
                     <li>Mengisi data dengan jujur dan benar</li>
                     <li>Bersedia mengikuti seluruh tahapan seleksi</li>
                 </ul>

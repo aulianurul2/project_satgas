@@ -11,10 +11,11 @@ class UserController extends Controller
     // List user
     public function index()
     {
-        $users = User::orderBy('idUser')->get();
+    $users = User::orderBy('idUser')->paginate(10); // bebas mau 5, 10, 15, dll
 
-        return view('admin.users.index', compact('users'));
+    return view('admin.users.index', compact('users'));
     }
+
 
     // Edit user
     public function edit($id)

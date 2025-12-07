@@ -53,6 +53,7 @@ class RecruitmentController extends Controller
                 'cv'           => $cvPath,
                 'essay'        => $essayPath,
                 'pas_foto'     => $fotoPath,
+                'tanggal_pendaftaran' => now(),
                 // status otomatis diisi "Seleksi" oleh model
             ]);
 

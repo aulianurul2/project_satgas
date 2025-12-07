@@ -24,22 +24,27 @@
             <p class="text-sm">Pilih salah satu menu di bawah ini</p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Laporkan Kasus -->
+        {{-- PERUBAHAN UTAMA ADA DI SINI --}}
+        {{-- Kita ubah lg:grid-cols-3 menjadi lg:grid-cols-2 untuk memastikan 2x2 --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+
+            {{-- BARIS 1 (Laporkan Kasus & Riwayat Laporan) --}}
+
             <a href="{{ route('user.laporan.create') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">📝</div>
                 <h3 class="text-lg font-semibold">Laporkan Kasus</h3>
                 <p class="text-sm text-gray-500">Buat laporan kasus baru</p>
             </a>
-            <!-- Riwayat Laporan -->
             <a href="{{ route('user.laporan.history') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">📜</div>
                 <h3 class="text-lg font-semibold">Riwayat Laporan</h3>
                 <p class="text-sm text-gray-500">Lihat laporan yang sudah Anda kirim</p>
             </a>
-            <!-- Pendaftaran Anggota -->
 
-            <a href="{{ route ('recruitment.create')}}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
+            {{-- BARIS 2 (Pendaftaran Anggota & Profil) --}}
+            
+            <a href="{{ $pendaftaranAktif ? route('recruitment.create') : '#' }}"
+            class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center relative {{ !$pendaftaranAktif ? 'opacity-50 cursor-not-allowed' : '' }}">
                 <div class="text-3xl mb-3">👥</div>
                 <h3 class="text-lg font-semibold">Pendaftaran Anggota</h3>
                 <p class="text-sm text-gray-500">
@@ -50,13 +55,15 @@
                 @endif
             </a>
 
-            <!-- Profil -->
             <a href="{{ route('profile.edit') }}" class="block bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 text-center">
                 <div class="text-3xl mb-3">👤</div>
                 <h3 class="text-lg font-semibold">Profil</h3>
                 <p class="text-sm text-gray-500">Lihat dan ubah biodata Anda</p>
             </a>
+            
         </div>
+        {{-- AKHIR PERUBAHAN UTAMA --}}
+
         @if(Auth::user()->role === 'admin')
         <div class="mt-8 p-4 bg-gray-100 rounded-lg">
             <form action="{{ route('admin.recruitment.toggle') }}" method="POST">
@@ -74,7 +81,7 @@
     </div>
 </div>
 
-{{-- Notifikasi WA --}}
+{{-- Notifikasi WA (Tidak diubah) --}}
 @if(session('wa_notice') && session('wa_link'))
 <div 
     x-data="{ show: true }" 
@@ -103,11 +110,11 @@
 
 <style>
 @keyframes fade-in-right {
-  0% { opacity: 0; transform: translateX(50px); }
-  100% { opacity: 1; transform: translateX(0); }
+    0% { opacity: 0; transform: translateX(50px); }
+    100% { opacity: 1; transform: translateX(0); }
 }
 .animate-fade-in-right {
-  animation: fade-in-right 0.5s ease-out;
+    animation: fade-in-right 0.5s ease-out;
 }
 </style>
 @endif

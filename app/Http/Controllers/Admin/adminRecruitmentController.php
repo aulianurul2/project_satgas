@@ -7,25 +7,39 @@ use Illuminate\Http\Request;
 use App\Models\Recruitment;
 use App\Models\Member;
 use App\Models\Setting;
-// use App\Http\Controllers\Controller; // <--- TAMBAHKAN BARIS INI
-// use Illuminate\Http\Request;
-// use App\Models\Member; // Pastikan Model Member juga di-import jika dipakai
 
 class AdminRecruitmentController extends Controller
 {
     /**
-     * Menampilkan daftar semua pendaftar recruitment.
+     * Menampilkan daftar semua pendaftar recruitment dengan filter tanggal.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // 1. Inisialisasi query untuk Model Recruitment
+        $query = Recruitment::latest();
 
-    $pelamars = Recruitment::latest()->paginate(10);
-    $members = Member::latest()->paginate(10);
+        // 2. Logika Filter Tanggal Pendaftaran (created_at)
+        if ($request->filled('start_date')) {
+            // Filter pelamar yang dibuat mulai dari tanggal ini (00:00:00)
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
 
-    // Ambil status pendaftaran
-    $pendaftaranAktif = (bool) Setting::where('key', 'pendaftaran_aktif')->value('value');
-    return view('admin.laporan.adminrecruitment', compact('pelamars', 'members', 'pendaftaranAktif'));
+        if ($request->filled('end_date')) {
+            // Filter pelamar yang dibuat sampai dengan tanggal ini (23:59:59)
+            // Tambahkan 1 hari atau gunakan <= end_date pada kolom date time jika ingin akurat
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+        
+        // 3. Eksekusi query dengan pagination
+        $pelamars = $query->paginate(10)->withQueryString();
 
+        // Data lain yang diperlukan
+        $members = Member::latest()->paginate(10);
+
+        // Ambil status pendaftaran
+        $pendaftaranAktif = (bool) Setting::where('key', 'pendaftaran_aktif')->value('value');
+        
+        return view('admin.laporan.adminrecruitment', compact('pelamars', 'members', 'pendaftaranAktif'));
     }
 
 
@@ -34,7 +48,7 @@ class AdminRecruitmentController extends Controller
      */
     public function create()
     {
-       $pendaftaranAktif = (bool) Setting::where('key', 'pendaftaran_aktif')->value('value');
+        $pendaftaranAktif = (bool) Setting::where('key', 'pendaftaran_aktif')->value('value');
 
         return view('admin.laporan.adminrecruitment', compact('pendaftaranAktif'));
     }
@@ -46,7 +60,7 @@ class AdminRecruitmentController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:Seleksi,Lolos Wawancara,Diterima',
+            'status' => 'required|in:Seleksi,Lolos Wawancara,Diterima,Ditolak', // Menambahkan Ditolak
         ]);
 
         $pelamar = Recruitment::findOrFail($id);
@@ -56,21 +70,18 @@ class AdminRecruitmentController extends Controller
         return redirect()->back()->with('success', 'Status pelamar berhasil diperbarui!');
     }
 
-     public function toggle(Request $request)
+    /**
+     * Mengubah status pendaftaran aktif/tidak aktif.
+     */
+    public function toggle(Request $request)
     {
         $action = $request->input('action'); // 'open' atau 'close'
 
         Setting::updateOrCreate(
             ['key' => 'pendaftaran_aktif'],
             ['value' => $action === 'open' ? 1 : 0]
-
         );
 
         return back()->with('success', 'Status pendaftaran berhasil diubah.');
-        // Pastikan model Member sudah ada
-        $members = Member::latest()->paginate(10); 
-        
-        // Sesuaikan path view-nya dengan folder view Anda
-        return view('admin/laporan/adminrecruitment', compact('members'));
     }
 }
