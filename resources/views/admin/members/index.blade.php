@@ -75,8 +75,9 @@
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama & NIM</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Divisi & Jabatan</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kontak</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alamat</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                    <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -96,6 +97,9 @@
                     <td class="px-6 py-4 text-sm text-gray-500">
                         {{ $member->kontak }}
                     </td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        {{ $member->alamat }}
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         @if($member->aktif)
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -107,7 +111,7 @@
                             </span>
                         @endif
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                         <div class="flex justify-end space-x-2">
                             {{-- Tombol Edit --}}
                             <a href="{{ route('admin.members.edit', $member->id) }}" class="text-white bg-yellow-500 hover:bg-yellow-600 px-3 py-1.5 rounded transition flex items-center gap-1">

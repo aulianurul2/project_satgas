@@ -65,6 +65,7 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Pelapor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Submit</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                 </tr>
@@ -74,6 +75,7 @@
                 <tr class="hover:bg-gray-50 transition">
                     <td class="px-6 py-4 whitespace-nowrap">{{ $loop->iteration }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $report->nama_pelapor }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $report->created_at }}</td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{-- Form ubah status (Inline) --}}
                         <form action="{{ route('admin.laporan.update_status', $report->idForm) }}" method="POST" onsubmit="return handleCancelSubmit(event, '{{ $report->idForm }}')">

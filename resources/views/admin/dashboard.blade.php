@@ -31,76 +31,61 @@
         </div>
 
          {{-- Menu Grid (Sesuai Mockup) --}}
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">
-            
-            {{-- 1. Hotliner --}}
-            {{-- <a href="#" class="menu-card">
-                <div class="icon-placeholder">
-                    <!-- Phone icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h2.6a1 1 0 01.97.757l.6 2.7a1 1 0 01-.27.95L7.4 9.8a11 11 0 005.8 5.8l1.2-1.6a1 1 0 01.95-.27l2.7.6A1 1 0 0119 18.4V21a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" />
-                    </svg>
-                </div>
-                 <h3 class="card-title">Hotliner</h3>
-                 <p class="card-subtitle">Daftar kontak hotliner</p>
-             </a> --}}
+       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">
 
-        {{-- 2. Data Laporan (Riwayat Laporan di Mockup) --}}
-   <a href="{{ route('admin.laporan.index') }}" class="menu-card">
-            <div class="icon-placeholder">
-                <i class="bi bi-clipboard-data text-blue-600" aria-hidden="true"></i>
-            </div>
-             <h3 class="card-title">Data Laporan</h3>
-             <p class="card-subtitle">Kelola seluruh laporan</p>
-         </a>
-        
-         {{-- 3. Page Content --}}
-         <a href="{{ route('admin.media.index') }}" class="menu-card">
-           <div class="icon-placeholder">
-                <i class="bi bi-file-earmark-text text-indigo-600" aria-hidden="true"></i>
-            </div>
-              <h3 class="card-title">Kelola Berita</h3>
-              <p class="card-subtitle">Kelola informasi publik</p>
-          </a>
-
-         
-         {{-- 4. Anggota --}}
-         <a href="{{ route('admin.members.index') }}" class="menu-card">
-            <div class="icon-placeholder">
-                <i class="bi bi-people-fill text-green-600" aria-hidden="true"></i>
-            </div>
-              <h3 class="card-title">Anggota</h3>
-              <p class="card-subtitle">Kelola data anggota</p>
-          </a>
-
-
-          <a href="{{ route('admin.users.index') }}" class="menu-card">
-                <div class="icon-placeholder">
-                    <i class="bi bi-people text-purple-600" aria-hidden="true"></i>
-                </div>
-                <h3 class="card-title">Kelola User</h3>
-                <p class="card-subtitle">Manajemen pengguna sistem</p>
-
-            {{-- 5. Recruitment --}}
-            <a href="{{ route('laporan.adminrecruitment') }}" class="menu-card">
-            <div class="icon-placeholder">
-                <i class="bi bi-person-badge text-green-600" aria-hidden="true"></i>
-            </div>
-                <h3 class="card-title">Recruitment</h3>
-                <p class="card-subtitle">Data pendaftar anggota</p>
-            </a>
-
-
-            {{-- 6. Settings --}}
-            {{-- <a href="#" class="menu-card">
-                <div class="icon-placeholder"></div>
-                <h3 class="card-title">Settings</h3>
-                <p class="card-subtitle">Pengaturan sistem</p>
-            </a> --}}
-
-            {{-- Anda bisa tambahkan kartu lain di sini jika ada --}}
-
+    {{-- 2. Data Laporan — Hanya Admin --}}
+    @if(auth()->user()->jenisUser === 'admin')
+    <a href="{{ route('admin.laporan.index') }}" class="menu-card">
+        <div class="icon-placeholder">
+            <i class="bi bi-clipboard-data text-blue-600" aria-hidden="true"></i>
         </div>
+        <h3 class="card-title">Data Laporan</h3>
+        <p class="card-subtitle">Kelola seluruh laporan</p>
+    </a>
+    @endif
+
+    {{-- 3. Kelola Berita — minor_admin boleh --}}
+    <a href="{{ route('admin.media.index') }}" class="menu-card">
+        <div class="icon-placeholder">
+            <i class="bi bi-file-earmark-text text-indigo-600" aria-hidden="true"></i>
+        </div>
+        <h3 class="card-title">Kelola Berita</h3>
+        <p class="card-subtitle">Kelola informasi publik</p>
+    </a>
+
+    {{-- 4. Anggota — minor_admin boleh --}}
+    <a href="{{ route('admin.members.index') }}" class="menu-card">
+        <div class="icon-placeholder">
+            <i class="bi bi-people-fill text-green-600" aria-hidden="true"></i>
+        </div>
+        <h3 class="card-title">Anggota</h3>
+        <p class="card-subtitle">Kelola data anggota</p>
+    </a>
+
+    {{-- 5. Kelola User — Hanya Admin --}}
+    @if(auth()->user()->jenisUser === 'admin')
+    <a href="{{ route('admin.users.index') }}" class="menu-card">
+        <div class="icon-placeholder">
+            <i class="bi bi-people text-purple-600" aria-hidden="true"></i>
+        </div>
+        <h3 class="card-title">Kelola User</h3>
+        <p class="card-subtitle">Manajemen pengguna sistem</p>
+    </a>
+    @endif
+
+    {{-- 6. Recruitment — Hanya Admin --}}
+    @if(auth()->user()->jenisUser === 'admin')
+    <a href="{{ route('laporan.adminrecruitment') }}" class="menu-card">
+        <div class="icon-placeholder">
+            <i class="bi bi-person-badge text-green-600" aria-hidden="true"></i>
+        </div>
+        <h3 class="card-title">Recruitment</h3>
+        <p class="card-subtitle">Data pendaftar anggota</p>
+    </a>
+    @endif
+
+</div>
+
 <style>
 /* Custom CSS untuk styling card menu */
 .menu-card {

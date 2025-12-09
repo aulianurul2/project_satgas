@@ -152,10 +152,12 @@
                         💡 Anda tidak dapat mengubah jenis user Anda sendiri saat ini.
                     </small>
                 @else
-                    <select name="jenisUser" class="form-input-custom">
-                        <option value="admin" {{ $user->jenisUser == 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="user" {{ $user->jenisUser == 'user' ? 'selected' : '' }}>User Biasa</option>
-                    </select>
+                  <select name="jenisUser" class="form-input-custom">
+                    <option value="admin" {{ $user->jenisUser == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="minor_admin" {{ $user->jenisUser == 'minor_admin' ? 'selected' : '' }}>Minor Admin</option>
+                    <option value="user" {{ $user->jenisUser == 'user' ? 'selected' : '' }}>User Biasa</option>
+                </select>
+
                 @endif
             </div>
 
