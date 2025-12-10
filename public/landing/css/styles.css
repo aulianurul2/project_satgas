@@ -10864,12 +10864,10 @@ hr.divider-light {
   background-color: #fff;
 }
 
-/* Force navbar white on large screens (override existing #mainNav transparent rule) */
-@media (min-width: 992px) {
-  #mainNav {
-    background-color: #ffffff !important;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
-  }
+#mainNav {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  transition: background-color 0.2s ease;
 }
 #mainNav .navbar-brand {
   font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -11068,4 +11066,3 @@ header.masthead h1, header.masthead .h1 {
     /* non-aktifkan translate ikon di layar sentuh agar tidak mengganggu layout */
     .service-card .mb-3 { transform: none; transition: none; }
 }
-nav.fixed { background-color: #fff !important; }
