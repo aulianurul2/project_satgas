@@ -466,7 +466,7 @@
                     <h2 class="mt-0">Tentang Satgas</h2>
                     <hr class="divider" />
                     <p class="text-muted mb-4">
-                        "Satgas PPKPT adalah satuan tugas di perguruan tinggi yang dibentuk untuk mencegah dan menangani kekerasan seksual. Pembentukan satgas ini diamanatkan oleh Permendikbud Ristek Nomor 30 Tahun 2021 sebagai respon atas tingginya kasus kekerasan seksual di kampus dan rendahnya keberanian korban untuk melapor. Satgas bertugas memastikan kampus menjadi lingkungan aman, menangani laporan secara profesional, serta mendukung upaya edukasi dan pencegahan di lingkungan civitas akademika."
+                        "Satgas PPKPT adalah satuan tugas di perguruan tinggi yang dibentuk untuk mencegah dan menangani kekerasan. Pembentukan satgas ini diamanatkan oleh Permendikbud Ristek Nomor 30 Tahun 2021 sebagai respon atas tingginya kasus kekerasan seksual di kampus dan rendahnya keberanian korban untuk melapor. Satgas bertugas memastikan kampus menjadi lingkungan aman, menangani laporan secara profesional, serta mendukung upaya edukasi dan pencegahan di lingkungan civitas akademika."
                     </p>
                     <p class="text-muted mb-0">Untuk informasi lebih lanjut atau pelaporan, silakan hubungi kami melalui kontak resmi Satgas PPKPT Polsub.</p>
                 </div>
@@ -529,7 +529,7 @@
                             <p class="mb-1"><strong>Telepon</strong></p>
                             <p class="small text-muted mb-2">(+62) 123-4567</p>
                             <p class="mb-1"><strong>Alamat</strong></p>
-                            <p class="small text-muted">Jalan Contoh No.1, Subang, Jawa Barat</p>
+                            <p class="small text-muted">Politeknik Negeri Subang, Kab. Subang, Jawa Barat</p>
                         </div>
                     </div>
 
@@ -578,14 +578,14 @@
 
 <div class="col-md-4 text-md-end">
     <h6 class="fw-semibold mb-2">Follow Us on</h6>
-    <a href="https://www.instagram.com/satgasppkpt" target="_blank" 
+    <a href="https://www.instagram.com/satgasppkpt.polsub?igsh=eDl1OHo3Z282bzgy" target="_blank" 
        class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
        style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);"
        aria-label="Instagram Satgas PPKPT">
         <i class="bi bi-instagram"></i>
     </a>
     
-    <a href="https://wa.me/6281947315687" target="_blank" 
+    <a href="https://wa.me/6282124305025" target="_blank" 
        class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
        style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);"
        aria-label="WhatsApp Satgas PPKPT">

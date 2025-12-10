@@ -9,7 +9,7 @@
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Navbar -->
-    <nav class="flex justify-between items-center px-6 py-4 bg-white shadow">
+    <nav class="flex justify-between items-center px-6 py-4 bg-white shadow fixed top-0 left-0 w-full z-50">
         <div class="flex items-center space-x-2">
             <img src="{{ asset('images/logo.png') }}" alt="Logo Satgas" class="h-10">
             <span class="text-xl font-semibold text-blue-700">Satgas PPKPT</span>
@@ -21,7 +21,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="text-center py-24 bg-gradient-to-b from-blue-50 to-white">
+    <section class="text-center py-24 bg-gradient-to-b from-blue-50 to-white mt-20">
         <h1 class="text-4xl font-bold text-gray-900">Selamat Datang di Sistem Satgas PPKPT</h1>
         <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
             Platform untuk mendukung pelaporan, pengawasan, dan pengelolaan kegiatan Satgas PPKPT secara digital.
