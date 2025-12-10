@@ -6,13 +6,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     *
-     * @var array<int, class-string|string>
-     */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests::class,
         \Illuminate\Http\Middleware\TrustProxies::class,
@@ -23,11 +16,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance::class,
     ];
 
-    /**
-     * The application's route middleware groups.
-     *
-     * @var array<string, array<int, class-string|string>>
-     */
     protected $middlewareGroups = [
         'web' => [
             \Illuminate\Cookie\Middleware\EncryptCookies::class,
@@ -43,18 +31,13 @@ class Kernel extends HttpKernel
         ],
     ];
 
-    /**
-     * The application's route middleware.
-     *
-     * @var array<string, class-string|string>
-     */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'minor_admin' => \App\Http\Middleware\MinorAdminMiddleware::class,
+        'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+
+        // Role-based
         'role' => \App\Http\Middleware\RoleMiddleware::class,
-        
-
-
+        'minor_admin' => \App\Http\Middleware\MinorAdminMiddleware::class,
     ];
 }

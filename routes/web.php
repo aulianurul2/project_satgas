@@ -24,6 +24,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\User\formpendaftaranController;
+use App\Http\Controllers\MinorAdmin\DashboardController as MinorAdminDashboardController;
+
 
 
 
@@ -71,7 +73,7 @@ Route::middleware(['auth', 'can:access-admin'])
 |--------------------------------------------------------------------------
 | Hanya untuk pengguna yang login & terverifikasi emailnya.
 */
-Route::middleware(['auth', 'verified'])
+Route::middleware(['auth', 'verified', 'role:user'])
     ->prefix('user')
     ->name('user.')
     ->group(function () {
@@ -161,6 +163,18 @@ Route::get('/tim-pengembang', function () {
     return view('frontend.tim-pengembang');
 })->name('tim.pengembang');
 
+Route::get('/privacy-policy', function () {
+    return view('landing.privacy');
+})->name('privacy');
+
+Route::get('/help-center', function () {
+    return view('landing.help');
+})->name('help');
+
+Route::get('/terms-condition', function () {
+    return view('landing.terms');
+})->name('terms');
+
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
@@ -195,3 +209,16 @@ Route::middleware(['auth'])->group(function () {
         ->name('formpendaftaran.riwayat');
 });
 
+Route::middleware(['auth', 'role:minor_admin'])
+    ->prefix('minor_admin')
+    ->name('minor_admin.')
+    ->group(function () {
+
+        Route::get('/dashboard', [MinorAdminDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::post('/recruitment/toggle', [AdminRecruitmentController::class, 'toggle'])
+            ->name('recruitment.toggle');
+
+        Route::resource('media', MediaController::class);
+});

@@ -3,32 +3,24 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate; // Wajib di-import untuk Gate
-use App\Models\User; // Wajib di-import untuk Type Hinting User Model
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Paginator::useTailwind();
-        // Mendefinisikan Gate 'access-admin'
+
+        // ⚡ Gate access-admin untuk admin & minor_admin
         Gate::define('access-admin', function (User $user) {
-            // Cek apakah kolom 'role' pada User yang login bernilai 'admin'
-            // Ganti 'admin' dengan nilai yang sesuai di database Anda jika berbeda
-            return $user->jenisUser === 'admin'; 
+            return in_array($user->jenisUser, ['admin', 'minor_admin']);
         });
     }
-    
 }

@@ -114,20 +114,37 @@
             opacity: 1;
         }
 
+        /* === LOGIC NAVBAR SAAT SCROLL (Navbar Shrink) === */
+
+        /* 1. Link Navigasi biasa jadi hitam */
         #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:not(.btn) {
             color: #212529 !important;
         }
 
-        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn {
-            color: #fff !important;
-        }
+        /* 2. FIX BUG LOGIN BUTTON (Invisible Button Fix)
+           Masalah sebelumnya: Rule lama memaksa semua .nav-link.btn jadi putih (#fff).
+           Solusi: Pisahkan rule untuk btn-outline (Login) dan btn-primary (Register).
+        */
 
-        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-primary {
-            background-color: var(--bs-primary) !important;
+        /* Untuk Tombol LOGIN (Outline): Saat scroll, teks & border harus BIRU (Primary), bukan putih */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-outline-primary {
+            color: var(--bs-primary) !important;
             border-color: var(--bs-primary) !important;
+        }
+        
+        /* Saat hover di mode scroll, baru jadi teks putih background biru */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-outline-primary:hover {
             color: #fff !important;
+            background-color: var(--bs-primary) !important;
         }
 
+        /* Untuk Tombol REGISTER (Solid): Tetap teks PUTIH karena backgroundnya biru */
+        #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link.btn.btn-primary {
+            color: #fff !important;
+            background-color: var(--bs-primary) !important;
+        }
+
+        /* Efek Hover Link Navigasi */
         #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:hover,
         #mainNav.navbar-shrink .navbar-nav .nav-item a.nav-link:focus {
             color: var(--bs-primary) !important;
@@ -537,26 +554,44 @@
                     <p class="small mb-0">Politeknik Negeri<br>Subang</p>
                 </div>
 
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <h6 class="fw-semibold mb-2">About</h6>
-                    <ul class="list-unstyled small mb-0">
-                        <li><a href="#" class="text-decoration-none text-muted">Privacy Policy</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Help Center</a></li>
-                        <li><a href="#" class="text-decoration-none text-muted">Terms & Condition</a></li>
-                    </ul>
-                </div>
+<!-- Cari bagian footer di file index Anda dan ubah list-nya menjadi seperti ini -->
+<div class="col-md-4 mb-4 mb-md-0">
+    <h6 class="fw-semibold mb-2">About</h6>
+    <ul class="list-unstyled small mb-0">
+        <li>
+            <a href="{{ route('privacy') }}" class="text-decoration-none text-muted hover-primary">
+                Privacy Policy
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('help') }}" class="text-decoration-none text-muted hover-primary">
+                Help Center
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('terms') }}" class="text-decoration-none text-muted hover-primary">
+                Terms & Condition
+            </a>
+        </li>
+    </ul>
+</div>
 
-                <div class="col-md-4 text-md-end">
-                    <h6 class="fw-semibold mb-2">Follow Us on</h6>
-                    <a href="#" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
-                       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-                    <a href="#" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
-                       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);">
-                        <i class="bi bi-whatsapp"></i>
-                    </a>
-                </div>
+<div class="col-md-4 text-md-end">
+    <h6 class="fw-semibold mb-2">Follow Us on</h6>
+    <a href="https://www.instagram.com/satgasppkpt" target="_blank" 
+       class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
+       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);"
+       aria-label="Instagram Satgas PPKPT">
+        <i class="bi bi-instagram"></i>
+    </a>
+    
+    <a href="https://wa.me/6281947315687" target="_blank" 
+       class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light border" 
+       style="width:40px;height:40px;text-decoration:none;color:var(--bs-dark-rgb);"
+       aria-label="WhatsApp Satgas PPKPT">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+</div>
             </div>
         </div>
     </footer>
