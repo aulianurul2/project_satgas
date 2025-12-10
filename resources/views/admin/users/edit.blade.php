@@ -2,7 +2,7 @@
 
 @section('content')
 
-{{-- Tambahkan styling kustom untuk mempercantik form --}}
+{{-- Tambahkan styling kustom agar seragam dengan form User --}}
 <style>
     /* Styling dasar input dan textarea */
     .form-input-custom {
@@ -21,186 +21,148 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Ring focus biru muda */
     }
 
-    /* Styling khusus untuk input yang disabled/read-only */
-    .form-input-disabled {
-        background-color: #f3f4f6; /* gray-100 */
-        color: #6b7280; /* gray-500 */
-        cursor: not-allowed;
-    }
-
     /* Styling Tombol Primary */
     .btn-primary-custom {
         display: inline-block;
-        padding: 10px 20px;
-        background-color: #10b981; /* emerald-500 */
+        padding: 10px 24px;
+        background-color: #1d4ed8; /* blue-700 (Sesuaikan dengan warna tema Member/Recruitment sebelumnya jika mau, atau emerald seperti user) */
         color: white;
         font-weight: 600;
         border-radius: 8px;
-        transition: background-color 0.3s;
+        transition: background-color 0.3s, transform 0.1s;
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     }
 
     .btn-primary-custom:hover {
-        background-color: #059669; /* emerald-600 */
+        background-color: #1e40af; /* blue-800 */
+        transform: translateY(-1px);
     }
 
     /* Styling Tombol Secondary */
     .btn-secondary-custom {
         display: inline-block;
-        padding: 10px 20px;
-        background-color: #6b7280; /* gray-500 */
-        color: white;
+        padding: 10px 24px;
+        background-color: #f3f4f6; /* gray-100 */
+        color: #374151; /* gray-700 */
         font-weight: 600;
         border-radius: 8px;
         transition: background-color 0.3s;
         text-decoration: none;
-        margin-left: 10px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        margin-right: 10px;
+        border: 1px solid #d1d5db;
     }
 
     .btn-secondary-custom:hover {
-        background-color: #4b5563; /* gray-600 */
+        background-color: #e5e7eb; /* gray-200 */
+        color: #111827;
     }
-
 </style>
 
-
-<div class="container mx-auto py-8 px-4 sm:px-6 lg:px-8 max-w-2xl">
+<div class="container mx-auto py-10 px-4 sm:px-6 lg:px-8 max-w-3xl">
     
     {{-- Notifikasi Sukses --}}
     @if(session('success'))
-        <div class="p-4 mb-4 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-lg shadow-md" role="alert">
+        <div class="p-4 mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 rounded-lg shadow-sm" role="alert">
             <p class="font-bold">Berhasil!</p>
             <p>{{ session('success') }}</p>
         </div>
     @endif
 
-    {{-- Notifikasi Error --}}
-    @if(session('error'))
-        <div class="p-4 mb-4 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-lg shadow-md" role="alert">
-            <p class="font-bold">Error!</p>
-            <p>{{ session('error') }}</p>
+    {{-- Notifikasi Error Global --}}
+    @if ($errors->any())
+        <div class="p-4 mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 rounded-lg shadow-sm">
+            <p class="font-bold mb-1">Terjadi Kesalahan</p>
+            <ul class="list-disc pl-5 text-sm">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
     @endif
 
-
-    <div class="bg-white shadow-2xl rounded-xl p-8">
-        <h2 class="text-3xl font-extrabold text-gray-800 mb-6 border-b pb-3">
-            <span class="text-indigo-600">📝</span> Edit Data User
+    <div class="bg-white shadow-2xl rounded-xl p-8 border-t-4 border-blue-700">
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-8 border-b pb-4">
+            <span class="text-blue-700">👤</span> {{ isset($member) ? 'Edit Data Anggota' : 'Tambah Anggota Baru' }}
         </h2>
 
-        <form action="{{ route('admin.users.update', $user->idUser) }}" method="POST">
+        <form action="{{ isset($member) ? route('admin.members.update', $member) : route('admin.members.store') }}" method="POST">
             @csrf
-            @method('PUT')
+            @if(isset($member))
+                @method('PUT')
+            @endif
 
-            {{-- Nama --}}
-            <div class="mb-5">
-                <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                <input type="text" id="nama" name="nama" value="{{ old('nama', $user->nama) }}" 
-                    class="form-input-custom @error('nama') border-red-500 @enderror">
-                @error('nama')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+            {{-- Grid Baris 1: Nama & NIM --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                <div>
+                    <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap *</label>
+                    <input type="text" id="nama" name="nama" value="{{ old('nama', $member->nama ?? '') }}" 
+                        class="form-input-custom @error('nama') border-red-500 @enderror" 
+                        placeholder="Nama Lengkap" required>
+                    @error('nama') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+                <div>
+                    <label for="nim_nip" class="block text-sm font-medium text-gray-700 mb-1">NIM / NIP *</label>
+                    <input type="text" id="nim_nip" name="nim_nip" value="{{ old('nim_nip', $member->nim_nip ?? '') }}" 
+                        class="form-input-custom @error('nim_nip') border-red-500 @enderror" 
+                        placeholder="NIM atau NIP" required>
+                    @error('nim_nip') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
 
-            {{-- Email --}}
-            <div class="mb-5">
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" 
-                    class="form-input-custom @error('email') border-red-500 @enderror">
-                @error('email')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+            {{-- Grid Baris 2: Jabatan & Divisi --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                <div>
+                    <label for="jabatan" class="block text-sm font-medium text-gray-700 mb-1">Jabatan</label>
+                    <input type="text" id="jabatan" name="jabatan" value="{{ old('jabatan', $member->jabatan ?? '') }}" 
+                        class="form-input-custom @error('jabatan') border-red-500 @enderror" 
+                        placeholder="Contoh: Staff">
+                </div>
+                <div>
+                    <label for="divisi" class="block text-sm font-medium text-gray-700 mb-1">Divisi</label>
+                    <input type="text" id="divisi" name="divisi" value="{{ old('divisi', $member->divisi ?? '') }}" 
+                        class="form-input-custom @error('divisi') border-red-500 @enderror" 
+                        placeholder="Contoh: Humas">
+                </div>
             </div>
 
-            {{-- Kontak --}}
-            <div class="mb-5">
-                <label for="kontak" class="block text-sm font-medium text-gray-700 mb-1">Kontak (No. Telp)</label>
-                <input type="text" id="kontak" name="kontak" value="{{ old('kontak', $user->kontak) }}" 
-                    class="form-input-custom @error('kontak') border-red-500 @enderror">
-                @error('kontak')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+            {{-- Grid Baris 3: Kontak & Status --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
+                <div>
+                    <label for="kontak" class="block text-sm font-medium text-gray-700 mb-1">Kontak (No. HP/WA)</label>
+                    <input type="text" id="kontak" name="kontak" value="{{ old('kontak', $member->kontak ?? '') }}" 
+                        class="form-input-custom @error('kontak') border-red-500 @enderror" 
+                        placeholder="08xxxxxxxxxx">
+                </div>
+                <div>
+                    <label for="aktif" class="block text-sm font-medium text-gray-700 mb-1">Status Keanggotaan</label>
+                    <select id="aktif" name="aktif" class="form-input-custom">
+                        <option value="1" {{ old('aktif', $member->aktif ?? 1) == 1 ? 'selected' : '' }}>🟢 Aktif</option>
+                        <option value="0" {{ old('aktif', $member->aktif ?? 1) == 0 ? 'selected' : '' }}>🔴 Nonaktif</option>
+                    </select>
+                </div>
             </div>
 
-            {{-- Alamat --}}
-            <div class="mb-5">
+            {{-- Baris 4: Alamat (Full Width) --}}
+            <div class="mb-8">
                 <label for="alamat" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
                 <textarea id="alamat" name="alamat" rows="3" 
-                    class="form-input-custom @error('alamat') border-red-500 @enderror">{{ old('alamat', $user->alamat) }}</textarea>
-                @error('alamat')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
+                    class="form-input-custom @error('alamat') border-red-500 @enderror" 
+                    placeholder="Masukkan alamat lengkap domisili">{{ old('alamat', $member->alamat ?? '') }}</textarea>
+                @error('alamat') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
             </div>
-            
-            {{-- Jenis User --}}
-            <div class="mb-5">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis User</label>
-
-                @if (isset(auth()->user()->idUser) && $user->idUser == auth()->user()->idUser)
-                    {{-- Admin tidak bisa mengedit jenis user dirinya sendiri --}}
-                    <input type="text" 
-                        class="form-input-custom form-input-disabled" 
-                        value="{{ ucfirst($user->jenisUser) }} (Anda)" disabled>
-                    
-                    {{-- Hidden field untuk memastikan jenisUser tetap terkirim saat disubmit --}}
-                    <input type="hidden" name="jenisUser" value="{{ $user->jenisUser }}">
-                    
-                    <small class="text-yellow-600 mt-2 block">
-                        💡 Anda tidak dapat mengubah jenis user Anda sendiri saat ini.
-                    </small>
-                @else
-                  <select name="jenisUser" class="form-input-custom">
-                    <option value="admin" {{ $user->jenisUser == 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="minor_admin" {{ $user->jenisUser == 'minor_admin' ? 'selected' : '' }}>Minor Admin</option>
-                    <option value="user" {{ $user->jenisUser == 'user' ? 'selected' : '' }}>User Biasa</option>
-                </select>
-
-                @endif
-            </div>
-
-            <hr class="my-6 border-gray-200">
-            
-            {{-- Password Baru (Opsional) --}}
-            <h3 class="text-xl font-semibold text-gray-700 mb-3">Ubah Password (Opsional)</h3>
-            <div class="mb-5">
-                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password Baru</label>
-                <input type="password" id="password" name="password"
-                    class="form-input-custom @error('password') border-red-500 @enderror"
-                    placeholder="Kosongkan jika tidak ingin mengubah password">
-                @error('password')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-            
-            {{-- Konfirmasi Password --}}
-            <div class="mb-6">
-                <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                <input type="password" id="password_confirmation" name="password_confirmation"
-                    class="form-input-custom @error('password_confirmation') border-red-500 @enderror"
-                    placeholder="Ulangi password baru">
-                @error('password_confirmation')
-                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
 
             {{-- Tombol Aksi --}}
-            <div class="flex justify-end pt-4 border-t border-gray-100">
-                <button type="submit" class="btn-primary-custom">
-                    💾 Simpan Perubahan
-                </button>
-                <a href="{{ route('admin.users.index') }}" class="btn-secondary-custom">
-                    Kembali ke Daftar
+            <div class="flex justify-end pt-6 border-t border-gray-100">
+                <a href="{{ route('admin.members.index') }}" class="btn-secondary-custom">
+                    Kembali
                 </a>
+                <button type="submit" class="btn-primary-custom">
+                    {{ isset($member) ? '💾 Simpan Perubahan' : '💾 Simpan Data' }}
+                </button>
             </div>
-
         </form>
-
     </div>
-
 </div>
-
 @endsection

@@ -1,69 +1,234 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-gray-50 py-8 px-4">
-    <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+<div class="container">
 
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">✏️ Edit Media Berita</h1>
+    {{-- Notifikasi Error Validation --}}
+    @if ($errors->any())
+        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-        <form action="{{ route('admin.media.update', $media) }}" method="POST" enctype="multipart/form-data">
+    <div class="form-card">
+        <h1 class="form-title">Edit Media Berita</h1>
+        <p class="form-subtitle">Perbarui detail artikel atau berita yang sudah dipublikasikan.</p>
+
+        <form action="{{ route('admin.media.update', $media) }}" 
+              method="POST" 
+              enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            {{-- Judul --}}
-            <div class="mb-4">
-                <label for="judul" class="block text-sm font-semibold text-gray-700 mb-2">Judul</label>
-                <input type="text" id="judul" name="judul" value="{{ old('judul', $media->judul) }}"
-                       class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+            {{-- Grid Layout --}}
+            <div class="grid">
+                
+                {{-- Judul --}}
+                <div style="grid-column: 1 / -1;">
+                    <label>Judul *</label>
+                    <input type="text" name="judul" value="{{ old('judul', $media->judul) }}" class="input" placeholder="Masukkan judul artikel" required>
+                </div>
+
+                {{-- Kategori --}}
+                <div>
+                    <label>Kategori *</label>
+                    <select name="kategori" class="input" required>
+                        <option value="">-- Pilih Kategori --</option>
+                        @foreach($kategoriList as $kategori)
+                            <option value="{{ $kategori }}" {{ old('kategori', $media->kategori) == $kategori ? 'selected' : '' }}>
+                                {{ $kategori }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Gambar --}}
+                <div>
+                    <label>Gambar (Opsional)</label>
+                    {{-- Preview Gambar Lama --}}
+                    @if ($media->gambar)
+                        <div style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
+                            <img src="{{ asset('storage/' . $media->gambar) }}" alt="Current Image" style="height: 60px; width: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #ddd;">
+                            <span style="font-size: 13px; color: #6b7280;">(Gambar saat ini)</span>
+                        </div>
+                    @endif
+                    <input type="file" name="gambar" class="input" accept="image/*">
+                    <small style="color: #6b7280; font-size: 12px;">Biarkan kosong jika tidak ingin mengubah gambar.</small>
+                </div>
+
+                {{-- Isi (Textarea Full Width) --}}
+                <div style="grid-column: 1 / -1;">
+                    <label>Isi Konten *</label>
+                    <textarea name="isi" rows="8" class="input" placeholder="Tuliskan isi artikel di sini..." required>{{ old('isi', $media->isi) }}</textarea>
+                </div>
+
             </div>
 
-            {{-- Isi --}}
-            <div class="mb-4">
-                <label for="isi" class="block text-sm font-semibold text-gray-700 mb-2">Isi Berita</label>
-                <textarea id="isi" name="isi" rows="6"
-                          class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">{{ old('isi', $media->isi) }}</textarea>
-            </div>
-
-            {{-- Kategori --}}
-            <div class="mb-4">
-            <label for="kategori" class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
-            <select id="kategori" name="kategori" required
-                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
-                <option value="">-- Pilih Kategori --</option>
-                @foreach($kategoriList as $kategori)
-                    <option value="{{ $kategori }}" {{ old('kategori') == $kategori ? 'selected' : '' }}>
-                        {{ $kategori }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-
-            {{-- Gambar --}}
-            <div class="mb-4">
-                <label for="gambar" class="block text-sm font-semibold text-gray-700 mb-2">Gambar (Opsional)</label>
-                @if ($media->gambar)
-                    <div class="mb-2">
-                        <img src="{{ asset('storage/' . $media->gambar) }}" alt="Gambar Saat Ini"
-                             class="h-32 w-auto rounded-md border">
-                    </div>
-                @endif
-                <input type="file" id="gambar" name="gambar"
-                       class="w-full text-gray-700 border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            {{-- Tombol --}}
-            <div class="flex justify-between items-center">
-                <a href="{{ route('admin.media.index') }}"
-                   class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400">⬅ Kembali</a>
-
-                <button type="submit"
-                        class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">
-                    💾 Simpan Perubahan
-                </button>
+            {{-- Tombol Aksi --}}
+            <div class="button-group between" style="margin-top: 25px;">
+                <a href="{{ route('admin.media.index') }}" class="btn-secondary">Batal</a>
+                <button type="submit" class="btn-primary">Simpan Perubahan</button>
             </div>
         </form>
-
     </div>
 </div>
+
+{{-- 🎨 Styling CSS (Sama persis dengan Create & Recruitment) --}}
+<style>
+/* Base Layout */
+body {
+    background: #f5f6fa;
+    font-family: 'Poppins', sans-serif;
+}
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+.form-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    border-top: 6px solid #1d4ed8; /* Blue Top Border */
+}
+.form-title {
+    text-align: center;
+    color: #1d4ed8;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.form-subtitle {
+    text-align: center;
+    color: #555;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* Grid System */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+.grid > div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels & Inputs */
+.grid label {
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+.input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: white;
+    box-sizing: border-box;
+}
+.input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.input::placeholder {
+    color: #9ca3af;
+}
+
+/* Textarea specific */
+textarea.input {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* File Input Styling */
+.input[type="file"] {
+    padding: 10px;
+    cursor: pointer;
+}
+.input[type="file"]::file-selector-button {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 16px;
+    margin-right: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+    transition: all 0.2s ease;
+}
+.input[type="file"]::file-selector-button:hover {
+    background: #e5e7eb;
+}
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 15px;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+.btn-primary {
+    background: #1d4ed8;
+    color: white;
+}
+.btn-primary:hover {
+    background: #1e40af;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+.btn-secondary {
+    background: #9ca3af;
+    color: white;
+}
+.btn-secondary:hover {
+    background: #6b7280;
+    transform: translateY(-1px);
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Error Alerts */
+.bg-red-100 { background-color: #fee2e2; border: 1px solid #fecaca; }
+.text-red-700 { color: #b91c1c; }
+.list-disc { list-style-type: disc; }
+.pl-5 { padding-left: 1.25rem; }
+.p-3 { padding: 0.75rem; }
+.rounded { border-radius: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-card { padding: 30px 20px; }
+    .form-title { font-size: 24px; }
+    .grid { grid-template-columns: 1fr; }
+    .button-group {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+    .btn-primary, .btn-secondary { width: 100%; }
+}
+</style>
 @endsection
