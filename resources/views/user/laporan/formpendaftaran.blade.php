@@ -314,7 +314,7 @@ body {
             <div class="modal-body" style="padding: 24px;">
                 <ul style="list-style-type: disc; padding-left: 24px; color: #374151; line-height: 1.8;">
                     <li>Mahasiswa aktif Politeknik Negeri Subang</li>
-                    <li>IPK minimal <strong>3.50</strong></li>
+                    <li>IPK minimal <strong>3.00</strong></li>
                     <li>Melampirkan pas foto terbaru (format JPG/PNG)</li>
                     <li>Melampirkan CV (Curriculum Vitae) dalam format PDF</li>
                     <li>Melampirkan essay dalam format PDF</li>
