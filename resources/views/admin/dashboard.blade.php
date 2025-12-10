@@ -5,30 +5,17 @@
 <div class="min-h-screen bg-gray-50 py-8 px-4">
     <div class="max-w-7xl mx-auto">
         
-        {{-- Header Section --}}
-        <div class="bg-white rounded-lg shadow-md border border-gray-200 p-6 mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-1">
+        {{-- Header Section (Diubah jadi Biru & Text Putih) --}}
+        <div class="bg-blue-800 rounded-lg shadow-md border border-blue-700 p-8 mb-8 text-white">
+            <h1 class="text-3xl font-bold mb-2">
                 Selamat Datang, Admin!
             </h1>
-            <p class="text-gray-600">
+            <p class="text-blue-100 text-lg">
                 Bersama Peduli, Tanggap menangani, POLSUB Tanpa kekerasan!
             </p>
         </div>
 
-        {{-- Search/Quick Action Area (Seperti di Mockup) --}}
-        <div class="bg-blue-800 rounded-lg p-10 mb-8 shadow-xl">
-            <h2 class="text-2xl text-white font-semibold mb-6 text-center">
-                What are you looking for?
-            </h2>
-            <div class="max-w-xl mx-auto">
-                <div class="relative">
-                    <input type="text" placeholder="Search report text" class="w-full py-3 pl-12 pr-4 rounded-full text-gray-800 focus:ring-4 focus:ring-blue-300 focus:outline-none" />
-                    <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
+        {{-- Search Section SUDAH DIHAPUS --}}
 
          {{-- Menu Grid (Sesuai Mockup) --}}
        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-6">

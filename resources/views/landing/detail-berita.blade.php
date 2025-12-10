@@ -94,7 +94,7 @@
                                target="_blank" 
                                class="share-btn twitter"
                                data-tooltip="Twitter">
-                                <i class="bi bi-twitter-x"></i>
+                                <i class="bi bi-twitter"></i>
                             </a>
                             <a href="https://wa.me/?text={{ urlencode($media->judul . ' ' . url()->current()) }}" 
                                target="_blank" 

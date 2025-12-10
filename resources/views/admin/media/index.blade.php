@@ -3,24 +3,38 @@
 @section('content')
 <div class="container mx-auto py-8 px-4">
 
-    {{-- Header & Title --}}
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-        <div>
-            <h1 class="text-3xl font-bold text-gray-800">Kelola Media / Berita</h1>
-            <p class="text-sm text-gray-500 mt-1">Manajemen artikel, berita, dan pengumuman.</p>
-        </div>
-        <div class="flex flex-col md:flex-row gap-3 mt-4 md:mt-0">
-            @if(request('search') || request('kategori'))
-                <a href="{{ route('admin.media.index') }}" class="text-sm text-red-600 hover:underline self-center">
-                    &times; Reset Filter
+    {{-- Header & Title (MODIFIED: Blue Background Wraps Everything) --}}
+    <div class="bg-blue-800 rounded-lg shadow-md border border-blue-700 p-8 mb-8 text-white">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            
+            {{-- Bagian Kiri: Judul & Deskripsi --}}
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-3xl font-bold mb-2">
+                    Kelola Berita dan Media
+                </h1>
+                <p class="text-blue-100 text-lg">
+                    Bersama Peduli, Tanggap menangani, POLSUB Tanpa kekerasan!
+                </p>
+            </div>
+
+            {{-- Bagian Kanan: Tombol & Filter --}}
+            <div class="flex flex-col md:flex-row gap-3 items-center">
+                @if(request('search') || request('kategori'))
+                    {{-- Warna text reset filter disesuaikan agar terbaca di background biru --}}
+                    <a href="{{ route('admin.media.index') }}" class="text-sm text-red-300 hover:text-white hover:underline self-center transition">
+                        &times; Reset Filter
+                    </a>
+                @endif
+                
+                {{-- Tombol Tambah Media --}}
+                <a href="{{ route('admin.media.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 border border-blue-500 transition shadow-sm flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Tambah Media
                 </a>
-            @endif
-            <a href="{{ route('admin.media.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-                Tambah Media
-            </a>
+            </div>
+
         </div>
     </div>
 
@@ -32,52 +46,16 @@
         </div>
     @endif
 
-    {{-- SECTION: Filter Form (Konsisten dengan Laporan) --}}
-    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-        <form action="{{ route('admin.media.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-            
-            {{-- Search Judul --}}
-            <div class="md:col-span-2">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari Judul</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" placeholder="Masukkan kata kunci judul..."
-                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
-            </div>
-
-            {{-- Filter Kategori --}}
-            <div>
-                <label for="kategori" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                <select name="kategori" id="kategori" 
-                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 border">
-                    <option value="">Semua Kategori</option>
-                    {{-- Sesuaikan value opsi ini dengan data di database Anda --}}
-                    <option value="Berita" {{ request('kategori') == 'Berita' ? 'selected' : '' }}>Berita</option>
-                    <option value="Pengumuman" {{ request('kategori') == 'Pengumuman' ? 'selected' : '' }}>Pengumuman</option>
-                    <option value="Artikel" {{ request('kategori') == 'Artikel' ? 'selected' : '' }}>Artikel</option>
-                </select>
-            </div>
-
-            {{-- Tombol Cari --}}
-            <div>
-                <button type="submit" class="w-full bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-900 transition duration-150 ease-in-out flex justify-center items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                    </svg>
-                    Cari Data
-                </button>
-            </div>
-        </form>
-    </div>
-
     {{-- SECTION: Table Media --}}
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-12">No</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Gambar</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Gambar</th>
                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Informasi Media</th>
-                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Kategori</th>
+                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-48">Aksi</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -88,19 +66,34 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         @if($item->gambar)
-                            <img src="{{ asset('storage/' . $item->gambar) }}" class="h-16 w-16 object-cover rounded-md border border-gray-200" alt="Thumbnail">
+                            <img src="{{ asset('storage/' . $item->gambar) }}" class="h-12 w-12 object-cover rounded-md border border-gray-200 shadow-sm" alt="Thumb">
                         @else
-                            <div class="h-16 w-16 bg-gray-100 rounded-md border border-gray-200 flex items-center justify-center text-gray-400 text-xs text-center p-1">
-                                No Image
+                            <div class="h-12 w-12 bg-gray-100 rounded-md border border-gray-200 flex items-center justify-center text-gray-400">
+                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
                             </div>
                         @endif
                     </td>
                     <td class="px-6 py-4">
-                        <div class="text-sm font-medium text-gray-900 line-clamp-2">{{ $item->judul }}</div>
-                        <div class="text-xs text-gray-500 mt-1">Dibuat: {{ $item->created_at->format('d M Y') }}</div>
+                        <div class="text-sm font-medium text-gray-900 line-clamp-1 hover:text-blue-600 transition">{{ $item->judul }}</div>
+                        <div class="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                            {{ $item->created_at->format('d M Y, H:i') }} WIB
+                        </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                        @php
+                            $badgeColor = match($item->kategori) {
+                                'Berita' => 'bg-blue-100 text-blue-800',
+                                'Pengumuman' => 'bg-yellow-100 text-yellow-800',
+                                'Artikel' => 'bg-green-100 text-green-800',
+                                default => 'bg-gray-100 text-gray-800',
+                            };
+                        @endphp
+                        <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full {{ $badgeColor }}">
                             {{ $item->kategori }}
                         </span>
                     </td>
@@ -143,11 +136,12 @@
         </table>
         
         {{-- Pagination --}}
+        @if($media->hasPages())
         <div class="px-6 py-4 border-t border-gray-200">
             {{ $media->withQueryString()->links() }}
         </div>
+        @endif
     </div>
-
 </div>
 
 {{-- HTML MODAL (Tailwind Version) --}}
@@ -164,7 +158,6 @@
             <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
                     <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                        <!-- Heroicon name: outline/exclamation -->
                         <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                         </svg>
@@ -204,13 +197,10 @@
     function showDeleteModal(actionUrl, itemName) {
         document.getElementById('deleteForm').action = actionUrl;
         document.getElementById('modalItemName').innerText = itemName;
-        
-        // Menampilkan modal dengan menghapus class hidden
         document.getElementById('deleteModal').classList.remove('hidden');
     }
 
     function closeDeleteModal() {
-        // Menyembunyikan modal dengan menambahkan class hidden
         document.getElementById('deleteModal').classList.add('hidden');
     }
 </script>

@@ -3,14 +3,30 @@
 @section('content')
 <div class="container mx-auto py-8 px-4">
 
-    {{-- Header & Reset Filter --}}
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">Daftar Laporan Kasus</h1>
-        @if(request('status') || request('start') || request('end'))
-            <a href="{{ route('admin.laporan.index') }}" class="text-sm text-red-600 hover:underline mt-2 md:mt-0">
-                &times; Reset Filter
-            </a>
-        @endif
+    {{-- Header & Title (MODIFIED: Blue Background Wraps Everything) --}}
+    <div class="bg-blue-800 rounded-lg shadow-md border border-blue-700 p-8 mb-8 text-white">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            
+            {{-- Bagian Kiri: Judul & Deskripsi --}}
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-3xl font-bold mb-2">
+                    Kelola Laporan Kasus
+                </h1>
+                <p class="text-blue-100 text-lg">
+                    Pantau dan kelola laporan kasus yang masuk, status penanganan, dan verifikasi.
+                </p>
+            </div>
+
+            {{-- Bagian Kanan: Reset Filter --}}
+            <div class="flex flex-col md:flex-row gap-3 items-center">
+                @if(request('status') || request('start') || request('end'))
+                    <a href="{{ route('admin.laporan.index') }}" class="text-sm text-red-300 hover:text-white hover:underline self-center transition">
+                        &times; Reset Filter
+                    </a>
+                @endif
+            </div>
+
+        </div>
     </div>
 
     {{-- SECTION: Filter Form --}}

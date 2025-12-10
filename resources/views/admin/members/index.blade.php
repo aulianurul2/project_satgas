@@ -3,24 +3,36 @@
 @section('content')
 <div class="container mx-auto py-8 px-4">
 
-    {{-- Header & Title --}}
-    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-        <div>
-            <h1 class="text-3xl font-bold text-gray-800">Kelola Anggota</h1>
-            <p class="text-sm text-gray-500 mt-1">Manajemen data anggota, divisi, dan status keaktifan.</p>
-        </div>
-        <div class="flex flex-col md:flex-row gap-3 mt-4 md:mt-0">
-            @if(request('search') || request('status'))
-                <a href="{{ route('admin.members.index') }}" class="text-sm text-red-600 hover:underline self-center">
-                    &times; Reset Filter
+    {{-- Header & Title (MODIFIED: Blue Background Wraps Everything) --}}
+    <div class="bg-blue-800 rounded-lg shadow-md border border-blue-700 p-8 mb-8 text-white">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            
+            {{-- Bagian Kiri: Judul & Deskripsi --}}
+            <div class="mb-4 md:mb-0">
+                <h1 class="text-3xl font-bold mb-2">
+                    Kelola Anggota
+                </h1>
+                <p class="text-blue-100 text-lg">
+                    Manajemen data anggota, divisi, dan status keaktifan.
+                </p>
+            </div>
+
+            {{-- Bagian Kanan: Tombol & Filter --}}
+            <div class="flex flex-col md:flex-row gap-3 items-center">
+                @if(request('search') || request('status'))
+                    <a href="{{ route('admin.members.index') }}" class="text-sm text-red-300 hover:text-white hover:underline self-center transition">
+                        &times; Reset Filter
+                    </a>
+                @endif
+                
+                <a href="{{ route('admin.members.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 border border-blue-500 transition shadow-sm flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                    Tambah Anggota
                 </a>
-            @endif
-            <a href="{{ route('admin.members.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition shadow-sm flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                </svg>
-                Tambah Anggota
-            </a>
+            </div>
+
         </div>
     </div>
 
